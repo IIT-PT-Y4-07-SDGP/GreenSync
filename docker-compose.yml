@@ -1,0 +1,26 @@
+version: '3'
+services:
+	backend:
+		build:
+			context: ./backend
+		image: greensync-backend:latest
+		container_name: greensync-backend
+		environment:
+			SPRING_DATA_MONGODB_URI: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/<your-database>"
+		ports:
+			- "8080:8080"
+		secrets:
+			- greensync-secrets
+	
+	frontend:
+		build:
+			context: ./frontend
+		image: greensync-frontend:latest
+		container_name: greensync-frontend
+		ports:
+			- "9000:9000"
+		depends_on:
+			- backend
+secrets:
+	greensync-secrets:
+		file: ./secrets/secret
