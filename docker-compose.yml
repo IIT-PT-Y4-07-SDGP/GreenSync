@@ -6,7 +6,7 @@ services:
 		image: greensync-backend:latest
 		container_name: greensync-backend
 		environment:
-			SPRING_DATA_MONGODB_URI: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/<your-database>"
+			SPRING_DATA_MONGODB_URI: "mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_STRING}"
 		ports:
 			- "8080:8080"
 		secrets:
