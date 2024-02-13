@@ -10,6 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "express": "^4.18.2"
+=======
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.2",
+    "nodemon": "^3.0.3"
+>>>>>>> 511f365b1bb7166d36aaf270ee307b509dafc221
   }
 }
