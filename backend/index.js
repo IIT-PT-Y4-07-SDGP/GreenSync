@@ -4,5 +4,5 @@ const app = express();
 
 
 app.listen(config.PORT, () => {
-    console.log("Server is up and running on port 5001");
+    console.log(`Server running on port ${config.PORT}`);
 })
