@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const emailValidator = require("email-validator");
 const phoneNumberValidation = require("phone");
 const userModel = require('../models/userModel');
+const AuthService = require("../Services/authService");
+const authService = new AuthService();
 
 class UserService {
     async userRegister(userDetails){
@@ -21,14 +23,14 @@ class UserService {
         const phoneNumber = phoneNumberValidation.phone(userDetails.phoneNumber);
         if(!phoneNumber.isValid) throw new Error("Invalid phone number. Please enter valid phone number");
 
-        
         userDetails.account.password = hashedPassword;
-        await userModel.create(userDetails);
+        const user = await userModel.create(userDetails);
+        return user;
     }
 
     isPasswordValid(password){
         // Valid password should consist of 
-        // minimum of 8 charecters, special charecters, LowerCase, UpperCase and numbers 
+        // minimum of 8 characters, special characters, LowerCase, UpperCase and numbers 
         const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
         const minLength = 8
         const hasLowerCase = /[a-z]/
