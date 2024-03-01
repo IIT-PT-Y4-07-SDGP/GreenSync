@@ -535,6 +535,16 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.bg-background {
+  --tw-bg-opacity: 1;
+  background-color: rgb(246 248 246 / var(--tw-bg-opacity));
+}
+
+.bg-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(115 156 120 / var(--tw-bg-opacity));
+}
+
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -542,6 +552,16 @@ video {
 
 .font-bold {
   font-weight: 700;
+}
+
+.text-background {
+  --tw-text-opacity: 1;
+  color: rgb(246 248 246 / var(--tw-text-opacity));
+}
+
+.text-primary {
+  --tw-text-opacity: 1;
+  color: rgb(115 156 120 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -558,3 +578,13 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+$text: #ecf9f7;
+
+$background: #2fb474;
+
+$primary: #40716b;
+
+$secondary: #0f4100;
+
+$accent: #19ff00;
