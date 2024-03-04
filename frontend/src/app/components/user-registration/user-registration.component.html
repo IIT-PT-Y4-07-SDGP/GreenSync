@@ -1,33 +1,38 @@
-<!-- 
-Required Input Field
-- profilePic
- -->
-
 <form action="">
     <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-        <div class="col-span-1 mb-4">
-            <label class="block mb-2">
-                Select Profile Picture
-            </label>
-            <input 
-                type="file" 
-                [multiple]="false"
-                accept="image/*"
-                (change)="onFileSelected($event)" 
-                class="mb-4"
-            >
-        </div>
-        <div class="flex justify-center align-middle col-span-1 mb-4">
-            <div class="h-16 w-16 overflow-hidden rounded-full border-2 border-primary">
-                <img 
-                    *ngIf="selectedProfilePicture" 
-                    [src]="selectedProfilePicture" 
-                    alt="Profile Picture" 
-                    class="object-cover w-full h-full"
-                >
+        <div class="col-span-1 flex mb-2 justify-start items-center">
+            <div class="grid grid-rows-2">
+                <label class="row-span-1">Select Profile Picture</label>
+                <div class="row-span-1 flex items-center ">
+                    <label 
+                        for="fileInput" 
+                        class="flex w-24 items-center justify-center cursor-pointer bg-primary text-white px-2 py-1 rounded whitespace-nowrap"
+                    >
+                        Choose File
+                    </label>
+                    <input 
+                        id="fileInput" 
+                        type="file" 
+                        class="hidden"
+                        [multiple]="false"
+                        accept="image/*"
+                    >
+                    <span id="fileName" class="file-name text-text-color opacity-40 ml-3"></span>
+                </div>
             </div>
         </div>
-        
+        <div class="col-span-1 flex mb-2 justify-start gap-10 items-center">
+            <div class="flex justify-center items-center">
+                <div class="h-16 w-16 overflow-hidden rounded-full border-2 border-primary">
+                    <img 
+                        *ngIf="selectedProfilePicture" 
+                        [src]="selectedProfilePicture" 
+                        alt="Profile Picture" 
+                        class="object-cover w-full h-full mt-2"
+                    >
+                </div>
+            </div>
+        </div>
         <mat-form-field
             [hideRequiredMarker]="options.value.hideRequired"
             [floatLabel]="options.value.floatLabel"
@@ -80,5 +85,6 @@ Required Input Field
         >
             <input matInput placeholder="Confirm password" required>
         </mat-form-field>
+        <button mat-button color="mat-primary">Primary Button</button>
     </div>
 </form>
