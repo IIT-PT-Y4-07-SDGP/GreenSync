@@ -7,6 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
 import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
 import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-registration.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -18,7 +24,14 @@ import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

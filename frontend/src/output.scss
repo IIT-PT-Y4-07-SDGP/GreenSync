@@ -535,40 +535,206 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.bg-background {
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
+.m-4 {
+  margin: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.mr-4 {
+  margin-right: 1rem;
+}
+
+.block {
+  display: block;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.h-4\/6 {
+  height: 66.666667%;
+}
+
+.h-5\/6 {
+  height: 83.333333%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.w-2\/12 {
+  width: 16.666667%;
+}
+
+.w-4\/12 {
+  width: 33.333333%;
+}
+
+.w-8\/12 {
+  width: 66.666667%;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-max {
+  width: max-content;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-none {
+  border-style: none;
+}
+
+.bg-secondary-background {
   --tw-bg-opacity: 1;
-  background-color: rgb(246 248 246 / var(--tw-bg-opacity));
+  background-color: rgb(249 247 247 / var(--tw-bg-opacity));
 }
 
-.bg-primary {
-  --tw-bg-opacity: 1;
-  background-color: rgb(115 156 120 / var(--tw-bg-opacity));
+.object-contain {
+  object-fit: contain;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+.object-cover {
+  object-fit: cover;
 }
 
-.font-bold {
-  font-weight: 700;
+.object-none {
+  object-fit: none;
 }
 
-.text-background {
-  --tw-text-opacity: 1;
-  color: rgb(246 248 246 / var(--tw-text-opacity));
+.object-left-top {
+  object-position: left top;
 }
 
-.text-primary {
-  --tw-text-opacity: 1;
-  color: rgb(115 156 120 / var(--tw-text-opacity));
+.pl-1 {
+  padding-left: 0.25rem;
 }
 
-.underline {
-  text-decoration-line: underline;
+.pl-4 {
+  padding-left: 1rem;
+}
+
+.align-middle {
+  vertical-align: middle;
 }
 
 /* You can add global styles to this file, and also import other style files */
+
+$text: #030F09;
+
+$background: #f1f6f1;
+
+$secondary-background: #fefefe;
+
+$primary: #30BE76;
+
+$secondary: #30BE76;
+
+$accent: #5ece52;
 
 html, body {
   height: 100%;
@@ -577,14 +743,7 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: $background;
 }
 
-$text: #ecf9f7;
 
-$background: #2fb474;
-
-$primary: #40716b;
-
-$secondary: #0f4100;
-
-$accent: #19ff00;

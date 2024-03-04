@@ -1,1 +1,84 @@
-<p>user-registration works!</p>
+<!-- 
+Required Input Field
+- profilePic
+ -->
+
+<form action="">
+    <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+        <div class="col-span-1 mb-4">
+            <label class="block mb-2">
+                Select Profile Picture
+            </label>
+            <input 
+                type="file" 
+                [multiple]="false"
+                accept="image/*"
+                (change)="onFileSelected($event)" 
+                class="mb-4"
+            >
+        </div>
+        <div class="flex justify-center align-middle col-span-1 mb-4">
+            <div class="h-16 w-16 overflow-hidden rounded-full border-2 border-primary">
+                <img 
+                    *ngIf="selectedProfilePicture" 
+                    [src]="selectedProfilePicture" 
+                    alt="Profile Picture" 
+                    class="object-cover w-full h-full"
+                >
+            </div>
+        </div>
+        
+        <mat-form-field
+            [hideRequiredMarker]="options.value.hideRequired"
+            [floatLabel]="options.value.floatLabel"
+            class="col-span-1"
+        >
+            <input matInput placeholder="First name" required>
+        </mat-form-field>
+        <mat-form-field
+            [hideRequiredMarker]="options.value.hideRequired"
+            [floatLabel]="options.value.floatLabel"
+            class="col-span-1"
+        >
+            <input matInput placeholder="Last name" required>
+        </mat-form-field>
+    
+        <mat-form-field
+            [hideRequiredMarker]="options.value.hideRequired"
+            [floatLabel]="options.value.floatLabel"
+            class="col-span-full"
+            >
+            <input matInput placeholder="Email" required>
+        </mat-form-field>
+        
+        <mat-form-field
+            [hideRequiredMarker]="options.value.hideRequired"
+            [floatLabel]="options.value.floatLabel"
+            class="col-span-1"
+        >
+            <input matInput placeholder="Username" required>
+        </mat-form-field>
+        <mat-form-field
+            [hideRequiredMarker]="options.value.hideRequired"
+            [floatLabel]="options.value.floatLabel"
+            class="col-span-1"
+        >
+            <input matInput placeholder="Phone number" required>
+        </mat-form-field>
+        
+        <mat-form-field
+            [hideRequiredMarker]="options.value.hideRequired"
+            [floatLabel]="options.value.floatLabel"
+            class="col-span-1"
+        >
+            <input matInput placeholder="Password" required>
+        </mat-form-field>
+        <mat-form-field
+            [hideRequiredMarker]="options.value.hideRequired"
+            [floatLabel]="options.value.floatLabel"
+            class="col-span-1"
+        >
+            <input matInput placeholder="Confirm password" required>
+        </mat-form-field>
+    </div>
+</form>

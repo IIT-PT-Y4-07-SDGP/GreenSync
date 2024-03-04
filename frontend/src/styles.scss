@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
+$text: #030F09;
+$background: #f1f6f1;
+$secondary-background: #fefefe;
+$primary: #30BE76;
+$secondary: #30BE76;
+$accent: #5ece52;
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background-color: $background;
+}
 
-$text: #ecf9f7;
-$background: #2fb474;
-$primary: #40716b;
-$secondary: #0f4100;
-$accent: #19ff00;
+
