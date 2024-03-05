@@ -12,6 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class UserRegistrationComponent implements OnInit {
   selectedProfilePicture!: string;
+  private profilePicture!: File;
   userRegFormGroup: FormGroup;
   private destroy$: Subject<void> = new Subject();
   
@@ -52,10 +53,10 @@ export class UserRegistrationComponent implements OnInit {
       const selectedFile = (event.target as HTMLInputElement).files?.[0];
       if (selectedFile) {
         if (fileNameDisplay){
-          console.log(selectedFile.name);
           fileNameDisplay.textContent = selectedFile.name;
           fileNameDisplay?.classList.add('visible');
         }
+        component.profilePicture=selectedFile;
         component.onFileSelected(selectedFile);
       } else {
         if(fileNameDisplay){
@@ -96,7 +97,7 @@ export class UserRegistrationComponent implements OnInit {
         account: {
           username: this.userRegFormGroup.value.username,
           password: this.userRegFormGroup.value.password,
-          profilePic: "", 
+          profilePic: this.profilePicture, 
         }
       }
       // Convert registrationData to JSON format
@@ -106,8 +107,10 @@ export class UserRegistrationComponent implements OnInit {
       .subscribe(
         response => {
           console.log('Response from backend:', response);
+          alert("Registration is successful");
         },
         error => {
+          alert(error.error.error);
           console.error('Error:', error);
         }
         );
