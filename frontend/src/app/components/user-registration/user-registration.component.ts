@@ -24,7 +24,7 @@ export class UserRegistrationComponent implements OnInit {
       username:['', Validators.required],
       phoneNumber:['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
       password:['', [Validators.required, passwordValidator()]],
-      passwordConfirmation:['', [Validators.required, confirmPasswordValidator('password')]]
+      passwordConfirmation:['', [Validators.required, confirmPasswordValidator('password'), passwordValidator()]]
     })
     this.selectedProfilePicture="app/assets/default-male-profile-picture.jpg"
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
