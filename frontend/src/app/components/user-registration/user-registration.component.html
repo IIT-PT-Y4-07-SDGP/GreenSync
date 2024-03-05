@@ -116,9 +116,9 @@
         class="col-span-1"
     >
         <input matInput placeholder="Phone number" required formControlName="phoneNumber" type="tel">
-        <mat-hint>Phone number format - 9471****578</mat-hint>
+        <mat-hint>Phone number format - +9471****578</mat-hint>
         <mat-error *ngIf="userRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.</mat-error>
-        <mat-error *ngIf="userRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid 11-digit phone number.</mat-error>
+        <mat-error *ngIf="userRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone number.</mat-error>
     </mat-form-field>
     
     <!-- Password Section -->

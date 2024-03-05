@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable , Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-user-registration',
@@ -9,12 +13,17 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 export class UserRegistrationComponent implements OnInit {
   selectedProfilePicture!: string;
   userRegFormGroup: FormGroup;
+  private destroy$: Subject<void> = new Subject();
   
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private http: HttpClient) { 
     this.userRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
   });}
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.userRegFormGroup = this.fb.group({
@@ -22,7 +31,7 @@ export class UserRegistrationComponent implements OnInit {
       lastName:['', Validators.required],
       email:['', [Validators.required , Validators.email]],
       username:['', Validators.required],
-      phoneNumber:['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      phoneNumber:['', [Validators.required, Validators.pattern(/^\+\d{11}$/)]],
       password:['', [Validators.required, passwordValidator()]],
       passwordConfirmation:['', [Validators.required, confirmPasswordValidator('password'), passwordValidator()]]
     })
@@ -76,10 +85,40 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   onRegister(){
-    if(this.userRegFormGroup.valid){
-      console.log("hola");
+    if (this.userRegFormGroup.valid) {
+      // Construct the data object in the required format
+      const formData = {
+        firstName: this.userRegFormGroup.value.firstName,
+        lastName: this.userRegFormGroup.value.lastName,
+        email: this.userRegFormGroup.value.email,
+        phoneNumber: this.userRegFormGroup.value.phoneNumber,
+        userRole: 'GP', // Assuming this value is constant
+        account: {
+          username: this.userRegFormGroup.value.username,
+          password: this.userRegFormGroup.value.password,
+          profilePic: "", 
+        }
+      }
+      // Convert registrationData to JSON format
+      const jsonData = JSON.stringify(formData);
+      this.sendFormData(jsonData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        response => {
+          console.log('Response from backend:', response);
+        },
+        error => {
+          console.error('Error:', error);
+        }
+        );
+      }
     }
-  }
+    
+    private sendFormData(data: any): Observable<any> {
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      console.log(data);
+      return this.http.post<any>('http://localhost:5001/user/registration', data, { headers: headers });
+    }
 }
 
 export function passwordValidator(): ValidatorFn {
