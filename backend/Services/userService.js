@@ -3,13 +3,14 @@ const bcrypt = require("bcrypt");
 const emailValidator = require("email-validator");
 const phoneNumberValidation = require("phone");
 const userModel = require('../models/userModel');
+const accountModel = require("../models/accountModel");
 const AuthService = require("../Services/authService");
 const authService = new AuthService();
 
 class UserService {
     async userRegister(userDetails){
-       let hashedPassword;
-       if (this.isPasswordValid(userDetails.account.password)) {
+        let hashedPassword;
+        if (this.isPasswordValid(userDetails.account.password)) {
            const salt = await bcrypt.genSalt(10);
            hashedPassword = await bcrypt.hash(userDetails.account.password, salt);
         } else {
@@ -17,15 +18,28 @@ class UserService {
         } 
         
         // Validating Email
-        if(!emailValidator.validate(userDetails.email)) throw new Error("Invalid email. Please enter a valid email.");
+        if(!emailValidator.validate(userDetails.account.email)) throw new Error("Invalid email. Please enter a valid email.");
         
         // Validating phone number
-        const phoneNumber = phoneNumberValidation.phone(userDetails.phoneNumber);
+        const phoneNumber = phoneNumberValidation.phone(userDetails.account.phoneNumber);
         if(!phoneNumber.isValid) throw new Error("Invalid phone number. Please enter valid phone number");
 
         userDetails.account.password = hashedPassword;
-        const user = await userModel.create(userDetails);
-        return user;
+        const account = await accountModel.create({
+            username: userDetails.account.username,
+            phoneNumber: userDetails.account.phoneNumber,
+            userRole: userDetails.account.userRole,
+            email: userDetails.account.email,
+            password: userDetails.account.password,
+
+        });
+        const user = await userModel.create({
+            firstName: userDetails.firstName,
+            lastName: userDetails.lastName,
+            profilePic: userDetails.profilePic,
+            account: account._id
+        });
+        return account
     }
 
     isPasswordValid(password){
