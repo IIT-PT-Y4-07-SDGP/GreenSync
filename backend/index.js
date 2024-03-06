@@ -8,6 +8,7 @@ const config = require("./configuration/config");
 
 // Importing the routes
 const userRoute = require("./routes/user");
+const prcRoute = require("./routes/prc")
 
 // Initiating Express
 const app = express();
@@ -18,9 +19,10 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // Main route and the sub routes 
 app.use("/user", userRoute);
-app.use(express.urlencoded({ extended: true }));
+app.use("/prc", prcRoute);
 
 // Verifying the connection to database and starting the server 
 mongoose

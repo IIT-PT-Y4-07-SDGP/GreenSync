@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const accountSchema = require("../models/accountModel");
 const schema = mongoose.Schema;
 
-const userSchema = new schema({
+const generalUserSchema = new schema({
     firstName: {
         type: String,
         required: true
@@ -9,40 +10,20 @@ const userSchema = new schema({
     lastName: {
         type: String,
         required: true
-    },  
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    phoneNumber: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    userRole: {
-        type: String,
-        required: true
     },
     points:{
         type:Number,
         default: 0
     },
+    profilePic: {
+        type: String,
+        required: false
+    },
     account: {
-        username: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        password: {
-            type: String,
-            required: true
-        },
-        profilePic: {
-            type: String,
-            required: false
-        },
+        type: schema.Types.ObjectId,
+        ref: 'accountSchema',
+        required:true
     },
 }, { timestamps: true })
 
-module.exports = mongoose.model('user-Account',userSchema);
+module.exports = mongoose.model('general-user-Account', generalUserSchema);
