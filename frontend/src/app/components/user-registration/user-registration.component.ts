@@ -91,13 +91,13 @@ export class UserRegistrationComponent implements OnInit {
       const formData = {
         firstName: this.userRegFormGroup.value.firstName,
         lastName: this.userRegFormGroup.value.lastName,
-        email: this.userRegFormGroup.value.email,
-        phoneNumber: this.userRegFormGroup.value.phoneNumber,
-        userRole: 'GP', // Assuming this value is constant
+        profilePic: this.profilePicture, 
         account: {
           username: this.userRegFormGroup.value.username,
+          phoneNumber: this.userRegFormGroup.value.phoneNumber,
+          userRole: 'GP', // Assuming this value is constant
+          email: this.userRegFormGroup.value.email,
           password: this.userRegFormGroup.value.password,
-          profilePic: this.profilePicture, 
         }
       }
       // Convert registrationData to JSON format
