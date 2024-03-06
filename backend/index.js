@@ -1,6 +1,7 @@
 // Importing required libraries
 const mongoose = require("mongoose");
 const express = require("express");
+const cors = require('cors');
 
 // Getting the configuration values
 const config = require("./configuration/config");
@@ -13,9 +14,14 @@ const eventsRoute = require("./routes/events");
 const app = express();
 const port = "5001";
 
+app.use(cors({
+    origin: 'http://localhost:4200' // Allow requests only from localhost:4200
+}));
+
 app.use(express.json());
 // Main route and the sub routes 
 app.use("/user", userRoute);
+app.use(express.urlencoded({ extended: true }));
 app.use("/events", eventsRoute);
 
 // Verifying the connection to database and starting the server 
