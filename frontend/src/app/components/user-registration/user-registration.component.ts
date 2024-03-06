@@ -91,7 +91,7 @@ export class UserRegistrationComponent implements OnInit {
       const formData = {
         firstName: this.userRegFormGroup.value.firstName,
         lastName: this.userRegFormGroup.value.lastName,
-        profilePic: this.profilePicture, 
+        profilePic: this.profilePicture ? this.profilePicture : "Default",  
         account: {
           username: this.userRegFormGroup.value.username,
           phoneNumber: this.userRegFormGroup.value.phoneNumber,

@@ -6,12 +6,11 @@ const prc = new PRCService();
 // const authService = new AuthService();
 
 class PRCController{
-    // User Registration
+    // prc Registration
     async PRCRegistration (req,res) {
         try{
-            console.log(req.body);
             // Validate the prc data and add prc to database
-            await prc.PRCRegister();
+            await prc.PRCRegister(req.body);
             // get JWT token and
             // const token = authService.generateJWTToken(newUser.account.username, newUser.id, newUser.userRole);
             // return res.status(200).json({token:token});

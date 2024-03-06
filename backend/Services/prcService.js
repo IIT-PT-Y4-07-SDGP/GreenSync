@@ -1,8 +1,8 @@
 // Import necessary modules
 
 class PRCService {
-    async PRCRegister(){
-        console.log("User Service workss");
+    async PRCRegister(prcDetails){
+        console.log(prcDetails);
     }
 }
 
