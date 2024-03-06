@@ -9,11 +9,10 @@ class UserController{
     // User Registration
     async userRegistration (req,res) {
         try{
-            console.log(req.body);
             // Validate the user data and add ussr to database
-            const newUser = await user.userRegister(req.body);
+            const newUserAccount = await user.userRegister(req.body);
             // get JWT token and
-            const token = authService.generateJWTToken(newUser.account.username, newUser.id, newUser.userRole);
+            const token = authService.generateJWTToken(newUserAccount.username, newUserAccount.userRole);
             return res.status(200).json({token:token});
         }
         catch(error){
