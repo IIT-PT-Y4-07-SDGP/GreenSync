@@ -1,25 +1,31 @@
-const { model } = require('mongoose')
-const { MongoClient, ObjectId } = require('mongodb');
+const mongoose = require('mongoose')
 const eventsModel = require('../models/eventsModel')
 const userModel = require('../models/userModel');
 
 class EventsService {
     async eventsOrganize(eventsDetails){
         let OrganizorID = eventsDetails.eventOrganizer;
-        if (this.isOrganizerInDB(OrganizorID)){
-            console.log('Organizer creating')
-            eventsDetails.eventOrganizer = OrganizorID;
-            const event = await eventsModel.create(eventsDetails);
-            return event;
+        if (await this.isOrganizerInDB(OrganizorID)){
+            let eventTime = new Date(eventsDetails.eventTime)
+            if (eventTime > new Date()){
+                console.log('Creating Event')
+                eventsDetails.eventOrganizer = OrganizorID;
+                const event = await eventsModel.create(eventsDetails);
+                
+                return event;
+            } else {
+                console.log('Event Time is not a Future Time')
+            }
+        } else {
+            console.log('Organizer is not a registered users')
         }
+        //Handle the case when the organizer doesn't exist
         
     }
-    isOrganizerInDB(organizerID){
+    async isOrganizerInDB(organizerID){
         try {
-            console.log(organizerID)
             // Assuming Account is your mongoose model for the 'accounts' collection
-            const organizer = userModel.accounts.findByID(organizerID);
-            console.log(organizer)
+            const organizer = await userModel.findById(organizerID);
             return !!organizer; // Returns true if organizer exists, false otherwise
         } catch (error) {
             console.error('Error checking organizer in the database:', error);
