@@ -1,5 +1,5 @@
 // Importing the service class
-const PRCService = require("../Services/prcService");
+const PRCService = require("../Services/PRCService");
 // const AuthService = require("../Services/authService");
 // creating instances for service class
 const prc = new PRCService();

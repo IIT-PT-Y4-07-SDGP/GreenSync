@@ -1,28 +1,24 @@
 // Import necessary modules
-const bcrypt = require("bcrypt");
-const emailValidator = require("email-validator");
-const phoneNumberValidation = require("phone");
 const userModel = require('../models/userModel');
 const accountModel = require("../models/accountModel");
-const AuthService = require("../Services/authService");
 const mongoose = require("mongoose");
-const authService = new AuthService();
+const CommonService = require("./commonService");
+const common = new CommonService();
 
 class UserService {
     async userRegister(userDetails){
         let hashedPassword;
-        if (this.isPasswordValid(userDetails.account.password)) {
-           const salt = await bcrypt.genSalt(10);
-           hashedPassword = await bcrypt.hash(userDetails.account.password, salt);
+        if (common.isPasswordValid(userDetails.account.password)) {
+           hashedPassword = await common.hashPassword(userDetails.account.password);
         } else {
             throw new Error("Invalid password. Please ensure it meets the requirements.")
         } 
         
         // Validating Email
-        if(!emailValidator.validate(userDetails.account.email)) throw new Error("Invalid email. Please enter a valid email.");
+        if(!common.validateEmail(userDetails.account.email)) throw new Error("Invalid email. Please enter a valid email.");
         
         // Validating phone number
-        const phoneNumber = phoneNumberValidation.phone(userDetails.account.phoneNumber);
+        const phoneNumber = common.validatePhoneNumber(userDetails.account.phoneNumber);
         if(!phoneNumber.isValid) throw new Error("Invalid phone number. Please enter valid phone number");
 
         userDetails.account.password = hashedPassword;
@@ -40,6 +36,7 @@ class UserService {
                         userRole: userDetails.account.userRole,
                         email: userDetails.account.email,
                         password: userDetails.account.password,
+                        accountStatus: "ACTIVE"
                     }], { session }
                 );
             } catch(error) {
@@ -73,23 +70,6 @@ class UserService {
             }
         }
         return account
-    }
-
-    isPasswordValid(password){
-        // Valid password should consist of 
-        // minimum of 8 characters, special characters, LowerCase, UpperCase and numbers 
-        const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-        const minLength = 8
-        const hasLowerCase = /[a-z]/
-        const hasUpperCase = /[A-Z]/
-        const hasNumbers = /[0-9]/;
-        return (
-            password.length >= minLength &&
-            hasSpecialChar.test(password) && 
-            hasLowerCase.test(password) &&
-            hasUpperCase.test(password) &&
-            hasNumbers.test(password)
-        );
     }
 }
 
