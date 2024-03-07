@@ -4,6 +4,6 @@ const eventsController = new EventsController();
 const express = require("express");
 const router = express.Router();
 
-router.post("/organize_event", eventsController.eventsOrganize);
+router.post("/organize-event", eventsController.eventsOrganize);
 
 module.exports = router;

@@ -9,7 +9,7 @@ class EventsController{
         try{
             // Validate the user data and add ussr to database
             const newEvents = await events.eventsOrganize(req.body);
-            return res.status(200).json({token:newEvents});
+            return res.status(200).json({newEvents});
         }
         catch(error){
             res.status(400).json({error:error.message})

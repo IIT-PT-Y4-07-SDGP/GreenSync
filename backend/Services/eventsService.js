@@ -8,16 +8,15 @@ class EventsService {
         if (await this.isOrganizerInDB(OrganizorID)){
             let eventTime = new Date(eventsDetails.eventTime)
             if (eventTime > new Date()){
-                console.log('Creating Event')
                 eventsDetails.eventOrganizer = OrganizorID;
                 const event = await eventsModel.create(eventsDetails);
-                
+
                 return event;
             } else {
-                console.log('Event Time is not a Future Time')
+                throw new Error('Event Time is not Valid')
             }
         } else {
-            console.log('Organizer is not a registered users')
+            throw new Error('Organizer is not a registered users')
         }
         //Handle the case when the organizer doesn't exist
         
@@ -28,8 +27,7 @@ class EventsService {
             const organizer = await userModel.findById(organizerID);
             return !!organizer; // Returns true if organizer exists, false otherwise
         } catch (error) {
-            console.error('Error checking organizer in the database:', error);
-            return false; // Handle the error accordingly
+            throw new Error('User not exist in the database:', error); // Handle the error accordingly
         }
     }
 }
