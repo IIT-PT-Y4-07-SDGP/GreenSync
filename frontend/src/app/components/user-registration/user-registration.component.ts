@@ -11,10 +11,10 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./user-registration.component.scss']
 })
 export class UserRegistrationComponent implements OnInit {
-  selectedProfilePicture!: string;
   private profilePicture!: File;
-  userRegFormGroup: FormGroup;
   private destroy$: Subject<void> = new Subject();
+  selectedProfilePicture!: string;
+  userRegFormGroup: FormGroup;
   
   constructor(private fb: FormBuilder, private http: HttpClient) { 
     this.userRegFormGroup = fb.group({

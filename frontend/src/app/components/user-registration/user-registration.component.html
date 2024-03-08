@@ -4,157 +4,157 @@
     action="" 
     class="grid grid-cols-2 gap-x-8 gap-y-3"
 >
-    <!-- Profile Picture Section -->
-    <div class="col-span-1 flex justify-start items-center">
-        <div class="grid grid-rows-2 gap-0">
-            <label class="row-span-1 w-25 text-text-color text-xs pt-2">Select Profile Picture</label>
-            <div class="row-span-1 flex items-center">
-                <label 
-                    for="fileInput" 
-                    class="flex w-24 items-center justify-center cursor-pointer bg-white border-2 border-primary text-text-color px-2 py-1 rounded whitespace-nowrap"
-                >
-                    Choose File
-                </label>
-                <input 
-                    id="fileInput" 
-                    type="file" 
-                    class="hidden"
-                    [multiple]="false"
-                    accept="image/*"
-                >
-                <span id="fileName" class="file-name text-text-color opacity-40 ml-3"></span>
+            <!-- Profile Picture Section -->
+        <div class="col-span-1 flex justify-start items-center">
+            <div class="grid grid-rows-2 gap-0">
+                <label class="row-span-1 w-25 text-text-color text-xs pt-2">Select Profile Picture</label>
+                <div class="row-span-1 flex items-center">
+                    <label 
+                        for="fileInput" 
+                        class="flex w-24 items-center justify-center cursor-pointer bg-white border-2 border-primary text-text-color px-2 py-1 rounded whitespace-nowrap"
+                    >
+                        Choose File
+                    </label>
+                    <input 
+                        id="fileInput" 
+                        type="file" 
+                        class="hidden"
+                        [multiple]="false"
+                        accept="image/*"
+                    >
+                    <span id="fileName" class="file-name text-text-color opacity-40 ml-3"></span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-span-1 flex mb-2 justify-start gap-10 items-center">
-        <div class="flex justify-center items-center">
-            <div class="h-16 w-16 overflow-hidden rounded-full border-2 border-primary">
-                <img 
-                    *ngIf="selectedProfilePicture" 
-                    [src]="selectedProfilePicture" 
-                    alt="Profile Picture" 
-                    class="object-cover w-full h-full"
-                >
+        <div class="col-span-1 flex mb-2 justify-start gap-10 items-center">
+            <div class="flex justify-center items-center">
+                <div class="h-16 w-16 overflow-hidden rounded-full border-2 border-primary">
+                    <img 
+                        *ngIf="selectedProfilePicture" 
+                        [src]="selectedProfilePicture" 
+                        alt="Profile Picture" 
+                        class="object-cover w-full h-full"
+                    >
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- First Name Section -->
-    <mat-form-field
-        [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
-        [floatLabel]="userRegFormGroup.value.floatLabel"
-        class="col-span-1"
-    >
-        <input matInput placeholder="First name" required formControlName="firstName">
-        <mat-error 
-            *ngIf="userRegFormGroup.get('firstName')?.invalid && 
-            (userRegFormGroup.get('firstName')?.dirty || userRegFormGroup.get('firstName')?.touched)"
+        <!-- First Name Section -->
+        <mat-form-field
+            [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
+            [floatLabel]="userRegFormGroup.value.floatLabel"
+            class="col-span-1"
         >
-            <span 
-                *ngIf="userRegFormGroup.get('firstName')?.errors && 
-                userRegFormGroup.get('firstName')?.errors?.['required']"
-            > First name is required.</span>
-        </mat-error>
-    </mat-form-field>
+            <input matInput placeholder="First name" required formControlName="firstName">
+            <mat-error 
+                *ngIf="userRegFormGroup.get('firstName')?.invalid && 
+                (userRegFormGroup.get('firstName')?.dirty || userRegFormGroup.get('firstName')?.touched)"
+            >
+                <span 
+                    *ngIf="userRegFormGroup.get('firstName')?.errors && 
+                    userRegFormGroup.get('firstName')?.errors?.['required']"
+                > First name is required.</span>
+            </mat-error>
+        </mat-form-field>
 
-    <!-- Last Name Section -->
-    <mat-form-field
-        [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
-        [floatLabel]="userRegFormGroup.value.floatLabel"
-        class="col-span-1"
-    >
-        <input matInput placeholder="Last name" required formControlName="lastName">
-        <mat-error 
-            *ngIf="userRegFormGroup.get('lastName')?.invalid && 
-            (userRegFormGroup.get('lastName')?.dirty || userRegFormGroup.get('lastName')?.touched)"
+        <!-- Last Name Section -->
+        <mat-form-field
+            [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
+            [floatLabel]="userRegFormGroup.value.floatLabel"
+            class="col-span-1"
         >
-            <span 
-                *ngIf="userRegFormGroup.get('lastName')?.errors && 
-                userRegFormGroup.get('lastName')?.errors?.['required']"
-            > Last name is required.</span>
-        </mat-error>
-    </mat-form-field>
+            <input matInput placeholder="Last name" required formControlName="lastName">
+            <mat-error 
+                *ngIf="userRegFormGroup.get('lastName')?.invalid && 
+                (userRegFormGroup.get('lastName')?.dirty || userRegFormGroup.get('lastName')?.touched)"
+            >
+                <span 
+                    *ngIf="userRegFormGroup.get('lastName')?.errors && 
+                    userRegFormGroup.get('lastName')?.errors?.['required']"
+                > Last name is required.</span>
+            </mat-error>
+        </mat-form-field>
 
-    <!-- Email Section -->
-    <mat-form-field
-        [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
-        [floatLabel]="userRegFormGroup.value.floatLabel"
-        class="col-span-full"
-    >
-        <input matInput placeholder="Email" required formControlName="email" type="email">
-        <mat-error 
-            *ngIf="userRegFormGroup.get('email')?.invalid && 
-            (userRegFormGroup.get('email')?.dirty || userRegFormGroup.get('email')?.touched)"
+        <!-- Email Section -->
+        <mat-form-field
+            [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
+            [floatLabel]="userRegFormGroup.value.floatLabel"
+            class="col-span-full"
         >
-            <span *ngIf="userRegFormGroup.get('email')?.errors && userRegFormGroup.get('email')?.errors?.['required']">Email is required.</span>
-            <span *ngIf="userRegFormGroup.get('email')?.errors?.['email']">Please enter a valid email address.</span>
-        </mat-error>
-    </mat-form-field>
+            <input matInput placeholder="Email" required formControlName="email" type="email">
+            <mat-error 
+                *ngIf="userRegFormGroup.get('email')?.invalid && 
+                (userRegFormGroup.get('email')?.dirty || userRegFormGroup.get('email')?.touched)"
+            >
+                <span *ngIf="userRegFormGroup.get('email')?.errors && userRegFormGroup.get('email')?.errors?.['required']">Email is required.</span>
+                <span *ngIf="userRegFormGroup.get('email')?.errors?.['email']">Please enter a valid email address.</span>
+            </mat-error>
+        </mat-form-field>
+        
+        <!-- UserName Section -->
+        <mat-form-field
+            [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
+            [floatLabel]="userRegFormGroup.value.floatLabel"
+            class="col-span-1"
+        >
+            <input matInput placeholder="Username" required formControlName="username">
+            <mat-error 
+                *ngIf="userRegFormGroup.get('username')?.invalid && 
+                (userRegFormGroup.get('username')?.dirty || userRegFormGroup.get('username')?.touched)"
+            >
+                <span 
+                    *ngIf="userRegFormGroup.get('username')?.errors && 
+                    userRegFormGroup.get('username')?.errors?.['required']"
+                > Username is required.</span>
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Phone Number Section -->
+        <mat-form-field
+            [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
+            [floatLabel]="userRegFormGroup.value.floatLabel"
+            class="col-span-1"
+        >
+            <input matInput placeholder="Phone number" required formControlName="phoneNumber" type="tel">
+            <mat-hint>Phone number format - +9471****768</mat-hint>
+            <mat-error *ngIf="userRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.</mat-error>
+            <mat-error *ngIf="userRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone number.</mat-error>
+        </mat-form-field>
+        
+        <!-- Password Section -->
+        <mat-form-field
+            [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
+            [floatLabel]="userRegFormGroup.value.floatLabel"
+            class="col-span-1 mb-4"
+        >
+            <input matInput placeholder="Password" required formControlName="password" type="password">
+            <mat-hint>Password should consist of minimum 8 length, special character, lowercase, uppercase and numbers</mat-hint>
+            <mat-error *ngIf="userRegFormGroup.get('password')?.hasError('required')">
+                Password is required.
+            </mat-error>
+            <mat-error *ngIf="userRegFormGroup.get('password')?.hasError('minlength')">
+                Password should be minimum 8 characters long.
+            </mat-error>
+            <mat-error *ngIf="userRegFormGroup.get('password')?.hasError('invalidPassword')">
+                Password should contain at least one special character, one lowercase letter, one uppercase letter, and one number.
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Password Confirmation -->
+        <mat-form-field
+            [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
+            [floatLabel]="userRegFormGroup.value.floatLabel"
+            class="col-span-1 mb-4"
+        >
+            <input matInput placeholder="Confirm password" required formControlName="passwordConfirmation" type="password">
+            <mat-error *ngIf="userRegFormGroup.get('passwordConfirmation')?.hasError('required')">
+                Confirm password is required.
+            </mat-error>
+            <mat-error *ngIf="userRegFormGroup.get('passwordConfirmation')?.hasError('passwordMismatch')">
+                Passwords do not match.
+            </mat-error>
+        </mat-form-field>
     
-    <!-- UserName Section -->
-    <mat-form-field
-        [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
-        [floatLabel]="userRegFormGroup.value.floatLabel"
-        class="col-span-1"
-    >
-        <input matInput placeholder="Username" required formControlName="username">
-        <mat-error 
-            *ngIf="userRegFormGroup.get('username')?.invalid && 
-            (userRegFormGroup.get('username')?.dirty || userRegFormGroup.get('username')?.touched)"
-        >
-            <span 
-                *ngIf="userRegFormGroup.get('username')?.errors && 
-                userRegFormGroup.get('username')?.errors?.['required']"
-            > Username is required.</span>
-        </mat-error>
-    </mat-form-field>
-
-    <!-- Phone Number Section -->
-    <mat-form-field
-        [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
-        [floatLabel]="userRegFormGroup.value.floatLabel"
-        class="col-span-1"
-    >
-        <input matInput placeholder="Phone number" required formControlName="phoneNumber" type="tel">
-        <mat-hint>Phone number format - +9471****578</mat-hint>
-        <mat-error *ngIf="userRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.</mat-error>
-        <mat-error *ngIf="userRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone number.</mat-error>
-    </mat-form-field>
-    
-    <!-- Password Section -->
-    <mat-form-field
-        [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
-        [floatLabel]="userRegFormGroup.value.floatLabel"
-        class="col-span-1 mb-4"
-    >
-        <input matInput placeholder="Password" required formControlName="password" type="password">
-        <mat-hint>Password should consist of minimum 8 length, special character, lowercase, uppercase and numbers</mat-hint>
-        <mat-error *ngIf="userRegFormGroup.get('password')?.hasError('required')">
-            Password is required.
-        </mat-error>
-        <mat-error *ngIf="userRegFormGroup.get('password')?.hasError('minlength')">
-            Password should be minimum 8 characters long.
-        </mat-error>
-        <mat-error *ngIf="userRegFormGroup.get('password')?.hasError('invalidPassword')">
-            Password should contain at least one special character, one lowercase letter, one uppercase letter, and one number.
-        </mat-error>
-    </mat-form-field>
-
-    <!-- Password Confirmation -->
-    <mat-form-field
-        [hideRequiredMarker]="userRegFormGroup.value.hideRequired"
-        [floatLabel]="userRegFormGroup.value.floatLabel"
-        class="col-span-1 mb-4"
-    >
-        <input matInput placeholder="Confirm password" required formControlName="passwordConfirmation" type="password">
-        <mat-error *ngIf="userRegFormGroup.get('passwordConfirmation')?.hasError('required')">
-            Confirm password is required.
-        </mat-error>
-        <mat-error *ngIf="userRegFormGroup.get('passwordConfirmation')?.hasError('passwordMismatch')">
-            Passwords do not match.
-        </mat-error>
-    </mat-form-field>
-
     <!-- Register Section -->
     <div class="col-span-full align-middle justify-center grid grid-rows-2 gap-1">
         <button 
