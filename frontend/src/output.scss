@@ -569,12 +569,16 @@ video {
   }
 }
 
-.col-span-2 {
-  grid-column: span 2 / span 2;
-}
-
 .col-span-1 {
   grid-column: span 1 / span 1;
+}
+
+.col-span-full {
+  grid-column: 1 / -1;
+}
+
+.row-span-1 {
+  grid-row: span 1 / span 1;
 }
 
 .m-4 {
@@ -583,6 +587,18 @@ video {
 
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
 }
 
 .ml-4 {
@@ -605,14 +621,6 @@ video {
   margin-top: 2rem;
 }
 
-.ml-2 {
-  margin-left: 0.5rem;
-}
-
-.mr-4 {
-  margin-right: 1rem;
-}
-
 .block {
   display: block;
 }
@@ -623,6 +631,14 @@ video {
 
 .grid {
   display: grid;
+}
+
+.hidden {
+  display: none;
+}
+
+.h-16 {
+  height: 4rem;
 }
 
 .h-4\/6 {
@@ -637,8 +653,16 @@ video {
   height: 100%;
 }
 
+.w-16 {
+  width: 4rem;
+}
+
 .w-2\/12 {
   width: 16.666667%;
+}
+
+.w-24 {
+  width: 6rem;
 }
 
 .w-4\/12 {
@@ -649,20 +673,24 @@ video {
   width: 66.666667%;
 }
 
+.w-auto {
+  width: auto;
+}
+
 .w-full {
   width: 100%;
 }
 
-.w-max {
-  width: max-content;
-}
-
-.w-1\/2 {
-  width: 50%;
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-rows-2 {
+  grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -681,6 +709,54 @@ video {
   justify-content: flex-start;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
+.gap-0 {
+  gap: 0px;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-10 {
+  gap: 2.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-x-8 {
+  column-gap: 2rem;
+}
+
+.gap-y-3 {
+  row-gap: 0.75rem;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
 .border-2 {
   border-width: 2px;
 }
@@ -689,9 +765,29 @@ video {
   border-style: none;
 }
 
+.border-primary {
+  --tw-border-opacity: 1;
+  border-color: rgb(115 156 120 / var(--tw-border-opacity));
+}
+
+.bg-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(115 156 120 / var(--tw-bg-opacity));
+}
+
 .bg-secondary-background {
   --tw-bg-opacity: 1;
   background-color: rgb(249 247 247 / var(--tw-bg-opacity));
+}
+
+.bg-warn {
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .object-contain {
@@ -710,16 +806,72 @@ video {
   object-position: left top;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .pl-1 {
   padding-left: 0.25rem;
 }
 
-.pl-4 {
-  padding-left: 1rem;
+.pt-2 {
+  padding-top: 0.5rem;
 }
 
 .align-middle {
   vertical-align: middle;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.text-primary {
+  --tw-text-opacity: 1;
+  color: rgb(115 156 120 / var(--tw-text-opacity));
+}
+
+.text-text-color {
+  --tw-text-opacity: 1;
+  color: rgb(11 14 12 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.opacity-40 {
+  opacity: 0.4;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 /* You can add global styles to this file, and also import other style files */
@@ -731,6 +883,8 @@ $background: #f1f6f1;
 $secondary-background: #fefefe;
 
 $primary: #30BE76;
+
+$warn: #B91C1C;
 
 $secondary: #30BE76;
 

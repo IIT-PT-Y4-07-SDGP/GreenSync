@@ -23,6 +23,10 @@ const eventsSchemma = new schema({
         type: ObjectId  ,
         required: false
     }],
+    eventDescription: {
+        type: String,
+        required: true
+    },
     eventStatus: {
         type: String,
         default: 'Not Started',
