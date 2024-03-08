@@ -20,14 +20,13 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     RegistrationPageComponent,
     UserRegistrationComponent,
-    PrcRegistrationComponent
+    PrcRegistrationComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,

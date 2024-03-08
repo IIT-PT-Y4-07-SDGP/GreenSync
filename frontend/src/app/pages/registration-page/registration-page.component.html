@@ -6,7 +6,7 @@
     <div class="flex items-center">
         <span class="flex flex-row mb-1 mr-2">Account type :</span>
         <mat-form-field>
-            <mat-select [(ngModel)]="userRegistrationType" value="userRegistration" class="pl-1 border-none">
+            <mat-select [(ngModel)]="this.userRegistrationType" value="userRegistration" class="pl-1 border-none">
                 <mat-option value="userRegistration">User registration</mat-option>
                 <mat-option value="prcRegistration">Private recycling center</mat-option>
                 <mat-option value="mcRegistration">Municipal council</mat-option>
@@ -22,10 +22,10 @@
         <div class="block items-center w-8/12 h-full bg-secondary-background overflow-auto">
             <!-- Calling the appropriate component -->
             <div class="w-auto m-4 px-5">
-                <div *ngIf="userRegistrationType === 'userRegistration'" class="items-center">
+                <div *ngIf="this.userRegistrationType === 'userRegistration'" class="items-center">
                     <app-user-registration></app-user-registration>
                 </div>
-                <div *ngIf="userRegistrationType === 'prcRegistration'">
+                <div *ngIf="this.userRegistrationType === 'prcRegistration'">
                     <app-prc-registration></app-prc-registration>
                 </div>
             </div>
