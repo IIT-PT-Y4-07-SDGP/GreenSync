@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationPageComponent implements OnInit {
   
-  userRegistrationType: string = "userRegistration";
+  public userRegistrationType: string = "userRegistration";
   
   constructor() { }
 

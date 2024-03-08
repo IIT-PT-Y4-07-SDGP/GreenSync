@@ -26,6 +26,7 @@ import { OrganizeEventComponent } from './components/events/organize-event/organ
     RegistrationPageComponent,
     UserRegistrationComponent,
     PrcRegistrationComponent,
+    PrcRegistrationComponent,
     EventsPageComponent,
     OrganizeEventComponent
   ],
@@ -34,7 +35,6 @@ import { OrganizeEventComponent } from './components/events/organize-event/organ
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
