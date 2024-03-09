@@ -20,6 +20,7 @@ import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-
 import { EventsPageComponent } from './pages/events-page/events-page.component';
 import { OrganizeEventComponent } from './components/events/organize-event/organize-event.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
     EventsPageComponent,
     OrganizeEventComponent,
     LandingPageComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
