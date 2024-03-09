@@ -29,7 +29,7 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
     PrcRegistrationComponent,
     PrcRegistrationComponent,
     EventsPageComponent,
-    OrganizeEventComponent
+    OrganizeEventComponent,
     LandingPageComponent,
   ],
   imports: [
