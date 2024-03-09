@@ -2,15 +2,14 @@
 const CommonService = require("./commonService");
 const mongoose = require("mongoose");
 const common = new CommonService();
-const MCModal = require("../models/MCModel");
+const MCModel = require("../models/MCModel");
 const accountModel = require("../models/accountModel");
 
 class MCService {
     async MCRegister(MCDetails){
         // Validate password
-        let hashedPassword;
         if (common.isPasswordValid(MCDetails.account.password)) {
-            hashedPassword = await common.hashPassword(MCDetails.account.password)
+            MCDetails.account.password = await common.hashPassword(MCDetails.account.password)
         } else {
             throw new Error("Invalid password. Please ensure it meets the requirements.")
         } 
@@ -22,7 +21,6 @@ class MCService {
         const phoneNumber = common.validatePhoneNumber(MCDetails.account.phoneNumber);
         if(!phoneNumber.isValid) throw new Error("Invalid phone number. Please enter valid phone number");
 
-        MCDetails.account.password = hashedPassword;
         let session;
         let account
         try{
@@ -47,7 +45,7 @@ class MCService {
             }
             
             try{
-                await MCModal.create(
+                await MCModel.create(
                     [{  
                         MCName: MCDetails.MCName,
                         District: MCDetails.District, 
@@ -58,13 +56,13 @@ class MCService {
                     );
                     await session.commitTransaction();
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                     await session.abortTransaction();
                     throw new Error("Error occurred when uploading user data to database");
                 }
                 
             } catch (error){
-                console.log(error);
+                console.error(error);
             } finally {
                 if (session) {
                     session.endSession();
