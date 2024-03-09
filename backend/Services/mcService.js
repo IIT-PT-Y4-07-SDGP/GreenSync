@@ -59,14 +59,12 @@ class MCService {
                     console.error(error);
                     await session.abortTransaction();
                     throw new Error("Error occurred when uploading user data to database");
-                }
+                }S
                 
             } catch (error){
                 console.error(error);
             } finally {
-                if (session) {
-                    session.endSession();
-            }
+                if (session) { session.endSession(); }
         }
         return account
     }

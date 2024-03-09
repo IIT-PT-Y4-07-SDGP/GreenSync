@@ -15,6 +15,16 @@ class EventsController{
             res.status(400).json({error:error.message})
         }
     }
+
+    async getEvents(_, res) {
+        try {
+            const newEvents = await events.getEventsList();
+            res.status(200).json(newEvents);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
 }
 
 // Export the controller
