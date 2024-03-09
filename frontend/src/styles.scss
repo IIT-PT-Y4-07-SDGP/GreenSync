@@ -9,11 +9,22 @@ $primary: #30BE76;
 $secondary: #30BE76;
 $accent: #5ece52;
 
-html, body { height: 100%; }
+html, body { 
+    height: 100%; 
+    overflow: hidden;   
+    margin: 0;
+}
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
     background-color: $background;
 }
 
+@font-face {
+    font-family: 'proda-sans';
+    src: url('./app/assets/font/Proda-Sans-Light.otf') format('truetype');
+}
 
+.custom-font {
+    font-family: 'proda-sans', sans-serif;
+}
