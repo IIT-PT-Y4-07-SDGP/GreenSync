@@ -7,9 +7,8 @@ const common = new CommonService();
 
 class UserService {
     async userRegister(userDetails){
-        let hashedPassword;
         if (common.isPasswordValid(userDetails.account.password)) {
-           hashedPassword = await common.hashPassword(userDetails.account.password);
+            userDetails.account.password = await common.hashPassword(userDetails.account.password);
         } else {
             throw new Error("Invalid password. Please ensure it meets the requirements.")
         } 
@@ -21,7 +20,7 @@ class UserService {
         const phoneNumber = common.validatePhoneNumber(userDetails.account.phoneNumber);
         if(!phoneNumber.isValid) throw new Error("Invalid phone number. Please enter valid phone number");
 
-        userDetails.account.password = hashedPassword;
+        // updating the data to database
         let session;
         let account
         try{
@@ -45,29 +44,27 @@ class UserService {
                 throw new Error('Error occurred when creating account');
             }
             
-            try{
+            try {
                 await userModel.create(
                     [{  
                         firstName: userDetails.firstName,
                         lastName: userDetails.lastName,
                         profilePic: "Default", // Passing the values from frontend.. It is required to save the profile picture in server and pass the path in the db
+                        address: userDetails.address,
                         account: account[0]._id
                     }], { session }
                     );
                     await session.commitTransaction();
-                    console.log(account);
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                     await session.abortTransaction();
                     throw new Error("Error occurred when uploading user data to database");
-                }
-                
-            } catch (error){
-                console.log(error);
-            } finally {
-                if (session) {
-                    session.endSession();
             }
+                
+        } catch (error){
+            console.error(error);
+        } finally {
+            if (session) { session.endSession(); }
         }
         return account
     }
