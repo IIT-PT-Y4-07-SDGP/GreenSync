@@ -10,6 +10,7 @@ const config = require("./configuration/config");
 const userRoute = require("./routes/user");
 const prcRoute = require("./routes/prc")
 const eventsRoute = require("./routes/events");
+const mcRoute = require("./routes/mc")
 
 // Initiating Express
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 // Main route and the sub routes 
 app.use("/user", userRoute);
 app.use("/prc", prcRoute);
+app.use("/mc", mcRoute);
 app.use(express.urlencoded({ extended: true }));
 app.use("/events", eventsRoute);
 
