@@ -60,7 +60,6 @@ export class PrcRegistrationComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         response => {
-          console.log('Response from backend:', response);
           alert("Registration is successful");
         },
         error => {
@@ -73,7 +72,6 @@ export class PrcRegistrationComponent implements OnInit {
     
   private sendFormData(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    console.log(data);
     return this.http.post<any>('http://localhost:5001/prc/registration', data, { headers: headers });
   }
 }

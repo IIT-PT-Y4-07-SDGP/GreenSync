@@ -19,6 +19,7 @@ import { UserRegistrationComponent } from './components/user-registration/user-r
 import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-registration.component';
 import { EventsPageComponent } from './pages/events-page/events-page.component';
 import { OrganizeEventComponent } from './components/events/organize-event/organize-event.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { McRegistrationComponent } from './components/mc/mc-registration/mc-registration.component';
 
 @NgModule({
@@ -29,6 +30,8 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
     PrcRegistrationComponent,
     PrcRegistrationComponent,
     EventsPageComponent,
+    OrganizeEventComponent,
+    LandingPageComponent,
     OrganizeEventComponent,
     McRegistrationComponent
   ],
