@@ -21,6 +21,7 @@ import { EventsPageComponent } from './pages/events-page/events-page.component';
 import { OrganizeEventComponent } from './components/events/organize-event/organize-event.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { McRegistrationComponent } from './components/mc/mc-registration/mc-registration.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,8 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     OrganizeEventComponent,
     LandingPageComponent,
     LoginPageComponent,
+    OrganizeEventComponent,
+    McRegistrationComponent
   ],
   imports: [
     BrowserModule,

@@ -34,6 +34,7 @@ export class UserRegistrationComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\+\d{11}$/)]],
+      address: ['', [Validators.required]],
       password: ['', [Validators.required, passwordValidator()]],
       passwordConfirmation: ['', [Validators.required, confirmPasswordValidator('password'), passwordValidator()]]
     })
@@ -93,6 +94,7 @@ export class UserRegistrationComponent implements OnInit {
         firstName: this.userRegFormGroup.value.firstName,
         lastName: this.userRegFormGroup.value.lastName,
         profilePic: this.profilePicture ? this.profilePicture : "Default",
+        address: this.userRegFormGroup.value.address,
         account: {
           username: this.userRegFormGroup.value.username,
           phoneNumber: this.userRegFormGroup.value.phoneNumber,
