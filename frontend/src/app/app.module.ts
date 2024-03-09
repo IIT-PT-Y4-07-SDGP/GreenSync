@@ -19,6 +19,7 @@ import { UserRegistrationComponent } from './components/user-registration/user-r
 import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-registration.component';
 import { EventsPageComponent } from './pages/events-page/events-page.component';
 import { OrganizeEventComponent } from './components/events/organize-event/organize-event.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { OrganizeEventComponent } from './components/events/organize-event/organ
     PrcRegistrationComponent,
     PrcRegistrationComponent,
     EventsPageComponent,
-    OrganizeEventComponent
+    OrganizeEventComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
