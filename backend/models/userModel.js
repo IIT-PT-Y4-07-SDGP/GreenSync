@@ -19,6 +19,10 @@ const generalUserSchema = new schema({
         type: String,
         required: false
     },
+    address: {
+        type: String,
+        required: true
+    },
     account: {
         type: schema.Types.ObjectId,
         ref: 'accountSchema',

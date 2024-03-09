@@ -21,10 +21,10 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 // Main route and the sub routes 
 app.use("/user", userRoute);
 app.use("/prc", prcRoute);
-app.use(express.urlencoded({ extended: true }));
 app.use("/events", eventsRoute);
 
 // Verifying the connection to database and starting the server 
