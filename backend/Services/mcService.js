@@ -59,7 +59,7 @@ class MCService {
                     console.error(error);
                     await session.abortTransaction();
                     throw new Error("Error occurred when uploading user data to database");
-                }S
+                }
                 
             } catch (error){
                 console.error(error);
