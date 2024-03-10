@@ -53,14 +53,16 @@ class UserService {
                         address: userDetails.address,
                         account: account[0]._id
                     }], { session }
-                    );
-                    await session.commitTransaction();
-                } catch (error) {
-                    console.error(error);
-                    await session.abortTransaction();
-                    throw new Error("Error occurred when uploading user data to database");
-            }
+                );
                 
+                await session.commitTransaction();
+                
+            } catch (error) {
+                console.error(error);
+                await session.abortTransaction();
+                throw new Error("Error occurred when uploading user data to database");
+            }
+
         } catch (error){
             console.error(error);
         } finally {
