@@ -28,6 +28,7 @@ app.use("/user", userRoute);
 app.use("/prc", prcRoute);
 app.use("/mc", mcRoute);
 app.use("/events", eventsRoute);
+app.use("/api/events", eventsRoute);
 
 // Verifying the connection to database and starting the server 
 mongoose

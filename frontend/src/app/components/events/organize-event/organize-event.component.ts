@@ -62,6 +62,7 @@ export class OrganizeEventComponent implements OnInit {
         response => {
           console.log('Response from backend:', response);
           alert("Event Created Successfully");
+          this.dialogRef.close();
         },
         error => {
           alert(error.error.error);

@@ -64,9 +64,7 @@ class MCService {
             } catch (error){
                 console.error(error);
             } finally {
-                if (session) {
-                    session.endSession();
-            }
+                if (session) { session.endSession(); }
         }
         return account
     }
