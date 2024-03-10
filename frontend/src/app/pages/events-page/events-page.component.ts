@@ -30,6 +30,19 @@ export class EventsPageComponent implements OnInit {
   public events: Event[] = [];
   constructor(public dialog: MatDialog, private http: HttpClient, private datePipe: DatePipe) { }
 
+  public imagePaths: string[] = [
+    'app/assets/event-list-img-1.jpg',
+    'app/assets/event-list-img-2.jpg',
+    'app/assets/event-list-img-3.jpg',
+    'app/assets/event-list-img-4.jpg',
+    'app/assets/event-list-img-5.jpg',
+    'app/assets/event-list-img-6.jpg',
+    'app/assets/event-list-img-7.jpg',
+    'app/assets/event-list-img-8.jpg',
+    'app/assets/event-list-img-9.jpg',
+    'app/assets/event-list-img-10.jpg',
+  ];
+
   ngOnInit(): void {
     this.fetchEvents();
   }
@@ -97,18 +110,19 @@ export class EventsPageComponent implements OnInit {
     });
   }
 
-  onCardClick() {
+  onCardClick(event: Event, index: number) {
     this.isViewEventCompVisible = !this.isViewEventCompVisible;
     if (this.isViewEventCompVisible) {
-    this.openViewEventDialog();
+    this.openViewEventDialog(event, index);
 
   }
 }
 
-  openViewEventDialog(){
+  openViewEventDialog(selectedEvent: Event, index: number){
     const dialogRef = this.dialog.open(ViewEventComponent, {
       height: '700px',
-      width: '1000px',    
+      width: '1000px', 
+      data: { event: selectedEvent, imagePath: this.imagePaths }   
   });
   dialogRef.afterClosed().subscribe(result => {
       this.isViewEventCompVisible = false;

@@ -1,1 +1,9 @@
-<p>view-event works!</p>
+<!-- view-event.component.html -->
+<div class="view-event-dialog">
+  <h1 class="text-primary font-extrabold" style="font-size: 35px;">{{ event.eventName }}</h1>
+  <p>Date: {{ formatDate(event.eventTime) }}</p>
+  <p>Time: {{ formatTime(event.eventTime) }}</p>
+  <p>Location: {{ event.eventLocation }}</p>
+  <p>Description: {{ event.eventDescription }}</p>
+  <!-- Add other event details as needed -->
+</div>
