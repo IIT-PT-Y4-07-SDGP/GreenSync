@@ -14,7 +14,7 @@ class UserController{
             // get JWT token 
             
             // append it to user account object
-            return res.status(200).json({token:token});
+            return res.status(200).json({newUserAccount});
         }
         catch(error){
             res.status(400).json({error:error.message})
