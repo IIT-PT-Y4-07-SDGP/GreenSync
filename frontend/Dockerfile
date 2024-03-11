@@ -11,4 +11,5 @@ RUN ng build --prod
 
 # Stage 2: Create a minimal Nginx image to serve the Angular app
 FROM nginxinc/nginx-unprivileged:latest
+USER 101
 COPY --from=builder /app/dist/* /usr/share/nginx/html/
