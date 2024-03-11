@@ -28,7 +28,10 @@ const accountSchema = new schema({
     accountStatus:{
         type: String,
         required: true
-    }
+    },
+    refreshToken:{
+        type:[String]
+    },
 }, { timestamps: true })
 
 module.exports = mongoose.model('accounts', accountSchema);

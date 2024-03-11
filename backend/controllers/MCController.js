@@ -1,19 +1,16 @@
 // Importing the service class
 const MCService = require("../services/MCService");
-const AuthService = require("../Services/authService");
-// creating instances for service class
-const mc = new MCService();
-const authService = new AuthService();
+// const AuthService = require("../Services/authService");
 
 class MCController{
     // mc Registration
-    async MCRegistration (req,res) {
+    static async MCRegistration (req,res) {
         try{
             // Validate the mc data and add mc to database
-            const newMC = await mc.MCRegister(req.body);
+            const newMC = await MCService.MCRegister(req.body);
             // get JWT token and
-            const token = authService.generateJWTToken(newMC.username, newMC.userRole);
-            return res.status(200).json({token:token});
+            // const token = AuthService.generateJWTToken(newMC.username, newMC.userRole);
+            return res.status(200).json({newMC});
         }
         catch(error){
             console.log(error);

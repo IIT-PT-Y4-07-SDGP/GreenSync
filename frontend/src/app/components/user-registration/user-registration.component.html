@@ -1,7 +1,6 @@
 <form 
     [formGroup]="userRegFormGroup" 
     (ngSubmit)="onRegister()" 
-    action="" 
     class="grid grid-cols-2 gap-x-8 gap-y-3"
 >
             <!-- Profile Picture Section -->
@@ -178,7 +177,7 @@
         <!-- Already have an account -->
         <div class="flex flex-row row-span-1 text-xs">
             <span>Already have an account? 
-                <a href="http://localhost:4200/registration" class="text-primary"> login page </a>
+                <a routerLink="/login-page" class="text-primary"> login page </a>
             </span>
         </div>
     </div>

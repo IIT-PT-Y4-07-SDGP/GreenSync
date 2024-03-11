@@ -6,7 +6,7 @@ const MCModel = require("../models/MCModel");
 const accountModel = require("../models/accountModel");
 
 class MCService {
-    async MCRegister(MCDetails){
+    static async MCRegister(MCDetails){
         // Validate password
         if (common.isPasswordValid(MCDetails.account.password)) {
             MCDetails.account.password = await common.hashPassword(MCDetails.account.password)
