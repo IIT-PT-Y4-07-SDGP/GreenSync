@@ -1,6 +1,6 @@
 # Stage 1: App Build
 FROM node:16.10.0 as builder
-USER 10001
+ENV USER=10014
 WORKDIR /app
 COPY package*.json ./
 RUN npm install -g @angular/cli
@@ -10,7 +10,7 @@ RUN ng build --prod
 
 # Stage 2: Create a minimal Nginx image to serve the Angular app
 FROM nginx:alpine
-USER 10001
+ENV USER=10014
 COPY --from=builder /app/dist/* /usr/share/nginx/html/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
