@@ -24,6 +24,8 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { McRegistrationComponent } from './components/mc/mc-registration/mc-registration.component';
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { ViewEventComponent } from './components/events/view-event/view-event.co
     HttpClientModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCardModule,
+    MatButtonModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
