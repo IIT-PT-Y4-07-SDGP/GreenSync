@@ -13,7 +13,7 @@ class PRCController{
             const newPRC = await prc.PRCRegister(req.body);
             // get JWT token and
             const token = authService.generateJWTToken(newPRC.username, newPRC.userRole);
-            return res.status(200).json({token:token});
+            return res.status(200).json({newPRC});
         }
         catch(error){
             res.status(400).json({error:error.message})
