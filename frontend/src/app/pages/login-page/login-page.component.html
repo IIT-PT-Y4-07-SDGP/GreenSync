@@ -1,0 +1,92 @@
+<div class="flex w-full">
+    <div class="block container object-none object-left-top w-2/12 h-2/12 ml-4 mt-2">
+        <img src="app/assets/greensync-logo.png" alt="Logo" class="object-contain">
+    </div>
+</div>
+
+<div class="flex justify-center items-center h-5/6">
+    <div class="flex w-1/3 shadow-2xl h-auto bg-white items-center justify-center rounded-2xl">
+        <div class="w-full">
+            <mat-card class="">
+                <mat-card-header class="justify-center py-5">
+                    <mat-card-title>Login</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form 
+                        [formGroup]="loginFormGroup" 
+                        (ngSubmit)="validateCredential()"
+                        class="space-y-6"
+                    >
+                        <div>
+                            <mat-form-field 
+                                appearance="fill" 
+                                class="w-full" 
+                                [hideRequiredMarker]="loginFormGroup.value.hideRequired"
+                                [floatLabel]="loginFormGroup.value.floatLabel"
+                            >
+                                <mat-label>Email/Username</mat-label>
+                                <input 
+                                    matInput 
+                                    type="text" 
+                                    placeholder="Enter your email or username" 
+                                    required 
+                                    formControlName="userIdentity"
+                                >
+                                <mat-error 
+                                    *ngIf="loginFormGroup.get('userIdentity')?.invalid && 
+                                    (loginFormGroup.get('userIdentity')?.dirty || loginFormGroup.get('userIdentity')?.touched)"
+                                >
+                                    <span 
+                                        *ngIf="loginFormGroup.get('userIdentity')?.errors && 
+                                        loginFormGroup.get('userIdentity')?.errors?.['required']"
+                                    > Username or email required.</span>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field 
+                                appearance="fill" 
+                                class="w-full"
+                                [hideRequiredMarker]="loginFormGroup.value.hideRequired"
+                                [floatLabel]="loginFormGroup.value.floatLabel"                            
+                            >
+                                <mat-label>Password</mat-label>
+                                <input 
+                                    matInput 
+                                    type="password" 
+                                    placeholder="Enter your password"
+                                    required
+                                    formControlName="password"
+                                >
+                                <mat-error 
+                                    *ngIf="loginFormGroup.get('password')?.invalid && 
+                                    (loginFormGroup.get('password')?.dirty || loginFormGroup.get('password')?.touched)"
+                                >
+                                    <span 
+                                        *ngIf="loginFormGroup.get('password')?.errors && 
+                                        loginFormGroup.get('password')?.errors?.['required']"
+                                    > Password required.</span>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <button 
+                                type="submit" 
+                                mat-raised-button 
+                                [class.opacity-50]="!this.loginFormGroup.valid"
+                                [disabled]="!this.loginFormGroup.valid"     
+                                class="w-full bg-primary font-bold text-white tracking-widest"
+                            >
+                                Login
+                            </button>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-sm text-text-color">Don't have an account?</span>
+                            <a routerLink="/registration" class="text-primary">Sign up here</a>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

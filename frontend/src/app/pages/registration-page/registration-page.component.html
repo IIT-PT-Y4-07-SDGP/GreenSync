@@ -1,0 +1,38 @@
+<div class="block container object-none object-left-top w-2/12 h-2/12 ml-4 mt-2">
+    <img src="app/assets/greensync-logo.png" alt="Logo" class="object-contain">
+</div>
+
+<div class="flex justify-start items-center h-5/6 flex-col mt-8">
+    <div class="flex items-center">
+        <span class="flex flex-row mb-1 mr-2">Account type :</span>
+        <mat-form-field>
+            <mat-select [(ngModel)]="this.userRegistrationType" value="userRegistration" class="pl-1 border-none">
+                <mat-option value="userRegistration">User registration</mat-option>
+                <mat-option value="prcRegistration">Private recycling center</mat-option>
+                <mat-option value="mcRegistration">Municipal council</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="flex flex-row container border-2 w-8/12 h-4/6 align-middle justify-start mt-4">
+        <div class="flex w-4/12 h-full justify-start">
+            <div class="container w-full h-full flex flex-col">
+                <img src="app/assets/signup-page.png" alt="Signup page picture" class="h-full w-full object-cover" />
+            </div>
+        </div>
+        <div class="block items-center w-8/12 h-full bg-secondary-background overflow-auto">
+            <!-- Calling the appropriate component -->
+            <div class="w-auto m-4 px-5">
+                <div *ngIf="this.userRegistrationType === 'userRegistration'" class="items-center">
+                    <app-user-registration></app-user-registration>
+                </div>
+                <div *ngIf="this.userRegistrationType === 'prcRegistration'">
+                    <app-prc-registration></app-prc-registration>
+                </div>
+                <div *ngIf="this.userRegistrationType === 'mcRegistration'">
+                    <app-mc-registration></app-mc-registration>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

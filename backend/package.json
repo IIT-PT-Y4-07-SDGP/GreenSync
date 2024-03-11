@@ -1,13 +1,28 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "./src/index.js",
-  "description": "backend application for greensync",
   "main": "index.js",
+  "description": "backend application for greensync",
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.4",
+    "email-validator": "^2.0.4",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.2",
+    "nodemon": "^3.0.3",
+    "path": "^0.12.7",
+    "phone": "^3.1.42"
+  }
 }
