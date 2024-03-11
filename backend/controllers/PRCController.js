@@ -7,7 +7,7 @@ const authService = new AuthService();
 
 class PRCController{
     // prc Registration
-    async PRCRegistration (req,res) {
+    static async PRCRegistration (req,res) {
         try{
             // Validate the prc data and add prc to database
             const newPRC = await prc.PRCRegister(req.body);
