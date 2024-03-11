@@ -30,6 +30,15 @@ class EventsService {
             throw new Error('User not exist in the database:', error); // Handle the error accordingly
         }
     }
+
+    async getEventsList() {
+        try {
+            const eventsList = await eventsModel.find();
+            return eventsList;
+        } catch (error) {
+            throw new Error(`Error fetching events from the database: ${error.message}`);
+        }
+    }
 }
 
 module.exports = EventsService

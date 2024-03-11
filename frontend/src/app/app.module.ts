@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
 import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
 import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-registration.component';
@@ -22,6 +23,7 @@ import { OrganizeEventComponent } from './components/events/organize-event/organ
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { McRegistrationComponent } from './components/mc/mc-registration/mc-registration.component';
+import { ViewEventComponent } from './components/events/view-event/view-event.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
     LandingPageComponent,
     LoginPageComponent,
     OrganizeEventComponent,
-    McRegistrationComponent
+    McRegistrationComponent,
+    ViewEventComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,7 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
     MatDatepickerModule,
     MatNativeDateModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

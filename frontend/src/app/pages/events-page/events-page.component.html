@@ -1,1 +1,40 @@
-<button class="bg-primary" (click)="onClickOrganizeEvents()">Organize Event</button>
+<div class="block container object-none object-left-top w-2/12 h-2/12 ml-4 mt-2">
+    <img src="app/assets/greensync-logo.png" alt="Logo" class="object-contain">
+</div>
+
+<div class="container mx-auto flex justify-end">    
+    <div class="col-span-1 align-middle justify-end grid grid-rows-2 gap-1 mr-4">
+        <button class="bg-primary px-1 py-1 rounded text-white row-span-1" (click)="onClickViewMyEvents()">My Events</button>
+    </div>
+    <div class="col-span-1 align-middle justify-end grid grid-rows-2 gap-1 mr-4">
+        <button class="bg-primary px-1 py-1 rounded text-white row-span-1" (click)="onClickOrganizeEvents()">Organize Event</button>
+    </div>
+</div>
+
+<div class="w-full h-screen" style="max-height: 550px; overflow-y: auto;">
+    <div class="block mt-4 mx-auto w-9/12">
+        <div class="card-deck">
+            <div class="card my-6 h-20 bg-gray-200 rounded-xl shadow-xl hover:scale-110 transition-transform duration-200" *ngFor="let event of events; let i = index" (click)="onCardClick(event, i)">
+                <div class="card-body">
+                    <div class="ml-4">
+                        <div class="flex h-20">
+                            <div class="w-3/5">
+                                <div class="grid grid-rows-2">
+                                    <h1 class=" text-primary custom-font font-extrabold row-span-1">{{ event.eventName }}</h1>
+                                    <div class="row-span-1 flex justify-between mr-4 text-xl">
+                                        <p class="">Date: {{ formatDate(event.eventTime) }}</p>
+                                        <p class="">Time: {{ formatTime(event.eventTime) }}</p>
+                                        <p class="">Location: {{ event.eventLocation }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-2/5 rounded-r-xl flex container">
+                                <img [src]="imagePaths[i % imagePaths.length]" alt="Event Image" class="object-cover col-span-2 h-full w-full rounded-r-xl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
