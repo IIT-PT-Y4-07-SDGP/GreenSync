@@ -3,9 +3,9 @@ const AuthService = require("../Services/authService");
 class AuthController {
   static async login(req, res) {
     try {
-      const { email, password } = req.body;
+      const { userIdentity, password } = req.body;
       const cookies = req.cookies;
-      const response = await AuthService.login(email, password, cookies, res);
+      const response = await AuthService.login(userIdentity, password, cookies, res);
       res.cookie("jwt", response.newRefreshToken, {
         httpOnly: true,
         secure: true,

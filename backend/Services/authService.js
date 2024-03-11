@@ -4,13 +4,13 @@ const bcrypt = require("bcryptjs");
 const config = require("../configuration/config");
 
 class AuthService {
-    static async login(email, password, cookies, res) {
+    static async login(userIdentity, password, cookies, res) {
         try {
-            if (!email || !password) {
+            if (!userIdentity || !password) {
                 throw new Error("Missing Credentials");
             }
 
-            const account = await accountModel.findOne({ email });
+            const account = await accountModel.findOne({ email: userIdentity }) || await accountModel.findOne({ username: userIdentity });
             if (!account) {
                 throw new Error("User not found");
             }
