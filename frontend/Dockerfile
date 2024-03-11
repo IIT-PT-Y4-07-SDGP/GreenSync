@@ -4,7 +4,7 @@ RUN addgroup --gid 10014 choreo && \
     adduser  --disabled-password  --no-create-home --uid 10014 --ingroup choreo choreouser
 WORKDIR /app
 COPY package*.json ./
-RUN npm install -g @angular/cli@17.1.1
+RUN npm install -g @angular/cli@13.3.11
 RUN npm install
 COPY . .
 RUN ng build --prod
