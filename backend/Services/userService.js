@@ -2,8 +2,8 @@
 const userModel = require('../models/userModel');
 const accountModel = require("../models/accountModel");
 const mongoose = require("mongoose");
-const CommonService = require("./CommonService");
-const AuthService = require("./AuthService");
+const CommonService = require("./commonService");
+const AuthService = require("./authService");
 const common = new CommonService();
 
 class UserService {
