@@ -7,4 +7,4 @@ COPY package*.json ./
 RUN npm clean-install
 COPY . .
 EXPOSE 8081
-CMD [ "node", "server.js" ]
+CMD [ "node", "index.js"]
