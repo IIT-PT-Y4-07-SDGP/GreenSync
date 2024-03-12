@@ -1,5 +1,5 @@
 // Importing the service class
-const MCService = require("../services/MCService");
+const MCService = require("../services/mcService");
 // const AuthService = require("../Services/authService");
 
 class MCController{
