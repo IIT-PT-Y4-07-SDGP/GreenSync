@@ -7,7 +7,7 @@ const AuthService = require("./AuthService");
 const common = new CommonService();
 
 class UserService {
-    async userRegister(userDetails){
+    async userRegister(userDetails, res){
         if (common.isPasswordValid(userDetails.account.password)) {
             userDetails.account.password = await common.hashPassword(userDetails.account.password);
         } else {
@@ -76,6 +76,14 @@ class UserService {
         }
         generalUserDetails = generalUserDetails[0];
         account = account[0];
+
+        res.cookie("jwt", tokens.refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            maxAge: 24 * 60 * 60 * 1000,
+        });
+
         return {
             _id: generalUserDetails._id,
             firstName: generalUserDetails.firstName,

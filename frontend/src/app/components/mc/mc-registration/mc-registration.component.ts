@@ -70,7 +70,6 @@ export class McRegistrationComponent implements OnInit {
 
   private sendFormData(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    console.log(data);
     return this.http.post<any>('http://localhost:5001/mc/registration', data, { headers: headers });
   }
 }

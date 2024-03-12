@@ -7,7 +7,7 @@ const PRCModal = require("../models/PRCModel");
 const accountModel = require("../models/accountModel");
 
 class PRCService {
-    async PRCRegister(prcDetails){
+    async PRCRegister(prcDetails, res){
         // Validate password
         let hashedPassword;
         if (common.isPasswordValid(prcDetails.account.password)) {
@@ -81,6 +81,14 @@ class PRCService {
 
         PRC = PRC[0];
         account = account[0];
+
+        res.cookie("jwt", tokens.refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            maxAge: 24 * 60 * 60 * 1000,
+        });
+
         return {
             _id: PRC._id,
             PRCName: PRC.PRCName,
