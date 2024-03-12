@@ -11,10 +11,7 @@ class UserController{
         try{
             // Validate the user data and add ussr to database
             const newUserAccount = await user.userRegister(req.body);
-            // get JWT token 
-            
-            // append it to user account object
-            return res.status(200).json({token:token});
+            return res.status(200).json({newUserAccount});
         }
         catch(error){
             res.status(400).json({error:error.message})

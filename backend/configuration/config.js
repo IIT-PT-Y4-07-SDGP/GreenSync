@@ -7,8 +7,8 @@ const requiredVariables = [
     'MONGO_USERNAME', 
     'MONGO_PASSWORD',
     'MONGO_STRING',
-    'ACCESS_TOKEN',
-    'REFRESH_TOKEN'
+    'ACCESS_TOKEN_SECRET',
+    'REFRESH_TOKEN_SECRET'
 ];
 
 // Check if all required environment variables are defined and throws an error if there are missing values in the env file
@@ -22,8 +22,8 @@ const config = {
     MONGO_USERNAME: process.env.MONGO_USERNAME,
     MONGO_PASSWORD: process.env.MONGO_PASSWORD,
     MONGO_STRING: process.env.MONGO_STRING,
-    ACCESS_TOKEN: process.env.ACCESS_TOKEN,
-    REFRESH_TOKEN: process.env.REFRESH_TOKEN 
+    ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
+    REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET 
 }
 
 // generate mongoURI for database

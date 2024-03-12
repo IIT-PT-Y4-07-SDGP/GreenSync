@@ -20,22 +20,9 @@ class AuthService {
                 throw new Error("Incorrect Password");
             }
 
-            const accessToken = jwt.sign(
-                {
-                    UserInfo: {
-                        username: account.username,
-                        role: account.userRole,
-                    },
-                },
-                config.ACCESS_TOKEN,
-                { expiresIn: "20m" }
-            );
-
-            const newRefreshToken = jwt.sign(
-                { username: account.username },
-                config.REFRESH_TOKEN,
-                { expiresIn: "3d" }
-            );
+            const tokens = this.generateJWTToken(account.username,account.userRole);
+            const accessToken = tokens.accessToken;
+            const newRefreshToken = tokens.refreshToken;
 
             let newRefreshTokenArray = !cookies?.jwt
                 ? account.refreshToken
@@ -70,6 +57,27 @@ class AuthService {
         }
     }
 
+    static generateJWTToken(username, role){
+        let accessToken = jwt.sign(
+            {
+                UserInfo: {
+                    username: username,
+                    role: role,
+                },
+            },
+            config.ACCESS_TOKEN_SECRET,
+            { expiresIn: "20m" }
+        )
+
+        let refreshToken = jwt.sign(
+            { username: username },
+            config.REFRESH_TOKEN_SECRET,
+            { expiresIn: "3d" }
+        );
+
+        return {accessToken: accessToken, refreshToken: refreshToken}
+    }
+
 
     static async logout(cookies) {
         try {
@@ -101,7 +109,7 @@ class AuthService {
             const user = await accountModel.findOne({ refreshToken }).exec();
 
             if (!user) {
-                jwt.verify(refreshToken, config.REFRESH_TOKEN, async (err, decoded) => {
+                jwt.verify(refreshToken, config.REFRESH_TOKEN_SECRET, async (err, decoded) => {
                     if (err) {
                         throw new Error("Invalid or expired token");
                     }
@@ -118,7 +126,7 @@ class AuthService {
                 (rt) => rt !== refreshToken
             );
 
-            jwt.verify(refreshToken, config.REFRESH_TOKEN, async (err, decoded) => {
+            jwt.verify(refreshToken, config.REFRESH_TOKEN_SECRET, async (err, decoded) => {
                 if (err) {
                     user.refreshToken = [...newRefreshTokenArray];
                     await user.save();
@@ -134,13 +142,13 @@ class AuthService {
                             username: decoded.username,
                         },
                     },
-                    config.ACCESS_TOKEN,
+                    config.ACCESS_TOKEN_SECRET,
                     { expiresIn: "20m" }
                 );
 
                 const newRefreshToken = jwt.sign(
                     { username: user.username },
-                    config.REFRESH_TOKEN,
+                    config.REFRESH_TOKEN_SECRET,
                     { expiresIn: "3d" }
                 );
 

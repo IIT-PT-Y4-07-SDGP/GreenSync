@@ -8,7 +8,7 @@ const requireAuth = (req, res, next) => {
     console.log(token)
     jwt.verify(
         token,
-        config.ACCESS_TOKEN,
+        config.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             if (err) return res.sendStatus(403); //invalid token
             req.user = decoded.UserInfo.username;
