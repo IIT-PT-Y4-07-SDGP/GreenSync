@@ -1,6 +1,6 @@
 // Import necessary modules
-const CommonService = require("./CommonService");
-const AuthService = require("./AuthService");
+const CommonService = require("./commonService");
+const AuthService = require("./authService");
 const mongoose = require("mongoose");
 const common = new CommonService();
 const MCModel = require("../models/MCModel");
