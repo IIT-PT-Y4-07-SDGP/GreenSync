@@ -61,6 +61,7 @@ export class PrcRegistrationComponent implements OnInit {
       .subscribe(
         response => {
           alert("Registration is successful");
+          console.log(response);
         },
         error => {
           alert("Registration Failed :-(");

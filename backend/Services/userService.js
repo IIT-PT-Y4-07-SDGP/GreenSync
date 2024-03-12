@@ -2,7 +2,8 @@
 const userModel = require('../models/userModel');
 const accountModel = require("../models/accountModel");
 const mongoose = require("mongoose");
-const CommonService = require("./commonService");
+const CommonService = require("./CommonService");
+const AuthService = require("./AuthService");
 const common = new CommonService();
 
 class UserService {
@@ -22,7 +23,12 @@ class UserService {
 
         // updating the data to database
         let session;
-        let account
+        let account;
+        let generalUserDetails;
+
+        // Getting JWT Tokens
+        let tokens = AuthService.generateJWTToken(userDetails.account.username,userDetails.account.userRole)
+
         try{
             session = await mongoose.startSession();
             session.startTransaction();
@@ -35,7 +41,8 @@ class UserService {
                         userRole: userDetails.account.userRole,
                         email: userDetails.account.email,
                         password: userDetails.account.password,
-                        accountStatus: "ACTIVE"
+                        accountStatus: "ACTIVE",
+                        refreshToken:[tokens.refreshToken]
                     }], { session }
                 );
             } catch(error) {
@@ -45,7 +52,7 @@ class UserService {
             }
             
             try {
-                await userModel.create(
+                generalUserDetails = await userModel.create(
                     [{  
                         firstName: userDetails.firstName,
                         lastName: userDetails.lastName,
@@ -54,7 +61,6 @@ class UserService {
                         account: account[0]._id
                     }], { session }
                 );
-                
                 await session.commitTransaction();
                 
             } catch (error) {
@@ -68,7 +74,26 @@ class UserService {
         } finally {
             if (session) { session.endSession(); }
         }
-        return account
+        generalUserDetails = generalUserDetails[0];
+        account = account[0];
+        return {
+            _id: generalUserDetails._id,
+            firstName: generalUserDetails.firstName,
+            lastName: generalUserDetails.lastName,
+            points: generalUserDetails.points,
+            profilePic: generalUserDetails.profilePic,
+            address: generalUserDetails.address,
+            account: {
+                _id: account._id,
+                username: account.username,
+                phoneNumber: account.phoneNumber,
+                userRole: account.userRole,
+                email: account.email,
+                accountStatus: account.accountStatus,
+                refreshToken: account.refreshToken,
+                accessToken: tokens.accessToken
+            }
+        }
     }
 }
 

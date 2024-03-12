@@ -1,7 +1,8 @@
 // Import necessary modules
-const CommonService = require("./commonService");
+const CommonService = require("./CommonService");
 const mongoose = require("mongoose");
 const common = new CommonService();
+const AuthService = require("./AuthService");
 const PRCModal = require("../models/PRCModel");
 const accountModel = require("../models/accountModel");
 
@@ -24,7 +25,12 @@ class PRCService {
 
         prcDetails.account.password = hashedPassword;
         let session;
-        let account
+        let account;
+        let PRC;
+
+        // Getting JWT Tokens
+        let tokens = AuthService.generateJWTToken(prcDetails.account.username,prcDetails.account.userRole);
+
         try{
             session = await mongoose.startSession();
             session.startTransaction();
@@ -37,7 +43,8 @@ class PRCService {
                         userRole: prcDetails.account.userRole,
                         email: prcDetails.account.email,
                         password: prcDetails.account.password,
-                        accountStatus: "INACTIVE"
+                        accountStatus: "INACTIVE",
+                        refreshToken:[tokens.refreshToken]
                     }], { session }
                 );
             } catch(error) {
@@ -47,7 +54,7 @@ class PRCService {
             }
             
             try{
-                await PRCModal.create(
+                PRC = await PRCModal.create(
                     [{  
                         PRCName: prcDetails.PRCName,
                         PRCBusinessRegNumber: prcDetails.PRCBusinessRegNumber,
@@ -71,7 +78,27 @@ class PRCService {
                     session.endSession();
             }
         }
-        return account
+
+        PRC = PRC[0];
+        account = account[0];
+        return {
+            _id: PRC._id,
+            PRCName: PRC.PRCName,
+            PRCBusinessRegNumber: PRC.PRCBusinessRegNumber,
+            District: PRC.District, 
+            Address: PRC.Address,
+            PRCStatus: PRC.PRCStatus,
+            account:{
+                _id: account._id,
+                username: account.username,
+                phoneNumber: account.phoneNumber,
+                userRole: account.userRole,
+                email: account.email,
+                accountStatus: account.accountStatus,
+                refreshToken: account.refreshToken,
+                accessToken: tokens.accessToken
+            } 
+        }
     }
 }
 

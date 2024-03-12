@@ -1,5 +1,6 @@
 // Import necessary modules
-const CommonService = require("./commonService");
+const CommonService = require("./CommonService");
+const AuthService = require("./AuthService");
 const mongoose = require("mongoose");
 const common = new CommonService();
 const MCModel = require("../models/MCModel");
@@ -22,7 +23,12 @@ class MCService {
         if(!phoneNumber.isValid) throw new Error("Invalid phone number. Please enter valid phone number");
 
         let session;
-        let account
+        let account;
+        let MC;
+
+        // Getting JWT Tokens
+        let tokens = AuthService.generateJWTToken(MCDetails.account.username,MCDetails.account.userRole);
+
         try{
             session = await mongoose.startSession();
             session.startTransaction();
@@ -35,7 +41,8 @@ class MCService {
                         userRole: "MC-ADMIN",
                         email: MCDetails.account.email,
                         password: MCDetails.account.password,
-                        accountStatus: "INACTIVE"
+                        accountStatus: "INACTIVE",
+                        refreshToken:[tokens.refreshToken]
                     }], { session }
                 );
             } catch(error) {
@@ -45,7 +52,7 @@ class MCService {
             }
             
             try{
-                await MCModel.create(
+                MC = await MCModel.create(
                     [{  
                         MCName: MCDetails.MCName,
                         District: MCDetails.District, 
@@ -66,7 +73,26 @@ class MCService {
             } finally {
                 if (session) { session.endSession(); }
         }
-        return account
+
+        MC = MC[0];
+        account = account[0];
+        return {
+            _id: MC._id,
+            MCName: MC.MCName,
+            District: MC.District, 
+            Address: MC.Address,
+            MCStatus: MC.MCStatus,
+            account:{
+                _id: account._id,
+                username: account.username,
+                phoneNumber: account.phoneNumber,
+                userRole: account.userRole,
+                email: account.email,
+                accountStatus: account.accountStatus,
+                refreshToken: account.refreshToken,
+                accessToken: tokens.accessToken
+            }
+        }
     }
 }
 

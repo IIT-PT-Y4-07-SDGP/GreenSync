@@ -8,8 +8,6 @@ class MCController{
         try{
             // Validate the mc data and add mc to database
             const newMC = await MCService.MCRegister(req.body);
-            // get JWT token and
-            // const token = AuthService.generateJWTToken(newMC.username, newMC.userRole);
             return res.status(200).json({newMC});
         }
         catch(error){
