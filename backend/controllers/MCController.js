@@ -7,7 +7,7 @@ class MCController{
     static async MCRegistration (req,res) {
         try{
             // Validate the mc data and add mc to database
-            const newMC = await MCService.MCRegister(req.body);
+            const newMC = await MCService.MCRegister(req.body, res);
             return res.status(200).json({newMC});
         }
         catch(error){

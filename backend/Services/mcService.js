@@ -7,7 +7,7 @@ const MCModel = require("../models/MCModel");
 const accountModel = require("../models/accountModel");
 
 class MCService {
-    static async MCRegister(MCDetails){
+    static async MCRegister(MCDetails, res){
         // Validate password
         if (common.isPasswordValid(MCDetails.account.password)) {
             MCDetails.account.password = await common.hashPassword(MCDetails.account.password)
@@ -76,6 +76,14 @@ class MCService {
 
         MC = MC[0];
         account = account[0];
+
+        res.cookie("jwt", tokens.refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            maxAge: 24 * 60 * 60 * 1000,
+        });
+
         return {
             _id: MC._id,
             MCName: MC.MCName,

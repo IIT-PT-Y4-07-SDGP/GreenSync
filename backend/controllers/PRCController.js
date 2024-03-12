@@ -10,7 +10,7 @@ class PRCController{
     static async PRCRegistration (req,res) {
         try{
             // Validate the prc data and add prc to database
-            const newPRC = await prc.PRCRegister(req.body);
+            const newPRC = await prc.PRCRegister(req.body, res);
             return res.status(200).json({newPRC});
         }
         catch(error){
