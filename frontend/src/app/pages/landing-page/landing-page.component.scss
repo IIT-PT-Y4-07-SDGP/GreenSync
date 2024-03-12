@@ -1,0 +1,20 @@
+.container {
+  background-image: url("../../assets/img/GreenSync.jpg");
+  background-position: center center;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background-size: contain;
+}
+
+.mat-primary {
+  background-color: #1bc463;
+  color: white;
+}
+
+.btn-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

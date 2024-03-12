@@ -7,18 +7,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
 import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
 import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-registration.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationPageComponent,
     UserRegistrationComponent,
-    PrcRegistrationComponent
+    PrcRegistrationComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
