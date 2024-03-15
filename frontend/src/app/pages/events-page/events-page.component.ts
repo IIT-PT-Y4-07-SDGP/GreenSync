@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
 import { ViewEventComponent } from 'src/app/components/events/view-event/view-event.component';
+import { MyEventsComponent } from 'src/app/components/events/my-events/my-events.component';
 
 interface Event {
   _id: string;
@@ -25,8 +26,6 @@ interface Event {
   styleUrls: ['./events-page.component.scss']
 })
 export class EventsPageComponent implements OnInit {
-  public isOrganizeCompVisible: boolean = false;
-  public isViewEventCompVisible: boolean = false;
   public events: Event[] = [];
   constructor(public dialog: MatDialog, private http: HttpClient, private datePipe: DatePipe) { }
 
@@ -48,14 +47,11 @@ export class EventsPageComponent implements OnInit {
   }
 
   onClickOrganizeEvents(){
-    this.isOrganizeCompVisible = !this.isOrganizeCompVisible;
-    if (this.isOrganizeCompVisible) {
       this.openOrganizeEventDialog();
-    }
   }
 
   onClickViewMyEvents(){
-
+    this.openMyEventDialog();
   }
 
   openOrganizeEventDialog(): void {
@@ -66,7 +62,6 @@ export class EventsPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.isOrganizeCompVisible = false;
       this.ngOnInit();
       // Handle any data or actions after the dialog is closed
     });
@@ -88,7 +83,6 @@ export class EventsPageComponent implements OnInit {
         createdAt: event.createdAt,
         updatedAt: event.updatedAt,
         __v: event.__v
-        // ... add other properties as needed
       }));
     });
   }
@@ -111,11 +105,7 @@ export class EventsPageComponent implements OnInit {
   }
 
   onCardClick(event: Event, index: number) {
-    this.isViewEventCompVisible = !this.isViewEventCompVisible;
-    if (this.isViewEventCompVisible) {
     this.openViewEventDialog(event, index);
-
-  }
 }
 
   openViewEventDialog(selectedEvent: Event, index: number){
@@ -125,9 +115,21 @@ export class EventsPageComponent implements OnInit {
       data: { event: selectedEvent, imagePath: this.imagePaths }   
   });
   dialogRef.afterClosed().subscribe(result => {
-      this.isViewEventCompVisible = false;
       // Handle any data or actions after the dialog is closed
     });
 }
+
+openMyEventDialog(): void {
+    const dialogRef = this.dialog.open(MyEventsComponent, {
+      height: '600px',
+      width: '1000px', // Adjust the width as needed
+      // Add any other configuration options for your dialog
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+      // Handle any data or actions after the dialog is closed
+    });
+  }
 
 }
