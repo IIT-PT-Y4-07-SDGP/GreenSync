@@ -26,6 +26,7 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MyEventsComponent } from './components/events/my-events/my-events.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MatButtonModule } from '@angular/material/button';
     LoginPageComponent,
     OrganizeEventComponent,
     McRegistrationComponent,
-    ViewEventComponent
+    ViewEventComponent,
+    MyEventsComponent
   ],
   imports: [
     BrowserModule,
