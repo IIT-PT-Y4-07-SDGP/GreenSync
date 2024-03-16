@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const CommonService = require("./commonService");
 const AuthService = require("./authService");
 const common = new CommonService();
+const bcrypt = require('bcrypt');
 
 class UserService {
     async userRegister(userDetails, res){
@@ -103,6 +104,85 @@ class UserService {
             }
         }
     }
+
+       async updateUser(userId, userDetails) {
+        let session;
+        try {
+            session = await mongoose.startSession();
+            session.startTransaction();
+
+            // Update general user details
+            const updatedGeneralUser = await userModel.findByIdAndUpdate(
+                userId,
+                {
+                    $set: {
+                        firstName: userDetails.firstName,
+                        lastName: userDetails.lastName,
+                        profilePic: userDetails.profilePic,
+                        address: userDetails.address
+                    }
+                },
+                { new: true, session }
+            );
+
+            // Update account details
+            const updatedAccount = await accountModel.findByIdAndUpdate(
+                updatedGeneralUser.account,
+                {
+                    $set: {
+                        username: userDetails.username,
+                        phoneNumber: userDetails.phoneNumber,
+                        email: userDetails.email
+                    }
+                },
+                { new: true, session }
+            );
+
+            // If password is provided, update it
+            if (userDetails.password) {
+                const account = await accountModel.findById(updatedGeneralUser.account);
+                if (!account) {
+                    throw new Error('Account not found');
+                }
+                const isMatch = await bcrypt.compare(userDetails.oldPassword, account.password);
+                if (!isMatch) {
+                    throw new Error('Invalid previous password');
+                }
+                const hashedPassword = await common.hashPassword(userDetails.password);
+                updatedAccount.password = hashedPassword;
+                await updatedAccount.save();
+            }
+
+            await session.commitTransaction();
+
+            return {
+                _id: updatedGeneralUser._id,
+                firstName: updatedGeneralUser.firstName,
+                lastName: updatedGeneralUser.lastName,
+                points: updatedGeneralUser.points,
+                profilePic: updatedGeneralUser.profilePic,
+                address: updatedGeneralUser.address,
+                account: {
+                    _id: updatedAccount._id,
+                    username: updatedAccount.username,
+                    phoneNumber: updatedAccount.phoneNumber,
+                    userRole: updatedAccount.userRole,
+                    email: updatedAccount.email,
+                    accountStatus: updatedAccount.accountStatus
+                }
+            };
+        } catch (error) {
+            console.error(error);
+            await session.abortTransaction();
+            throw new Error(error.message);
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    }
+
+   
 }
 
 module.exports = UserService;
