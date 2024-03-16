@@ -31,6 +31,20 @@ class AdminController{
             res.status(400).json({ error: error.message });
         }
     }
+
+    static async approveBusiness(req, res) {
+        try {
+            const { id, businessType } = req.body; // Assuming businessId and businessType are provided in the request parameter
+
+            // Call the approveBusiness method from the AdminService
+            const result = await adminService.approveBusiness(id, businessType);
+
+            // Send the result in the response
+            return res.status(200).json(result);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
 }
 
 // Export the controller
