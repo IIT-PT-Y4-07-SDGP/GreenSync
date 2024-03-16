@@ -1,6 +1,8 @@
 // Import necessary modules
 const userModel = require("../models/userModel");
 const accountModel = require("../models/accountModel");
+const MCModel = require("../models/MCModel");
+const PRCModel = require("../models/PRCModel");
 const mongoose = require("mongoose");
 const CommonService = require("./commonService");
 const AuthService = require("./authService");
@@ -135,6 +137,61 @@ class AdminService {
         userRole: updatedAccount.userRole,
         email: updatedAccount.email,
         accountStatus: updatedAccount.accountStatus,
+      };
+    } catch (error) {
+      console.error(error);
+      await session.abortTransaction();
+      throw new Error(error.message);
+    } finally {
+      if (session) {
+        session.endSession();
+      }
+    }
+  }
+
+  async approveBusiness(Id, businessType) {
+    let session;
+    try {
+      session = await mongoose.startSession();
+      session.startTransaction();
+      let user;
+      if(businessType!=="PRC" && businessType!=="MC"){
+        throw new Error("Invalid business type ");
+      }
+
+
+      if (businessType === "PRC") {
+        const prcUser = await PRCModel.findOne({ _id: Id });
+        if(!prcUser){
+          throw new Error("No business found");
+        }
+        if (prcUser.PRCStatus === "APPROVED") {
+          throw new Error("Business is already approved");
+        }
+        user = prcUser;
+        if (prcUser) {
+          prcUser.PRCStatus = "APPROVED";
+          await prcUser.save({ session });
+        }
+      } else if (businessType === "MC") {
+        const mcUser = await MCModel.findOne({ _id: Id });
+        if(!mcUser){
+          throw new Error("No business found");
+        }
+        if (mcUser.MCStatus === "APPROVED") {
+          throw new Error("Business is already approved");
+        }
+        user = mcUser;
+        if (mcUser) {
+          mcUser.MCStatus = "APPROVED";
+          await mcUser.save({ session });
+        }
+      }
+
+      await session.commitTransaction();
+
+      return {
+        user,
       };
     } catch (error) {
       console.error(error);
