@@ -149,7 +149,7 @@ class AdminService {
     }
   }
 
-  async approveBusiness(Id, businessType) {
+  async approveBusiness(Id, businessType,status) {
     let session;
     try {
       session = await mongoose.startSession();
@@ -158,14 +158,18 @@ class AdminService {
       if (businessType !== "PRC" && businessType !== "MC") {
         throw new Error("Invalid business type ");
       }
+      if (status !== "ACTIVE" && status !== "REJECTED") {
+        throw new Error("Invalid status");
+      }
+      
 
       if (businessType === "PRC") {
         const prcUser = await PRCModel.findOne({ _id: Id });
         if (!prcUser) {
           throw new Error("No business found");
         }
-        if (prcUser.PRCStatus === "APPROVED") {
-          throw new Error("Business is already approved");
+        if (prcUser.PRCStatus !== "PENDING") {
+          throw new Error("Business is not awaiting approval");
         }
         user = prcUser;
         if (prcUser) {
@@ -176,8 +180,8 @@ class AdminService {
           if (!adminAccount || adminAccount.userRole !== "PRC-ADMIN") {
             throw new Error("Admin account not found");
           }
-          adminAccount.accountStatus = "APPROVED";
-          prcUser.PRCStatus = "APPROVED";
+          adminAccount.accountStatus = status;
+          prcUser.PRCStatus = status;
           await prcUser.save({ session });
           await adminAccount.save({ session });
         }
@@ -186,8 +190,8 @@ class AdminService {
         if (!mcUser) {
           throw new Error("No business found");
         }
-        if (mcUser.MCStatus === "APPROVED") {
-          throw new Error("Business is already approved");
+        if (mcUser.MCStatus !== "PENDING") {
+          throw new Error("Business is not awaiting approval");
         }
         user = mcUser;
         const adminAcoountId = mcUser.account[0];
@@ -195,12 +199,14 @@ class AdminService {
         if (!adminAccount || adminAccount.userRole !== "MC-ADMIN") {
           throw new Error("Admin account not found");
         }
-        adminAccount.accountStatus = "APPROVED";
+        adminAccount.accountStatus = status;
         if (mcUser) {
-          mcUser.MCStatus = "APPROVED";
+          mcUser.MCStatus = status;
           await mcUser.save({ session });
           await adminAccount.save({ session });
         }
+      }else{
+        throw new Error("Invalid business type")
       }
 
       await session.commitTransaction();
@@ -310,6 +316,62 @@ class AdminService {
         _id: GPaccount._id,
         username: GPaccount.username,
         accountStatus: GPaccount.accountStatus,
+      };
+    } catch (error) {
+      console.error(error);
+      await session.abortTransaction();
+      throw new Error(error.message);
+    } finally {
+      if (session) {
+        session.endSession();
+      }
+    }
+  }
+
+  async restrictBusiness(Id, type , status) {
+    let session;
+    let business;
+    try {
+      session = await mongoose.startSession();
+      session.startTransaction();
+      if (status !== "DELETED" && status !== "SUSPENDED" && status !== "ACTIVE" ) {
+        throw new Error("Invalid status");
+      }
+      if(type==="MC"){
+        business=await MCModel.findOne({_id:Id});
+        if(!business){
+          throw new Error("no account found for this id")
+        }
+        if(business.MCStatus==="PENDING"){
+          throw new Error("you are trying to alter a pending account")
+        }
+        if(business.MCStatus==="DELETED"){
+          throw new Error("you are trying to alter a deleted account")
+        }
+        business.MCStatus=status;
+      }
+      if(type==="PRC"){
+        business=await PRCModel.findOne({_id:Id});
+        if(!business){
+          throw new Error("no account found for this id")
+        }
+        if(business.PRCStatus==="PENDING"){
+          throw new Error("you are trying to alter a pending account")
+        }
+        if(business.PRCStatus==="DELETED"){
+          throw new Error("you are trying to alter a deleted account")
+        }
+        business.PRCStatus=status;
+      }
+      else{
+        throw new Error("Invalid business type")
+      }
+
+      await business.save({ session });
+      await session.commitTransaction();
+      return {
+        _id: business._id,
+        accountStatus: status,
       };
     } catch (error) {
       console.error(error);

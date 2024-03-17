@@ -34,10 +34,10 @@ class AdminController{
 
     static async approveBusiness(req, res) {
         try {
-            const { id, businessType } = req.body; // Assuming businessId and businessType are provided in the request parameter
+            const { id, businessType,status } = req.body; // Assuming businessId and businessType are provided in the request parameter
 
             // Call the approveBusiness method from the AdminService
-            const result = await adminService.approveBusiness(id, businessType);
+            const result = await adminService.approveBusiness(id, businessType,status);
 
             // Send the result in the response
             return res.status(200).json(result);
@@ -51,6 +51,19 @@ class AdminController{
             const { id, status,duration } = req.body; 
 
             const result = await adminService.restrictGP(id, status,duration);
+
+            // Send the result in the response
+            return res.status(200).json(result);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    static async restrictBusiness(req, res) {
+        try {
+            const { id, status,type } = req.body; 
+
+            const result = await adminService.restrictBusiness(id, type,status);
 
             // Send the result in the response
             return res.status(200).json(result);
