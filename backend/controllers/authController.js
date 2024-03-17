@@ -6,7 +6,7 @@ class AuthController {
       const { userIdentity, password } = req.body;
       const cookies = req.cookies;
       const response = await AuthService.login(userIdentity, password, cookies, res);
-      res.cookie("jwt", response.account.newRefreshToken, {
+      res.cookie("jwt", response.account.refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "None",
