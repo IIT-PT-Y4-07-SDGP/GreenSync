@@ -155,6 +155,8 @@ class AdminService {
       session = await mongoose.startSession();
       session.startTransaction();
       let user;
+
+      //validate types and status inputted
       if (businessType !== "PRC" && businessType !== "MC") {
         throw new Error("Invalid business type ");
       }
@@ -172,7 +174,7 @@ class AdminService {
           throw new Error("Business is not awaiting approval");
         }
         user = prcUser;
-        if (prcUser) {
+          //find the admin account associated with the business
           const adminAcoountId = prcUser.account[0];
           const adminAccount = await accountModel.findOne({
             _id: adminAcoountId,
@@ -180,12 +182,15 @@ class AdminService {
           if (!adminAccount || adminAccount.userRole !== "PRC-ADMIN") {
             throw new Error("Admin account not found");
           }
+
+        //change admin acct and business  status 
           adminAccount.accountStatus = status;
           prcUser.PRCStatus = status;
           await prcUser.save({ session });
           await adminAccount.save({ session });
-        }
-      } else if (businessType === "MC") {
+        
+      } 
+      else if (businessType === "MC") {
         const mcUser = await MCModel.findOne({ _id: Id });
         if (!mcUser) {
           throw new Error("No business found");
@@ -193,18 +198,18 @@ class AdminService {
         if (mcUser.MCStatus !== "PENDING") {
           throw new Error("Business is not awaiting approval");
         }
-        user = mcUser;
+         user = mcUser;
+          //find the admin account associated with the business
         const adminAcoountId = mcUser.account[0];
         const adminAccount = await accountModel.findById(adminAcoountId);
         if (!adminAccount || adminAccount.userRole !== "MC-ADMIN") {
           throw new Error("Admin account not found");
         }
+        //change admin acct status 
         adminAccount.accountStatus = status;
-        if (mcUser) {
           mcUser.MCStatus = status;
           await mcUser.save({ session });
           await adminAccount.save({ session });
-        }
       }else{
         throw new Error("Invalid business type")
       }
@@ -288,6 +293,8 @@ class AdminService {
     try {
       session = await mongoose.startSession();
       session.startTransaction();
+
+      //validate provided status
       if (status !== "BANNED" && status !== "SUSPENDED") {
         throw new Error("Invalid status");
       }
@@ -301,12 +308,15 @@ class AdminService {
       if (GPaccount.accountStatus === "DELETED") {
         throw new Error("Account cannot be restrcited since its deleted");
       }
+
+      //assign this to null by default
       GPaccount.suspensionEndDate=null;
       GPaccount.suspensionDuration=null;
       if (status === "SUSPENDED") {
         if (!duration) {
           throw new Error("duration is needed to suspend account");
         }
+        //if suspended ,the suspensionEndDate and suspensionDuration will be assigned through moongose
         GPaccount.suspensionDuration = duration;
       }
       GPaccount.accountStatus = status;
