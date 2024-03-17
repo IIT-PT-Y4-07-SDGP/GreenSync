@@ -71,6 +71,17 @@ class AdminController{
             res.status(400).json({ error: error.message });
         }
     }
+
+    static async districtRegistration (req,res) {
+        const {name}=req.body;
+        try{
+            const district = await adminService.registerDistrict(name);
+            return res.status(201).json(district);
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
 }
 
 // Export the controller

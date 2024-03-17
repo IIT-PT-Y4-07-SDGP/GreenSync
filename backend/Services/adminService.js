@@ -3,6 +3,7 @@ const userModel = require("../models/userModel");
 const accountModel = require("../models/accountModel");
 const MCModel = require("../models/MCModel");
 const PRCModel = require("../models/PRCModel");
+const districtModel=require("../models/district")
 const mongoose = require("mongoose");
 const CommonService = require("./commonService");
 const AuthService = require("./authService");
@@ -393,6 +394,50 @@ class AdminService {
       }
     }
   }
+
+  async registerDistrict(name) {
+    let session;
+    let district;
+    if(!name){
+      throw new Error("name is required")
+    }
+    try {
+      session = await mongoose.startSession();
+      session.startTransaction();
+
+      try {
+        const existingDistrict=await districtModel.findOne({name});
+        if(existingDistrict){
+          throw new Error("A district has been already registered for the given name")
+        }
+
+        district = await districtModel.create(
+          [
+            {
+              name: name,
+            },
+          ],
+          { session }
+        );
+        await session.commitTransaction();
+      } catch (error) {
+        await session.abortTransaction();
+        throw new Error(error.message);
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    } finally {
+      if (session) {
+        session.endSession();
+      }
+    }
+
+    return {
+      district
+    };
+  }
+
+
 }
 
 module.exports = AdminService;

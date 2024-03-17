@@ -26,6 +26,11 @@ const MCSchema = new schema({
         ref: 'accounts',
         required:true
     }],
+    DistrictId: {
+        type: schema.Types.ObjectId,
+        ref: 'districts',
+        required:true
+    },
 }, { timestamps: true })
 
 module.exports = mongoose.model('MC-account', MCSchema);
