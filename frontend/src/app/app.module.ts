@@ -26,6 +26,9 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
+import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
+import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
 
 @NgModule({
@@ -42,6 +45,9 @@ import { MyEventsComponent } from './components/events/my-events/my-events.compo
     OrganizeEventComponent,
     McRegistrationComponent,
     ViewEventComponent,
+    GeneralUserHomepageComponent,
+    PrcAdminHomepageComponent,
+    McAdminHomepageComponent,
     MyEventsComponent
   ],
   imports: [
