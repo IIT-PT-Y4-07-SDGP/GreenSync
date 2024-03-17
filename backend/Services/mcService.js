@@ -102,6 +102,71 @@ class MCService {
             }
         }
     }
+
+
+    static async getAllMCUsers() {
+        try {
+            // Query all MC users from the database and populate the 'account' field
+            const mcUsers = await MCModel.find().populate('account');
+
+            // Process the data if needed
+            const formattedMCUsers = mcUsers.map(mcUser => {
+                return {
+                    _id: mcUser._id,
+                    MCName: mcUser.MCName,
+                    District: mcUser.District,
+                    Address: mcUser.Address,
+                    MCStatus: mcUser.MCStatus,
+                    account: mcUser.account.map(acc => ({
+                        _id: acc._id,
+                        username: acc.username,
+                        phoneNumber: acc.phoneNumber,
+                        userRole: acc.userRole,
+                        email: acc.email,
+                        accountStatus: acc.accountStatus,
+                        refreshToken: acc.refreshToken
+                    }))
+                };
+            });
+
+            return formattedMCUsers;
+        } catch (error) {
+            console.error(error);
+            throw new Error("Error occurred while fetching MC users");
+        }
+    }
+
+    static async getPendingMCUsers() {
+        try {
+            // Query all MC users from the database and populate the 'account' field
+            const mcUsers = await MCModel.find({MCStatus:"PENDING"}).populate('account');
+
+            // Process the data if needed
+            const formattedMCUsers = mcUsers.map(mcUser => {
+                return {
+                    _id: mcUser._id,
+                    MCName: mcUser.MCName,
+                    District: mcUser.District,
+                    Address: mcUser.Address,
+                    MCStatus: mcUser.MCStatus,
+                    account: mcUser.account.map(acc => ({
+                        _id: acc._id,
+                        username: acc.username,
+                        phoneNumber: acc.phoneNumber,
+                        userRole: acc.userRole,
+                        email: acc.email,
+                        accountStatus: acc.accountStatus,
+                        refreshToken: acc.refreshToken
+                    }))
+                };
+            });
+
+            return formattedMCUsers;
+        } catch (error) {
+            console.error(error);
+            throw new Error("Error occurred while fetching MC users");
+        }
+    }
 }
 
 module.exports = MCService;

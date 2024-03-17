@@ -41,4 +41,8 @@ export class ViewEventComponent implements OnInit {
     });
   }
 
+  onClickParticipateEvent(){
+    
+  }
+
 }
