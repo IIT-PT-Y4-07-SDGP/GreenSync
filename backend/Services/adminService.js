@@ -155,14 +155,13 @@ class AdminService {
       session = await mongoose.startSession();
       session.startTransaction();
       let user;
-      if(businessType!=="PRC" && businessType!=="MC"){
+      if (businessType !== "PRC" && businessType !== "MC") {
         throw new Error("Invalid business type ");
       }
 
-
       if (businessType === "PRC") {
         const prcUser = await PRCModel.findOne({ _id: Id });
-        if(!prcUser){
+        if (!prcUser) {
           throw new Error("No business found");
         }
         if (prcUser.PRCStatus === "APPROVED") {
@@ -170,35 +169,37 @@ class AdminService {
         }
         user = prcUser;
         if (prcUser) {
-          const adminAcoountId=prcUser.account[0];
-          const adminAccount=await accountModel.findOne({_id:adminAcoountId});
-          if(!adminAccount || adminAccount.userRole!=="PRC-ADMIN"){
-           throw new Error("Admin account not found");
+          const adminAcoountId = prcUser.account[0];
+          const adminAccount = await accountModel.findOne({
+            _id: adminAcoountId,
+          });
+          if (!adminAccount || adminAccount.userRole !== "PRC-ADMIN") {
+            throw new Error("Admin account not found");
           }
           adminAccount.accountStatus = "APPROVED";
           prcUser.PRCStatus = "APPROVED";
           await prcUser.save({ session });
-          await adminAccount.save({session})
+          await adminAccount.save({ session });
         }
       } else if (businessType === "MC") {
         const mcUser = await MCModel.findOne({ _id: Id });
-        if(!mcUser){
+        if (!mcUser) {
           throw new Error("No business found");
         }
         if (mcUser.MCStatus === "APPROVED") {
           throw new Error("Business is already approved");
         }
         user = mcUser;
-        const adminAcoountId=mcUser.account[0];
-        const adminAccount=await accountModel.findById(adminAcoountId);
-        if(!adminAccount || adminAccount.userRole!=="MC-ADMIN"){
-         throw new Error("Admin account not found");
+        const adminAcoountId = mcUser.account[0];
+        const adminAccount = await accountModel.findById(adminAcoountId);
+        if (!adminAccount || adminAccount.userRole !== "MC-ADMIN") {
+          throw new Error("Admin account not found");
         }
         adminAccount.accountStatus = "APPROVED";
         if (mcUser) {
           mcUser.MCStatus = "APPROVED";
           await mcUser.save({ session });
-          await adminAccount.save({session})
+          await adminAccount.save({ session });
         }
       }
 
@@ -206,6 +207,109 @@ class AdminService {
 
       return {
         user,
+      };
+    } catch (error) {
+      console.error(error);
+      await session.abortTransaction();
+      throw new Error(error.message);
+    } finally {
+      if (session) {
+        session.endSession();
+      }
+    }
+  }
+
+  async updateAdmin(adminId, userDetails) {
+    let session;
+    try {
+      session = await mongoose.startSession();
+      session.startTransaction();
+
+      // Update account details
+      const updatedAccount = await accountModel.findByIdAndUpdate(
+        adminId,
+        {
+          $set: {
+            username: userDetails.username,
+            phoneNumber: userDetails.phoneNumber,
+            email: userDetails.email,
+          },
+        },
+        { new: true, session }
+      );
+
+      // If password is provided, update it
+      if (userDetails.password) {
+        const account = await accountModel.findById(adminId);
+        if (!account) {
+          throw new Error("Account not found");
+        }
+        const isMatch = await bcrypt.compare(
+          userDetails.oldPassword,
+          account.password
+        );
+        if (!isMatch) {
+          throw new Error("Invalid previous password");
+        }
+        const hashedPassword = await common.hashPassword(userDetails.password);
+        updatedAccount.password = hashedPassword;
+        await updatedAccount.save();
+      }
+
+      await session.commitTransaction();
+
+      return {
+        _id: updatedAccount._id,
+        username: updatedAccount.username,
+        phoneNumber: updatedAccount.phoneNumber,
+        userRole: updatedAccount.userRole,
+        email: updatedAccount.email,
+        accountStatus: updatedAccount.accountStatus,
+      };
+    } catch (error) {
+      console.error(error);
+      await session.abortTransaction();
+      throw new Error(error.message);
+    } finally {
+      if (session) {
+        session.endSession();
+      }
+    }
+  }
+
+  async restrictGP(Id, status, duration) {
+    let session;
+    try {
+      session = await mongoose.startSession();
+      session.startTransaction();
+      if (status !== "BANNED" && status !== "SUSPENDED") {
+        throw new Error("Invalid status");
+      }
+      const GPaccount = await accountModel.findOne({ _id: Id });
+      if (!GPaccount || GPaccount.userRole !== "GP") {
+        throw new Error("General public account not found");
+      }
+      if (GPaccount.accountStatus === "BANNED") {
+        throw new Error("Account is already banned");
+      }
+      if (GPaccount.accountStatus === "DELETED") {
+        throw new Error("Account cannot be restrcited since its deleted");
+      }
+      GPaccount.suspensionEndDate=null;
+      GPaccount.suspensionDuration=null;
+      if (status === "SUSPENDED") {
+        if (!duration) {
+          throw new Error("duration is needed to suspend account");
+        }
+        GPaccount.suspensionDuration = duration;
+      }
+      GPaccount.accountStatus = status;
+      await GPaccount.save({ session });
+      await session.commitTransaction();
+      return {
+        _id: GPaccount._id,
+        username: GPaccount.username,
+        accountStatus: GPaccount.accountStatus,
       };
     } catch (error) {
       console.error(error);

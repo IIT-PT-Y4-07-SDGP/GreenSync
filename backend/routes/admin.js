@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.post("/registration", AdminController.adminRegistration);
 router.put("/update/:id", AdminController.updateAdminDetails);
-router.post("/approve/business", AdminController.approveBusiness);
+router.patch("/approve/business", AdminController.approveBusiness);
+router.patch("/restrict/gp", AdminController.restrictGP);
 
 module.exports = router;
 
