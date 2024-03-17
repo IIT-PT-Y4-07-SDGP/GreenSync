@@ -50,6 +50,18 @@ class MCController{
         }
     }
 
+    static async getPickupPoints(req, res) {
+        const {id}=req.params;
+        try {
+            // Fetch all MC users from the database
+            const pickupPoints = await MCService.getPickupPoints(id);
+            return res.status(200).json(pickupPoints);
+        } catch (error) {
+            console.error(error);
+            res.status(400).json({ error: error.message });
+        }
+    }
+
 }
 
 // Export the controller

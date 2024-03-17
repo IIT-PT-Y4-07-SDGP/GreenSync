@@ -9,7 +9,7 @@ const pickupSchema = new Schema({
     },
     MC: {
         type: Schema.Types.ObjectId,
-        ref: 'MCmodel',
+        ref: 'MC-account',
         required:true
     },
 });

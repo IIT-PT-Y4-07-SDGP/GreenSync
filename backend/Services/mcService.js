@@ -242,6 +242,40 @@ class MCService {
     }
     return existingDistrict;
   }
+
+
+  static async getPickupPoints(MC) {
+    try {
+        // Find the MC document
+        const mcDocument = await MCModel.findById(MC).populate('DistrictId');
+        if (!mcDocument) {
+            throw new Error(`MC '${MC}' not found`);
+        }
+
+        // Extract the district associated with the MC
+        const districtName = mcDocument.DistrictId.name;
+
+        // Find the district document and populate its pickups
+        const districtWithPickups = await districtModel.findOne({ name: districtName });
+
+
+        if (!districtWithPickups) {
+            throw new Error(`District '${districtName}' not found or has no pickups`);
+        }
+
+        // Extract and return the pickup points for the district
+        const pickups = districtWithPickups.pickups
+        .filter(pickup => pickup.MC.equals(mcDocument._id))
+        .map(pickup => ({ _id: pickup._id, name: pickup.name }));
+        return pickups;
+    } catch (error) {
+        console.error(error);
+        throw new Error(error.message);
+    }
+}
+
+
+
 }
 
 module.exports = MCService;
