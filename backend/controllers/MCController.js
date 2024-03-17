@@ -37,6 +37,19 @@ class MCController{
             res.status(400).json({ error: "Error occurred while fetching Pending MC users" });
         }
     }
+
+    static async addPickupPoint (req,res) {
+        const {name,mc}=req.body
+        try{
+            const newPickup = await MCService.addPickupPoint(name,mc);
+            return res.status(200).json(newPickup);
+        }
+        catch(error){
+            console.log(error);
+            res.status(400).json({error:error.message})
+        }
+    }
+
 }
 
 // Export the controller
