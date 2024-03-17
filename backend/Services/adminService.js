@@ -170,8 +170,15 @@ class AdminService {
         }
         user = prcUser;
         if (prcUser) {
+          const adminAcoountId=prcUser.account[0];
+          const adminAccount=await accountModel.findOne({_id:adminAcoountId});
+          if(!adminAccount || adminAccount.userRole!=="PRC-ADMIN"){
+           throw new Error("Admin account not found");
+          }
+          adminAccount.accountStatus = "APPROVED";
           prcUser.PRCStatus = "APPROVED";
           await prcUser.save({ session });
+          await adminAccount.save({session})
         }
       } else if (businessType === "MC") {
         const mcUser = await MCModel.findOne({ _id: Id });
@@ -182,9 +189,16 @@ class AdminService {
           throw new Error("Business is already approved");
         }
         user = mcUser;
+        const adminAcoountId=mcUser.account[0];
+        const adminAccount=await accountModel.findById(adminAcoountId);
+        if(!adminAccount || adminAccount.userRole!=="MC-ADMIN"){
+         throw new Error("Admin account not found");
+        }
+        adminAccount.accountStatus = "APPROVED";
         if (mcUser) {
           mcUser.MCStatus = "APPROVED";
           await mcUser.save({ session });
+          await adminAccount.save({session})
         }
       }
 
