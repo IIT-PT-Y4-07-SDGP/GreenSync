@@ -7,6 +7,7 @@ router.post("/registration", AdminController.adminRegistration);
 router.put("/update/:id", AdminController.updateAdminDetails);
 router.patch("/approve/business", AdminController.approveBusiness);
 router.patch("/restrict/gp", AdminController.restrictGP);
+router.patch("/restrict/business", AdminController.restrictBusiness);
 
 module.exports = router;
 
