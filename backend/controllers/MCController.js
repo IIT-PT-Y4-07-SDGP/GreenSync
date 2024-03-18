@@ -62,6 +62,17 @@ class MCController{
         }
     }
 
+    static async createSchedule (req,res) {
+        try{
+            const schedule = await MCService.createSchedule(req.body);
+            return res.status(200).json(schedule);
+        }
+        catch(error){
+            console.log(error);
+            res.status(400).json({error:error.message})
+        }
+    }
+
 }
 
 // Export the controller
