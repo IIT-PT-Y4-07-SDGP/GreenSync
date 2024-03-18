@@ -1,4 +1,7 @@
 const accountModel = require("../models/accountModel");
+const userModel = require("../models/userModel");
+const PRCModel = require("../models/PRCModel");
+const MCModel = require("../models/MCModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const config = require("../configuration/config");
@@ -44,14 +47,78 @@ class AuthService {
             account.refreshToken = [...newRefreshTokenArray, newRefreshToken];
             await account.save();
 
-            return {
-                id: account._id,
-                userRole: account.userRole,
-                username: account.username,
-                token: accessToken,
-                message: "Login Successful",
-                newRefreshToken,
-            };
+            const userRole = account.userRole;
+            if(userRole == "GP"){
+                let userDetails = await userModel.findOne({account: account.id});
+                return {
+                    "_id": userDetails.id,
+                    "firstName": userDetails.firstName,
+                    "lastName": userDetails.lastName,
+                    "points": userDetails.points,
+                    "profilePic": userDetails.profilePic,
+                    "address": userDetails.address,
+                    "account": {
+                        "_id": account.id,
+                        "username": account.username,
+                        "phoneNumber": account.phoneNumber,
+                        "userRole": account.userRole,
+                        "email": account.email,
+                        "accountStatus": account.accountStatus,
+                        "accessToken": accessToken,
+                        "refreshToken": newRefreshToken
+                    },
+                }
+            } else if(userRole == "PRC-ADMIN"){
+                let PRC = await PRCModel.findOne({account: account.id});
+                return {
+                    "_id": PRC.id,
+                    "PRCName": PRC.PRCName,
+                    "PRCBusinessRegNumber": PRC.PRCBusinessRegNumber,
+                    "District": PRC.District,
+                    "Address": PRC.Address,
+                    "PRCStatus": PRC.PRCStatus,
+                    "account": {
+                        "_id": account.id,
+                        "username": account.username,
+                        "phoneNumber": account.phoneNumber,
+                        "userRole": account.userRole,
+                        "email": account.email,
+                        "accountStatus": account.accountStatus,
+                        "accessToken": accessToken,
+                        "refreshToken": newRefreshToken
+                    },
+                }
+            } 
+            // else if(userRole == "PRC-DRIVER"){
+            //     return {"PRCDriver" : "PRC Driver"}
+            // } 
+            else if(userRole == "MC-ADMIN"){
+                let MC = await MCModel.findOne({account: account.id});
+                return {
+                    "_id": MC.id,
+                    "MCName": MC.MCName,
+                    "District": MC.District,
+                    "Address": MC.Address,
+                    "MCStatus": MC.MCStatus,
+                    "account": {
+                        "_id": account.id,
+                        "username": account.username,
+                        "phoneNumber": account.phoneNumber,
+                        "userRole": account.userRole,
+                        "email": account.email,
+                        "accountStatus": account.accountStatus,
+                        "accessToken": accessToken,
+                        "refreshToken": newRefreshToken
+                    }
+                }
+            } 
+            // else if(userRole == "SYSTEM-ADMIN"){
+                
+            // } 
+            else {
+                throw new Error("User role is not specified")
+            }
+            
         } catch (error) {
             throw new Error(error.message);
         }
