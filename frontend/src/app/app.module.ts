@@ -32,6 +32,7 @@ import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-hom
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
 import { ParticipationsComponent } from './components/events/participations/participations.component';
 import { OrganizingComponent } from './components/events/organizing/organizing.component';
+import { HeaderComponent } from './shared/header/header.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { OrganizingComponent } from './components/events/organizing/organizing.c
     McAdminHomepageComponent,
     MyEventsComponent,
     ParticipationsComponent,
-    OrganizingComponent
+    OrganizingComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
