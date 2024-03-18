@@ -13,6 +13,7 @@ interface Event {
   eventLocation: string;
   eventOrganizer: string;
   eventParticipant: any[]; // Update the type based on your actual data structure
+  eventToken: number;
   eventDescription: string;
   eventStatus: string;
   createdAt: string;
@@ -79,6 +80,7 @@ export class EventsPageComponent implements OnInit {
         eventDescription: event.eventDescription,
         eventOrganizer: event.eventOrganizer,
         eventParticipant: event.eventParticipant,
+        eventToken: event.eventToken,
         eventStatus: event.eventStatus,
         createdAt: event.createdAt,
         updatedAt: event.updatedAt,
