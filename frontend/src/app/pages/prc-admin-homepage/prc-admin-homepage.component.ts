@@ -13,6 +13,7 @@ export class PrcAdminHomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.PRC = this.loginService.getPRC(); 
+    console.log(this.PRC);
   }
 
 }
