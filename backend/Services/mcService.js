@@ -326,6 +326,56 @@ static async createSchedule(schedule) {
   }
 }
 
+static async updateSchedule(scheduleId, updatedSchedule) {
+  const { date, time, MC, pickupPoints,typesOfWaste } = updatedSchedule;
+  
+  if (!date || !time || !MC || !pickupPoints ||!typesOfWaste) {
+    throw new Error("Missing required inputs");
+  }
+  
+  // Check if the schedule exists and is related to the provided MC
+  const existingSchedule = await scheduleModel.findById(scheduleId);
+  if (!existingSchedule) {
+    throw new Error("Schedule not found");
+  }
+  if (existingSchedule.MC.toString() !== MC) {
+    throw new Error("The provided schedule is not related to the provided MC");
+  }
+
+  // Validate if the new date and time are not in the past
+  const newArrival = new Date(`${date}T${time}`);
+  if (newArrival < new Date()) {
+    throw new Error("The updated schedule arrival time cannot be in the past");
+  }
+
+  // Validate each updated pickup point
+  const mcDocument = await MCModel.findById(MC);
+  const { DistrictId } = mcDocument;
+  for (const pickupPointId of pickupPoints) {
+    const pickupPoint = await districtModel.findOne({
+      _id: DistrictId,
+      'pickups._id': pickupPointId,
+      'pickups.MC': MC
+    });
+    if (!pickupPoint) {
+      throw new Error(`Invalid pickup point '${pickupPointId}' for the provided MC`);
+    }
+  }
+
+  // Update the schedule
+  try {
+    const updatedSchedule = await scheduleModel.findByIdAndUpdate(scheduleId, {
+      arrival: newArrival,
+      pickupPoints: pickupPoints,
+      typesOfWaste:typesOfWaste
+    }, { new: true }); 
+  
+    return updatedSchedule;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error.message);
+  }
+}
 
 
 

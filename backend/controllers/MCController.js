@@ -73,6 +73,18 @@ class MCController{
         }
     }
 
+    static async updateSchedule (req,res) {
+        const {scheduleId,updatedSchedule}=req.body;
+        try{
+            const schedule = await MCService.updateSchedule(scheduleId,updatedSchedule);
+            return res.status(200).json(schedule);
+        }
+        catch(error){
+            console.log(error);
+            res.status(400).json({error:error.message})
+        }
+    }
+
 }
 
 // Export the controller
