@@ -6,6 +6,7 @@ const common = new CommonService();
 const MCModel = require("../models/MCModel");
 const accountModel = require("../models/accountModel");
 const districtModel = require("../models/district");
+const scheduleModel= require("../models/schedule")
 
 class MCService {
   static async MCRegister(MCDetails, res) {
@@ -273,6 +274,60 @@ class MCService {
         throw new Error(error.message);
     }
 }
+
+static async createSchedule(schedule) {
+  const { date, time, MC, pickupPoints, typesOfWaste } = schedule;
+  if (!date || !time || !MC || !pickupPoints || !typesOfWaste) {
+      throw new Error("Missing required inputs");
+  }
+  const arrival = new Date(`${date}T${time}`);
+  if (arrival < new Date()) {
+    throw new Error("The schedule arrival time cannot be in the past");
+}
+  try {
+      const mcDocument = await MCModel.findById(MC);
+      if (!mcDocument) {
+          throw new Error("Municipal council not found");
+      }
+
+      const { DistrictId } = mcDocument;
+
+      // Validate each pickup point
+      for (const pickupPointId of pickupPoints) {
+          const pickupPoint = await districtModel.findOne({
+              _id: DistrictId,
+              'pickups._id': pickupPointId,
+              'pickups.MC': MC
+          });
+          if (!pickupPoint) {
+              throw new Error(`Invalid pickup point '${pickupPointId}' for the provided MC`);
+          }
+      }
+
+      // Create the schedule
+      const schedule = await scheduleModel.create({
+          arrival,
+          MC,
+          DistrictId,
+          pickupPoints,
+          typesOfWaste
+      });
+
+      return {
+        _id:schedule._id,
+        arrival:schedule.arrival,
+        DistrictId:schedule.DistrictId,
+        pickupPoints:schedule.pickupPoints,
+        typesOfWaste:schedule.typesOfWaste
+      }; 
+  } catch (error) {
+      console.error(error);
+      throw new Error(error.message);
+  }
+}
+
+
+
 
 
 

@@ -3,25 +3,31 @@ const Schema = mongoose.Schema;
 
 const scheduleSchema = new Schema(
   {
+    MC: {
+      type: Schema.Types.ObjectId,
+      ref: 'MC-account',
+      required:true
+  },
     arrival: {
       type: Date,
       required: true,
     },
-    district: {
-      type: String,
-      required: true,
-    },
-    pickupPoint: [
+    DistrictId: {
+      type: Schema.Types.ObjectId,
+      ref: 'districts',
+      required:true
+  },
+    pickupPoints: [
       {
-        type: String,
-        required: true,
-      },
+        type: Schema.Types.ObjectId,
+        required:true
+    },
     ],
-    typeOfWaste: {
+    typesOfWaste: [{
       type: String,
       enum: ["organic", "plastic", "paper", "metal", "glass", "other"],
       required: true,
-    },
+    }],
   },
   { timestamps: true }
 );
