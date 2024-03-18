@@ -3,6 +3,9 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable , Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { LoginService } from 'src/app/services/login-service';
+import { PRC } from 'src/app/interfaces/PRC';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-prc-registration',
@@ -13,7 +16,12 @@ export class PrcRegistrationComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   PRCRegFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { 
+  constructor(
+    private fb: FormBuilder, 
+    private http: HttpClient,
+    private router: Router,
+    private loginService: LoginService
+  ) { 
     this.PRCRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -58,22 +66,23 @@ export class PrcRegistrationComponent implements OnInit {
       const jsonData = JSON.stringify(formData);
       this.sendFormData(jsonData)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        response => {
-          alert("Registration is successful");
-          console.log(response);
+      .subscribe({
+        next : response => {
+          const PRC: PRC = response;
+          this.loginService.setPRC(PRC);
+          this.router.navigate(['/prc-admin-homepage'])
         },
-        error => {
+        error: err => {
           alert("Registration Failed :-(");
-          console.error('Error:', error);
+          console.error('Error:', err);
         }
-      );
+      });
     }
   }
     
-  private sendFormData(data: any): Observable<any> {
+  private sendFormData(data: any): Observable<PRC> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/prc/registration', data, { headers: headers });
+    return this.http.post<PRC>('http://localhost:5001/prc/registration', data, { headers: headers });
   }
 }
 
