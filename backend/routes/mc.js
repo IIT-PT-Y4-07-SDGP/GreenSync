@@ -9,6 +9,7 @@ router.get("/pending", MCController.getPendingMCUsers);
 router.post("/add/pickup", MCController.addPickupPoint);
 router.get("/pickups/:id", MCController.getPickupPoints);
 router.post("/schedule", MCController.createSchedule);
+router.put("/schedule", MCController.updateSchedule);
 
 
 module.exports = router;
