@@ -30,6 +30,8 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
+import { ReportGarbageComponent } from './components/report-garbage/report-garbage.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { MyEventsComponent } from './components/events/my-events/my-events.compo
     GeneralUserHomepageComponent,
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
-    MyEventsComponent
+    MyEventsComponent,
+    ReportPageComponent,
+    ReportGarbageComponent
   ],
   imports: [
     BrowserModule,

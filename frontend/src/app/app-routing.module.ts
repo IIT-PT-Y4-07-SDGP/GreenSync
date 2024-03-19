@@ -7,6 +7,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'user-homepage', component: GeneralUserHomepageComponent },
   { path: 'prc-admin-homepage', component: PrcAdminHomepageComponent },
   { path: 'mc-admin-homepage', component: McAdminHomepageComponent },
+  { path: 'report', component: ReportPageComponent},
   { path: '', component: LandingPageComponent },
 
 ];
