@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable , Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { EventService } from 'src/app/services/event.service';
 
 
 
@@ -16,11 +15,14 @@ import { environment } from 'src/environments/environment';
 
 
 export class OrganizeEventComponent implements OnInit {
-  apiUrl = environment.apiUrl;
   eventForm: FormGroup;
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<OrganizeEventComponent>, private http: HttpClient) { 
+  constructor(
+    private fb: FormBuilder, 
+    public dialogRef: MatDialogRef<OrganizeEventComponent>, 
+    private eventService: EventService
+  ) { 
     this.eventForm = this.fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -58,27 +60,23 @@ export class OrganizeEventComponent implements OnInit {
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
       console.log(jsonData);
-      this.sendFormData(jsonData)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: response => {
-          console.log('Response from backend:', response);
-          alert("Event Created Successfully");
-          this.dialogRef.close();
-        },
-        error: err => {
-          alert(err.error.error);
-          console.error('Error:', err);
-        }
+      this.eventService.createEvent(jsonData)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: response => {
+            console.log('Response from backend:', response);
+            alert("Event Created Successfully");
+            this.dialogRef.close();
+          },
+          error: err => {
+            alert(err.error.error);
+            console.error('Error:', err);
+          }
         });
       }
     }
     
-    private sendFormData(data: any): Observable<any> {
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      console.log(data);
-      return this.http.post<any>(`${this.apiUrl}/events/organize-event`, data, { headers: headers });
-    }
+
 
   onCancel() {
     // Close the dialog without saving
