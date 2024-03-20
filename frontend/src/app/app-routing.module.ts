@@ -7,6 +7,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
+import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 
 
 const routes: Routes = [
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'prc-admin-homepage', component: PrcAdminHomepageComponent },
   { path: 'mc-admin-homepage', component: McAdminHomepageComponent },
   { path: 'user-homepage/event', component: EventsPageComponent },
-
+  { path: 'user-homepage/event/organized-event-page', component: OrganizedEventPageComponent },
 ];
 
 @NgModule({

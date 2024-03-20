@@ -1,25 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
-
-
-interface Event {
-  _id: string;
-  eventName: string;
-  eventTime: string;
-  eventLocation: string;
-  eventOrganizer: string;
-  eventParticipant: any[]; // Update the type based on your actual data structure
-  eventToken: string;
-  eventDescription: string;
-  eventStatus: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
+import { LoginService } from 'src/app/services/login.service';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
+import { Event } from 'src/app/interfaces/event';
 
 @Component({
   selector: 'app-organizing',
@@ -27,9 +12,9 @@ interface Event {
   styleUrls: ['./organizing.component.scss']
 })
 export class OrganizingComponent implements OnInit {
-
+  public userDetails?: GeneralUser;
   public events: Event[] = [];
-  constructor(public dialog: MatDialog, private http: HttpClient, private datePipe: DatePipe) { }
+  constructor(public dialog: MatDialog, private http: HttpClient, private loginService: LoginService) { }
 
   public imagePaths: string[] = [
     'app/assets/event-list-img-1.jpg',
@@ -45,8 +30,8 @@ export class OrganizingComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    const organicerId = '65f023dc098f881d9b7f9557';
-    this.fetchOrganizingEvents(organicerId);
+    this.userDetails = this.loginService.getGeneralUser()!;
+    this.fetchOrganizingEvents(this.userDetails._id);
   }
 
 

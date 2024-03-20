@@ -1,14 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-interface Event {
-  _id: string;
-  eventName: string;
-  eventTime: string;
-  eventLocation: string;
-  eventDescription: string;
-  // Add other properties as needed
-}
+import { Event } from 'src/app/interfaces/event';
 
 @Component({
   selector: 'app-view-event',
