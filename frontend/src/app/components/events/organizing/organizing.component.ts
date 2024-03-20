@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
-import { ViewEventComponent } from 'src/app/components/events/view-event/view-event.component';
-import { MyEventsComponent } from 'src/app/components/events/my-events/my-events.component';
+
 
 interface Event {
   _id: string;
@@ -21,12 +20,14 @@ interface Event {
   __v: number;
 }
 
+
 @Component({
-  selector: 'app-events-page',
-  templateUrl: './events-page.component.html',
-  styleUrls: ['./events-page.component.scss']
+  selector: 'app-organizing',
+  templateUrl: './organizing.component.html',
+  styleUrls: ['./organizing.component.scss']
 })
-export class EventsPageComponent implements OnInit {
+export class OrganizingComponent implements OnInit {
+
   public events: Event[] = [];
   constructor(public dialog: MatDialog, private http: HttpClient, private datePipe: DatePipe) { }
 
@@ -44,33 +45,14 @@ export class EventsPageComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.fetchEvents();
+    const organicerId = '65f023dc098f881d9b7f9557';
+    this.fetchOrganizingEvents(organicerId);
   }
 
-  onClickOrganizeEvents(){
-      this.openOrganizeEventDialog();
-  }
 
-  onClickViewMyEvents(){
-    this.openMyEventDialog();
-  }
-
-  openOrganizeEventDialog(): void {
-    const dialogRef = this.dialog.open(OrganizeEventComponent, {
-      height: '600px',
-      width: '1000px', // Adjust the width as needed
-      // Add any other configuration options for your dialog
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.ngOnInit();
-      // Handle any data or actions after the dialog is closed
-    });
-  }
-
-  fetchEvents() {
+  fetchOrganizingEvents(eventOrganizer: string): void {
     // Make an HTTP request to fetch events from your server
-    this.http.get<Event[]>('http://localhost:5001/api/events/get-events').subscribe(events => {
+    this.http.get<Event[]>(`http://localhost:5001/api/events/get-my-organizing-events?organizerId=${eventOrganizer}`).subscribe(events => {
       // Assign the retrieved events to the component property
       this.events = events.map(event => ({
         _id: event._id,
@@ -97,7 +79,7 @@ export class EventsPageComponent implements OnInit {
     });
   }
 
-  // Helper function to format time
+    // Helper function to format time
   formatTime(dateTime: string): string {
     return new Date(dateTime).toLocaleTimeString('en-US', {
       hour: '2-digit',
@@ -106,23 +88,12 @@ export class EventsPageComponent implements OnInit {
     });
   }
 
-  onCardClick(event: Event, index: number) {
-    this.openViewEventDialog(event, index);
-}
+  onClickOrganizeEvents(){
+      this.openOrganizeEventDialog();
+  }
 
-  openViewEventDialog(selectedEvent: Event, index: number){
-    const dialogRef = this.dialog.open(ViewEventComponent, {
-      height: '700px',
-      width: '1000px', 
-      data: { event: selectedEvent, imagePath: this.imagePaths }   
-  });
-  dialogRef.afterClosed().subscribe(result => {
-      // Handle any data or actions after the dialog is closed
-    });
-}
-
-openMyEventDialog(): void {
-    const dialogRef = this.dialog.open(MyEventsComponent, {
+  openOrganizeEventDialog(): void {
+    const dialogRef = this.dialog.open(OrganizeEventComponent, {
       height: '600px',
       width: '1000px', // Adjust the width as needed
       // Add any other configuration options for your dialog
@@ -133,5 +104,6 @@ openMyEventDialog(): void {
       // Handle any data or actions after the dialog is closed
     });
   }
+  
 
 }

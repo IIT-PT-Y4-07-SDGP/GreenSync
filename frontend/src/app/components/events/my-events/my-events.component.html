@@ -1,1 +1,8 @@
-<p>my-events works!</p>
+<div>
+  <button class="bg-primary hover:bg-green-300 text-white py-2 px-4 rounded m-2" [class.selected]="selectedButton === 'Participation'" (click)="selectButton('Participation')">Participating</button>
+  <button class="bg-primary hover:bg-green-300 text-white py-2 px-4 rounded m-2" [class.selected]="selectedButton === 'Organizing'" (click)="selectButton('Organizing')">Organizing</button>
+</div>
+<div class="ml-2">
+    <app-organizing *ngIf="selectedButton === 'Organizing'"></app-organizing>
+    <app-participations *ngIf="selectedButton === 'Participation'"></app-participations>
+</div>

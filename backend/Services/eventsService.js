@@ -41,6 +41,15 @@ class EventsService {
         }
     }
 
+    async getOrganizedEventsList(eventOrganizer) {
+        try {
+            const OrganizerEventsList = await eventsModel.find({ eventOrganizer });
+            return OrganizerEventsList;
+        } catch (error) {
+            throw new Error(`Error fetching events from the database: ${error.message}`);
+        }
+    }
+
     generateUniqueToken() {
         let token;
         token = randomstring.generate({ length: 6, charset: 'numeric' });

@@ -31,6 +31,8 @@ import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { ParticipationsComponent } from './components/events/participations/participations.component';
+import { OrganizingComponent } from './components/events/organizing/organizing.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { HeaderComponent } from './shared/header/header.component';
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
     MyEventsComponent,
-    HeaderComponent
+    HeaderComponent,
+    ParticipationsComponent,
+    OrganizingComponent
   ],
   imports: [
     BrowserModule,

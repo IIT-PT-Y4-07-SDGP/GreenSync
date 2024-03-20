@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyEventsComponent implements OnInit {
 
+  selectedButton: string = 'Participation'; // Default selected button
+  
+  selectButton(button: string) {
+    this.selectedButton = button;
+  }
+
   constructor() { }
 
   ngOnInit(): void {
