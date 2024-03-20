@@ -1,0 +1,36 @@
+<div class="w-auto h-auto" style="max-height: 500px; overflow-y: auto;">
+    <div class="block mt-4 mx-auto w-9/12">
+        <div class="card-deck">
+            <div *ngIf="events.length > 0; else noEventsMessage">
+                <div class="card my-6 h-auto w-auto bg-gray-200 rounded-xl shadow-xl hover:scale-110 transition-transform duration-200" *ngFor="let event of events; let i = index">
+                    <div class="card-body">
+                        <div class="ml-4">
+                            <div class="flex h-20">
+                                <div class="w-3/5">
+                                    <div class="grid grid-rows-2">
+                                        <h1 class="text-primary custom-font font-extrabold row-span-1">{{ event.eventName }}</h1>
+                                        <div class="row-span-1 flex justify-between mr-4 text-l">
+                                            <p class="text-xs">Date: {{ formatDate(event.eventTime) }}</p>
+                                            <p class="text-xs">Time: {{ formatTime(event.eventTime) }}</p>
+                                            <p class="text-xs">Location: {{ event.eventLocation }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-2/5 rounded-r-xl flex container items-center justify-end mr-2">
+                                    <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 m-1 rounded text-white text-xs col-span-1" (click)="onClickStartEvents()">Start</button>
+                                    <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 m-1 rounded text-white text-xs col-span-1">View Event</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noEventsMessage>
+                <div class="flex items-center justify-center h-40">
+                    <p class="text-gray-500 m-4">You have not organized any events yet</p>
+                    <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 m-4 rounded text-white text-xs" (click)="onClickOrganizeEvents()">Organize Event</button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

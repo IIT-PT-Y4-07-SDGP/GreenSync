@@ -26,6 +26,17 @@ class EventsController{
         }
     }
 
+    async getMyOrganizingEvents(req, res) {
+        try {
+            const organizerId = req.query.organizerId;
+            const newEvents = await events.getOrganizedEventsList(organizerId);
+            res.status(200).json(newEvents);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
+
     async startEvents(req, res) {
         try {
             const eventId = req.params.eventId;
