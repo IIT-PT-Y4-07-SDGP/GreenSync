@@ -4,7 +4,7 @@ import { UserType } from 'src/app/enums/userTypes';
 import { MC } from 'src/app/interfaces/MC';
 import { PRC } from 'src/app/interfaces/PRC';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login-service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-header',

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login-service';
+import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -19,13 +18,12 @@ export class UserRegistrationComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   selectedProfilePicture!: string;
   userRegFormGroup: FormGroup;
-  apiUrl = environment.apiUrl;
 
   constructor(
     private fb: FormBuilder, 
-    private http: HttpClient,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private userService: UserService
   ) {
     this.userRegFormGroup = fb.group({
       hideRequired: false,
@@ -115,7 +113,7 @@ export class UserRegistrationComponent implements OnInit {
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
-      this.sendFormData(jsonData)
+      this.userService.registerUser(jsonData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: response => {
@@ -129,11 +127,6 @@ export class UserRegistrationComponent implements OnInit {
           } 
         });     
     }
-  }
-
-  private sendFormData(data: any): Observable<GeneralUser> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<GeneralUser>(`${this.apiUrl}/user/registration`, data, { headers: headers });
   }
 }
 
