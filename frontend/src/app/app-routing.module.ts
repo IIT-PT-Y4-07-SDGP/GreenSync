@@ -10,13 +10,13 @@ import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-hom
 
 
 const routes: Routes = [
+  { path: '', component: LandingPageComponent },
   { path: 'registration', component: RegistrationPageComponent },
-  { path: 'event', component: EventsPageComponent },
   { path: 'login-page', component: LoginPageComponent },
   { path: 'user-homepage', component: GeneralUserHomepageComponent },
   { path: 'prc-admin-homepage', component: PrcAdminHomepageComponent },
   { path: 'mc-admin-homepage', component: McAdminHomepageComponent },
-  { path: '', component: LandingPageComponent },
+  { path: 'user-homepage/event', component: EventsPageComponent },
 
 ];
 

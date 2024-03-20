@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable , Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -15,6 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 
 
 export class OrganizeEventComponent implements OnInit {
+  apiUrl = environment.apiUrl;
   eventForm: FormGroup;
   private destroy$: Subject<void> = new Subject();
 
@@ -58,24 +60,24 @@ export class OrganizeEventComponent implements OnInit {
       console.log(jsonData);
       this.sendFormData(jsonData)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        response => {
+      .subscribe({
+        next: response => {
           console.log('Response from backend:', response);
           alert("Event Created Successfully");
           this.dialogRef.close();
         },
-        error => {
-          alert(error.error.error);
-          console.error('Error:', error);
+        error: err => {
+          alert(err.error.error);
+          console.error('Error:', err);
         }
-        );
+        });
       }
     }
     
     private sendFormData(data: any): Observable<any> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       console.log(data);
-      return this.http.post<any>('http://localhost:5001/events/organize-event', data, { headers: headers });
+      return this.http.post<any>(`${this.apiUrl}/events/organize-event`, data, { headers: headers });
     }
 
   onCancel() {

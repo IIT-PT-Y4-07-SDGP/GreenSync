@@ -9,7 +9,7 @@ class UserController{
         try{
             // Validate the user data and add ussr to database
             const newUserAccount = await user.userRegister(req.body, res);
-            return res.status(200).json({newUserAccount});
+            return res.status(200).json(newUserAccount);
         }
         catch(error){
             res.status(400).json({error:error.message})

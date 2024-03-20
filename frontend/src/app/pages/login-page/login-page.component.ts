@@ -8,6 +8,7 @@ import { MC } from 'src/app/interfaces/MC';
 import { PRC } from 'src/app/interfaces/PRC';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
 import { LoginService } from 'src/app/services/login-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login-page',
@@ -17,6 +18,7 @@ import { LoginService } from 'src/app/services/login-service';
 export class LoginPageComponent implements OnInit {
   loginFormGroup: FormGroup;
   private destroy$: Subject<void> = new Subject();
+  apiUrl = environment.apiUrl;
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
@@ -92,6 +94,6 @@ export class LoginPageComponent implements OnInit {
 
   private sendFormData(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/auth/login', data, { headers: headers });
+    return this.http.post<any>(`${this.apiUrl}/auth/login`, data, { headers: headers });
   }
 }

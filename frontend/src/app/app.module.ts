@@ -30,6 +30,7 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
+import { HeaderComponent } from './shared/header/header.component';
 import { ParticipationsComponent } from './components/events/participations/participations.component';
 import { OrganizingComponent } from './components/events/organizing/organizing.component';
 
@@ -51,6 +52,7 @@ import { OrganizingComponent } from './components/events/organizing/organizing.c
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
     MyEventsComponent,
+    HeaderComponent,
     ParticipationsComponent,
     OrganizingComponent
   ],
