@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit {
       // this.points = userDetails?.points;
       this.username = "Kumar Sangakara";
       this.points = 1000;
-    }
+    } 
     else if(this.userType == this.userTypes.MC){
       let MC: MC | undefined = this.loginService.getMC();
       this.username = MC?.account.username.toString();
