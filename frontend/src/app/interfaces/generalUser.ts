@@ -1,11 +1,11 @@
 import { Account } from "./account"
 
 export interface GeneralUser{
-    _id: String,
-    firstName: String,
-    lastName: String,
+    _id: string,
+    firstName: string,
+    lastName: string,
     points: number,
-    profilePic: String,
-    address: String,
+    profilePic: string,
+    address: string,
     account: Account
 }
