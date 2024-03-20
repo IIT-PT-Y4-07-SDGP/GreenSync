@@ -33,6 +33,7 @@ import { MyEventsComponent } from './components/events/my-events/my-events.compo
 import { HeaderComponent } from './shared/header/header.component';
 import { ParticipationsComponent } from './components/events/participations/participations.component';
 import { OrganizingComponent } from './components/events/organizing/organizing.component';
+import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { OrganizingComponent } from './components/events/organizing/organizing.c
     MyEventsComponent,
     HeaderComponent,
     ParticipationsComponent,
-    OrganizingComponent
+    OrganizingComponent,
+    OrganizedEventPageComponent
   ],
   imports: [
     BrowserModule,

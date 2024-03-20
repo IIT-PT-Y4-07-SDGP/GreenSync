@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
 import { EventService } from 'src/app/services/event.service';
+import { LoginService } from 'src/app/services/login.service';
 
 
 
@@ -15,22 +17,26 @@ import { EventService } from 'src/app/services/event.service';
 
 
 export class OrganizeEventComponent implements OnInit {
-  eventForm: FormGroup;
+  public eventForm: FormGroup;
+  public userDetails?: GeneralUser;
   private destroy$: Subject<void> = new Subject();
 
   constructor(
     private fb: FormBuilder, 
     public dialogRef: MatDialogRef<OrganizeEventComponent>, 
-    private eventService: EventService
-  ) { 
+    private eventService: EventService,
+    private loginService: LoginService
+  ){ 
     this.eventForm = this.fb.group({
       hideRequired: false,
       floatLabel: 'auto',
-    });}
-    ngOnDestroy() {
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   
   ngOnInit(): void {
     this.eventForm = this.fb.group({
@@ -38,9 +44,9 @@ export class OrganizeEventComponent implements OnInit {
       eventLocation: ['', [Validators.required,]],
       eventDate: [null, [Validators.required]],
       eventTime: [null, [Validators.required,]],
-      evetnDescription: ['', [Validators.maxLength(1000)]]
+      eventDescription: ['', [Validators.maxLength(1000)]]
     })
-
+    this.userDetails = this.loginService.getGeneralUser();
   }
 
   onSubmit() {
@@ -53,9 +59,8 @@ export class OrganizeEventComponent implements OnInit {
         eventName: this.eventForm.value.eventName,
         eventTime: timestamp,
         eventLocation: this.eventForm.value.eventLocation,
-        eventDescription: this.eventForm.value.evetnDescription,
-        eventOrganizer: '65f023dc098f881d9b7f9557'
-
+        eventDescription: this.eventForm.value.eventDescription,
+        eventOrganizer: this.userDetails?._id
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
