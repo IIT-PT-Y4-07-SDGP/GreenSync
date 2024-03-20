@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { LoginService } from 'src/app/services/login-service';
 import { PRC } from 'src/app/interfaces/PRC';
 import { Router } from '@angular/router';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-prc-registration',
   templateUrl: './prc-registration.component.html',
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class PrcRegistrationComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   PRCRegFormGroup: FormGroup;
+  apiUrl = environment.apiUrl;
 
   constructor(
     private fb: FormBuilder, 
@@ -82,7 +83,7 @@ export class PrcRegistrationComponent implements OnInit {
     
   private sendFormData(data: any): Observable<PRC> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<PRC>('http://localhost:5001/prc/registration', data, { headers: headers });
+    return this.http.post<PRC>(`${this.apiUrl}/prc/registration`, data, { headers: headers });
   }
 }
 

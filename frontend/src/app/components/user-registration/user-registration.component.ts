@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
 import { LoginService } from 'src/app/services/login-service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class UserRegistrationComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   selectedProfilePicture!: string;
   userRegFormGroup: FormGroup;
+  apiUrl = environment.apiUrl;
 
   constructor(
     private fb: FormBuilder, 
@@ -131,7 +133,7 @@ export class UserRegistrationComponent implements OnInit {
 
   private sendFormData(data: any): Observable<GeneralUser> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<GeneralUser>('http://localhost:5001/user/registration', data, { headers: headers });
+    return this.http.post<GeneralUser>(`${this.apiUrl}/user/registration`, data, { headers: headers });
   }
 }
 
