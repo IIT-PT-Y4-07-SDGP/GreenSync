@@ -54,10 +54,8 @@ export class HeaderComponent implements OnInit {
   setUsername(){
     if(this.userType == this.userTypes.GENERAL_USER){
       let userDetails: GeneralUser | undefined = this.loginService.getGeneralUser();
-      // this.username = userDetails?.account.username.toString();
-      // this.points = userDetails?.points;
-      this.username = "Kumar Sangakara";
-      this.points = 1000;
+      this.username = userDetails?.account.username.toString();
+      this.points = userDetails?.points;
     } 
     else if(this.userType == this.userTypes.MC){
       let MC: MC | undefined = this.loginService.getMC();

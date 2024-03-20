@@ -8,6 +8,9 @@ import { MC } from 'src/app/interfaces/MC';
 import { PRC } from 'src/app/interfaces/PRC';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
 import { LoginService } from 'src/app/services/login-service';
+import { environment } from 'src/environments/environment';
+
+const apiUrl = environment.apiUrl;
 
 @Component({
   selector: 'app-login-page',
@@ -92,6 +95,6 @@ export class LoginPageComponent implements OnInit {
 
   private sendFormData(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/auth/login', data, { headers: headers });
+    return this.http.post<any>(`${apiUrl}/auth/login`, data, { headers: headers });
   }
 }
