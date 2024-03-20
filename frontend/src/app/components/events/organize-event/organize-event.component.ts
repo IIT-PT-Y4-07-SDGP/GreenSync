@@ -50,7 +50,7 @@ export class OrganizeEventComponent implements OnInit {
         eventTime: timestamp,
         eventLocation: this.eventForm.value.eventLocation,
         eventDescription: this.eventForm.value.evetnDescription,
-        eventOrganizer: '65e873e15a9d6183a4670244'
+        eventOrganizer: '65f023dc098f881d9b7f9557'
 
       }
       // Convert registrationData to JSON format

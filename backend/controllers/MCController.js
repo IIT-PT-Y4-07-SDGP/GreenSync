@@ -37,6 +37,54 @@ class MCController{
             res.status(400).json({ error: "Error occurred while fetching Pending MC users" });
         }
     }
+
+    static async addPickupPoint (req,res) {
+        const {name,mc}=req.body
+        try{
+            const newPickup = await MCService.addPickupPoint(name,mc);
+            return res.status(200).json(newPickup);
+        }
+        catch(error){
+            console.log(error);
+            res.status(400).json({error:error.message})
+        }
+    }
+
+    static async getPickupPoints(req, res) {
+        const {id}=req.params;
+        try {
+            // Fetch all MC users from the database
+            const pickupPoints = await MCService.getPickupPoints(id);
+            return res.status(200).json(pickupPoints);
+        } catch (error) {
+            console.error(error);
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    static async createSchedule (req,res) {
+        try{
+            const schedule = await MCService.createSchedule(req.body);
+            return res.status(200).json(schedule);
+        }
+        catch(error){
+            console.log(error);
+            res.status(400).json({error:error.message})
+        }
+    }
+
+    static async updateSchedule (req,res) {
+        const {scheduleId,updatedSchedule}=req.body;
+        try{
+            const schedule = await MCService.updateSchedule(scheduleId,updatedSchedule);
+            return res.status(200).json(schedule);
+        }
+        catch(error){
+            console.log(error);
+            res.status(400).json({error:error.message})
+        }
+    }
+
 }
 
 // Export the controller

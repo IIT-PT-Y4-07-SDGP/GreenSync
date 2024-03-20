@@ -23,6 +23,11 @@ const eventsSchemma = new schema({
         type: ObjectId  ,
         required: false
     }],
+    eventToken: {
+        type: String,
+        default: 0,
+        required: true
+    },
     eventDescription: {
         type: String,
         required: true
