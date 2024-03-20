@@ -17,6 +17,5 @@ export class GeneralUserHomepageComponent implements OnInit {
 
     ngOnInit(): void {
       this.userData = this.loginService.getGeneralUser();
-      console.log(this.userData);
     }
 }

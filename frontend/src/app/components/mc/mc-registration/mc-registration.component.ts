@@ -3,6 +3,9 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable , Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MC } from 'src/app/interfaces/MC';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login-service';
 
 @Component({
   selector: 'app-mc-registration',
@@ -13,7 +16,12 @@ export class McRegistrationComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   MCRegFormGroup: FormGroup;  
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder, 
+    private http: HttpClient,
+    private router: Router,
+    private loginService: LoginService
+  ) {
     this.MCRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -55,22 +63,23 @@ export class McRegistrationComponent implements OnInit {
       const jsonData = JSON.stringify(formData);
       this.sendFormData(jsonData)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        response => {
-          alert("Registration is successful");
-          console.log(response);
+      .subscribe({
+        next: response => {
+          const MC: MC = response;
+          this.loginService.setMC(MC);
+          this.router.navigate(['/mc-admin-homepage'])
         },
-        error => {
+        error: err => {
           alert("Registration Failed :-(");
-          console.error('Error:', error);
+          console.error('Error:', err);
         }
-      );
+      });
     }
   }
 
-  private sendFormData(data: any): Observable<any> {
+  private sendFormData(data: any): Observable<MC> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/mc/registration', data, { headers: headers });
+    return this.http.post<MC>('http://localhost:5001/mc/registration', data, { headers: headers });
   }
 }
 
