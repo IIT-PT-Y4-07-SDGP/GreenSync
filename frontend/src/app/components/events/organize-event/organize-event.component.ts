@@ -58,17 +58,17 @@ export class OrganizeEventComponent implements OnInit {
       console.log(jsonData);
       this.sendFormData(jsonData)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        response => {
+      .subscribe({
+        next: response => {
           console.log('Response from backend:', response);
           alert("Event Created Successfully");
           this.dialogRef.close();
         },
-        error => {
-          alert(error.error.error);
-          console.error('Error:', error);
+        error: err => {
+          alert(err.error.error);
+          console.error('Error:', err);
         }
-        );
+        });
       }
     }
     
