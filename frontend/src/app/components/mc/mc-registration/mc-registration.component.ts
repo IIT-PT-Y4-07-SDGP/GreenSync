@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MC } from 'src/app/interfaces/MC';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-mc-registration',
@@ -14,7 +15,8 @@ import { LoginService } from 'src/app/services/login-service';
 })
 export class McRegistrationComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
-  MCRegFormGroup: FormGroup;  
+  MCRegFormGroup: FormGroup;
+  apiUrl = environment.apiUrl;  
 
   constructor(
     private fb: FormBuilder, 
@@ -79,7 +81,7 @@ export class McRegistrationComponent implements OnInit {
 
   private sendFormData(data: any): Observable<MC> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<MC>('http://localhost:5001/mc/registration', data, { headers: headers });
+    return this.http.post<MC>(`${this.apiUrl}/mc/registration`, data, { headers: headers });
   }
 }
 
