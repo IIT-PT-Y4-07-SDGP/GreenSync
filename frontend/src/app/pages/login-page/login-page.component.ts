@@ -1,14 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MC } from 'src/app/interfaces/MC';
 import { PRC } from 'src/app/interfaces/PRC';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login-service';
-import { environment } from 'src/environments/environment';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login-page',
@@ -18,11 +16,9 @@ import { environment } from 'src/environments/environment';
 export class LoginPageComponent implements OnInit {
   loginFormGroup: FormGroup;
   private destroy$: Subject<void> = new Subject();
-  apiUrl = environment.apiUrl;
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
-    private http: HttpClient,
     private router: Router
   ) {
     this.loginFormGroup = fb.group({
@@ -52,7 +48,7 @@ export class LoginPageComponent implements OnInit {
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
-      this.sendFormData(jsonData)
+      this.loginService.loginUser(jsonData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: response => {
@@ -90,10 +86,5 @@ export class LoginPageComponent implements OnInit {
         }
       );
     }
-  }
-
-  private sendFormData(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.apiUrl}/auth/login`, data, { headers: headers });
   }
 }

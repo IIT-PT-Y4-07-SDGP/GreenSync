@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable , Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MC } from 'src/app/interfaces/MC';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/login-service';
-import { environment } from 'src/environments/environment';
+import { LoginService } from 'src/app/services/login.service';
+import { McService } from 'src/app/services/mc.service';
 
 @Component({
   selector: 'app-mc-registration',
@@ -16,13 +15,12 @@ import { environment } from 'src/environments/environment';
 export class McRegistrationComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   MCRegFormGroup: FormGroup;
-  apiUrl = environment.apiUrl;  
 
   constructor(
     private fb: FormBuilder, 
-    private http: HttpClient,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private MCService: McService
   ) {
     this.MCRegFormGroup = fb.group({
       hideRequired: false,
@@ -63,25 +61,20 @@ export class McRegistrationComponent implements OnInit {
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
-      this.sendFormData(jsonData)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: response => {
-          const MC: MC = response;
-          this.loginService.setMC(MC);
-          this.router.navigate(['/mc-admin-homepage'])
-        },
-        error: err => {
-          alert("Registration Failed :-(");
-          console.error('Error:', err);
-        }
-      });
+      this.MCService.registerMC(jsonData)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: response => {
+            const MC: MC = response;
+            this.loginService.setMC(MC);
+            this.router.navigate(['/mc-admin-homepage'])
+          },
+          error: err => {
+            alert("Registration Failed :-(");
+            console.error('Error:', err);
+          }
+        });
     }
-  }
-
-  private sendFormData(data: any): Observable<MC> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<MC>(`${this.apiUrl}/mc/registration`, data, { headers: headers });
   }
 }
 
