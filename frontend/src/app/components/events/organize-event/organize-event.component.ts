@@ -94,9 +94,6 @@ export class OrganizeEventComponent implements OnInit {
     // Create a Date object
     const dateTime = new Date(combinedDateTimeString);
 
-    // Get the timestamp in milliseconds
-    const timestamp = dateTime.getTime();
-
     // Convert to ISO string format (e.g., "2024-04-06T07:00:00.000Z")
     const isoString = dateTime.toISOString();
 

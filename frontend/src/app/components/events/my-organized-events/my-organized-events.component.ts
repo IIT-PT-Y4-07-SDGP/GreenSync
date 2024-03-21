@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
 import { Event } from 'src/app/interfaces/event';
@@ -18,7 +17,6 @@ export class MyOrganizedEventsComponent implements OnInit {
   public events: Event[] = [];
   constructor(
     public dialog: MatDialog, 
-    private http: HttpClient,
     private eventService: EventService
   ) { }
 
@@ -36,8 +34,8 @@ export class MyOrganizedEventsComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    const organicerId = '65f023dc098f881d9b7f9557';
-    this.fetchOrganizingEvents(organicerId);
+    const organizerId = '65f023dc098f881d9b7f9557';
+    this.fetchOrganizingEvents(organizerId);
   }
 
 
