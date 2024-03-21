@@ -4,22 +4,7 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
 import { environment } from 'src/environments/environment';
-
-
-interface Event {
-  _id: string;
-  eventName: string;
-  eventTime: string;
-  eventLocation: string;
-  eventOrganizer: string;
-  eventParticipant: any[]; // Update the type based on your actual data structure
-  eventToken: string;
-  eventDescription: string;
-  eventStatus: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+import { Event } from 'src/app/interfaces/event';
 
 
 @Component({
