@@ -54,8 +54,8 @@ class EventsController{
     */
     async participateUser(req, res){
         try{
-            const participationResponse = await events.participateUser(req.body.eventID, req.body.userID)
-            res.status(201).json({message: 'User is participated'})
+            await events.participateUser(req.body.eventID, req.body.userID)
+            res.status(201).json({message: 'Successfully registered to event'})
         } catch(error) {
             console.error(error);
             res.status(500).json({error: "Error occurred during participation"})

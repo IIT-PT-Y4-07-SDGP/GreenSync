@@ -1,6 +1,7 @@
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
+const userModel = require("../models/userModel")
 
 const eventSchema = new schema({
     eventName: {
@@ -20,10 +21,9 @@ const eventSchema = new schema({
         required: true
     },
     eventParticipant: [{
-        userID: {
-            type: ObjectId,
-            required: false,
-            unique: true
+        user:{
+            type: schema.Types.ObjectId,
+            ref: 'general-user-Account',
         },
         participationStatus: {
             type: String,

@@ -95,45 +95,42 @@ class EventsService {
         }
     }
 
-    async participateUser(eventID, userID){
+    async participateUser(eventID, userID, res){
+        // Getting the user and event details
+        let event; 
+        let user;
+        
         // Check if eventId is provided
-        if (!eventID) {
-            return res.status(400).json({ error: 'Event ID is required' });
+        if (eventID) {
+            event = await eventsModel.findById(eventID)
+            // Validating event
+            if(!event) { throw new Error ("Event not found") }   
+        } else {
+            throw new Error('Event ID is required');
         }
 
         // Check if userID is provided
-        if (!userID) {
-            return res.status(400).json({ error: 'User ID is required' });
-        }
-
-        // Getting the user and event details
-        const event = await eventsModel.findById(eventID)
-        const user = await userModel.findById(userID);
-        
-        // Validating event
-        if(!event){
-            return res.status(400).json({ error: 'Event not found' });
-        }
-        
-        // Validating User
-        if(!user){
-            return res.status(400).json({ error: 'User not found' });
-        }
-        
-        // organizer shouldn't participate
-        if(userID == event.organizerID){
-            return res.status(400).json({ error: 'Organizer not  allowed to participate' });
+        if (userID) {
+            user = await userModel.findById(userID);
+            // Validating User
+            if(!user) { throw new Error("User not found") }
+            // organizer shouldn't participate
+            if(userID == event.eventOrganizer){ throw new Error('Organizer not  allowed to participate') }
+        } else {
+            throw new Error('User ID is required');
         }
 
         // Check if the user already exists in the event participants array
-        const existingParticipant = event.eventParticipant.find(participant => participant.userID.toString() === userID);
+        const existingParticipant = event.eventParticipant.find(participant => participant.user._id.toString() === userID);
         if (existingParticipant) {
-            return res.status(400).json({ error: 'User is already a participant in this event' });
+            throw new Error('User is already a participant in this event');
         }
 
         // Add the new participant to the eventParticipant array
-        event.eventParticipant.push({ userID: userID });
+        event.eventParticipant.push({ user: userID });
         await event.save();
+
+        // return await eventsModel.findById(eventID).populate('eventParticipant.user');
     }
 }
 
