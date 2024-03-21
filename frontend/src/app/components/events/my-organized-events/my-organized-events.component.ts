@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
-import { Event } from 'src/app/interfaces/event';
+import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../../services/event.service';
+import { LoginService } from 'src/app/services/login.service';
 
 
 @Component({
@@ -14,10 +15,11 @@ export class MyOrganizedEventsComponent implements OnInit {
   
   showButton: boolean = true; // Flag to control the visibility of the button
   eventResponse: any; // Property to hold the response from the server
-  public events: Event[] = [];
+  public events: EventDetails[] = [];
   constructor(
     public dialog: MatDialog, 
-    private eventService: EventService
+    private eventService: EventService,
+    private loginService: LoginService
   ) { }
 
   public imagePaths: string[] = [
@@ -34,13 +36,34 @@ export class MyOrganizedEventsComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    const organizerId = '65f023dc098f881d9b7f9557';
+    const organizerId: string = this.loginService.getGeneralUser()?._id!;
     this.fetchOrganizingEvents(organizerId);
   }
 
 
   fetchOrganizingEvents(eventOrganizer: string): void {
     this.eventService.getOrganizingEvents(eventOrganizer)
+      .subscribe({
+        next: events => {
+          // Assign the retrieved events to the component property
+          this.events = events.map(event => ({
+            _id: event._id,
+            eventName: event.eventName,
+            eventTime: event.eventTime,
+            eventLocation: event.eventLocation,
+            eventDescription: event.eventDescription,
+            eventOrganizer: event.eventOrganizer,
+            eventParticipant: event.eventParticipant,
+            eventToken: event.eventToken,
+            eventStatus: event.eventStatus,
+            createdAt: event.createdAt,
+            updatedAt: event.updatedAt,
+            __v: event.__v
+          }));
+        }, error: err => {
+          console.log(err);
+        }
+    });
   }
 
   formatDate(dateTime: string): string {
