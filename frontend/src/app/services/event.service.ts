@@ -20,7 +20,7 @@ export class EventService {
 
   getOrganizingEvents(eventOrganizer: string){
     // Make an HTTP request to fetch events from your server
-    this.http.get<Event[]>(`${this.apiUrl}/api/events/get-my-organizing-events?organizerId=${eventOrganizer}`)
+    this.http.get<Event[]>(`${this.apiUrl}/events/get-my-organizing-events?organizerId=${eventOrganizer}`)
       .subscribe(events => {
         // Assign the retrieved events to the component property
         this.events = events.map(event => ({
@@ -40,6 +40,6 @@ export class EventService {
     });
   }
   startEvent(eventId:string, ){
-    return this.http.post(`${this.apiUrl}/api/events/start-event/${eventId}`, {})
+    return this.http.post(`${this.apiUrl}/events/start-event/${eventId}`, {})
   } 
 }
