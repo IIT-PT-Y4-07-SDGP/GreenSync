@@ -31,7 +31,7 @@ import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
 import { ParticipationsComponent } from './components/events/participations/participations.component';
-import { OrganizingComponent } from './components/events/organizing/organizing.component';
+import { MyOrganizedEventsComponent } from './components/events/my-organized-events/my-organized-events.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 
@@ -54,7 +54,7 @@ import { OrganizedEventPageComponent } from './pages/organized-event-page/organi
     McAdminHomepageComponent,
     MyEventsComponent,
     ParticipationsComponent,
-    OrganizingComponent,
+    MyOrganizedEventsComponent,
     HeaderComponent,
     OrganizedEventPageComponent
   ],
