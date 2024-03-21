@@ -47,6 +47,20 @@ class EventsController{
             res.status(500).json({error: 'Event starting error'})
         }
     }
+
+    /*Required values from frontend
+      - Event ID
+      - User ID              
+    */
+    async participateUser(req, res){
+        try{
+            const participationResponse = await events.participateUser(req.body.eventID, req.body.userID)
+            res.status(201).json({message: 'User is participated'})
+        } catch(error) {
+            console.error(error);
+            res.status(500).json({error: "Error occurred during participation"})
+        }
+    }
 }
 
 // Export the controller

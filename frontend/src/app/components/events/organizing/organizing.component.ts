@@ -37,7 +37,7 @@ export class OrganizingComponent implements OnInit {
 
   fetchOrganizingEvents(eventOrganizer: string): void {
     // Make an HTTP request to fetch events from your server
-    this.http.get<Event[]>(`http://localhost:5001/api/events/get-my-organizing-events?organizerId=${eventOrganizer}`).subscribe(events => {
+    this.http.get<Event[]>(`http://localhost:5001/events/get-my-organizing-events?organizerId=${eventOrganizer}`).subscribe(events => {
       // Assign the retrieved events to the component property
       this.events = events.map(event => ({
         _id: event._id,
