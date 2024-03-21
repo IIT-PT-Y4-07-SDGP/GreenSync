@@ -27,9 +27,19 @@ import { ViewEventComponent } from './components/events/view-event/view-event.co
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
+import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
+import { PickupComponent } from './pages/public/pickup/pickup.component';
+import { HistoryComponent } from './pages/public/history/history.component';
+import { LocationComponent } from './pages/public/location/location.component';
+import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 
 @NgModule({
   declarations: [
+    DashbordComponent,
+    PickupComponent,
+    HistoryComponent,
+    LocationComponent,
+    PriceChartComponent,
     AppComponent,
     RegistrationPageComponent,
     UserRegistrationComponent,
@@ -59,7 +69,7 @@ import { MyEventsComponent } from './components/events/my-events/my-events.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatCardModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
