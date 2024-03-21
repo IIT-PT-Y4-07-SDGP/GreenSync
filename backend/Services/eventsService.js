@@ -75,14 +75,27 @@ class EventsService {
 
     async startEvent(eventId) {
 
+        try {
+        // Check if the event has already started
+        const existingEvent = await eventsModel.findOne({ _id: eventId });
+        if (existingEvent.eventStatus === 'Started' && /^\d{6}$/.test(existingEvent.eventToken)) {
+            console.log('Event already started with token:', existingEvent.eventToken);
+            return 'Event already started';
+        }
+
+        // Generate a unique token
         const newToken = this.generateUniqueToken();
 
+        // Update event token and status
         await this.updateEventToken(eventId, newToken);
 
         console.log('New token generated and updated for event:', newToken);
         return newToken;
-
+    } catch (error) {
+        console.error('Error starting event:', error);
+        throw new Error('Error starting event');
     }
+}
 }
 
 module.exports = EventsService
