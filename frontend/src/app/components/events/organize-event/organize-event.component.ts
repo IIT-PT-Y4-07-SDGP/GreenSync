@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable , Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
+import { EventService } from 'src/app/services/event.service';
+import { LoginService } from 'src/app/services/login.service';
 
 
 
@@ -15,18 +17,26 @@ import { takeUntil } from 'rxjs/operators';
 
 
 export class OrganizeEventComponent implements OnInit {
-  eventForm: FormGroup;
+  public eventForm: FormGroup;
+  public userDetails?: GeneralUser;
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<OrganizeEventComponent>, private http: HttpClient) { 
+  constructor(
+    private fb: FormBuilder, 
+    public dialogRef: MatDialogRef<OrganizeEventComponent>, 
+    private eventService: EventService,
+    private loginService: LoginService
+  ){ 
     this.eventForm = this.fb.group({
       hideRequired: false,
       floatLabel: 'auto',
-    });}
-    ngOnDestroy() {
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   
   ngOnInit(): void {
     this.eventForm = this.fb.group({
@@ -34,9 +44,9 @@ export class OrganizeEventComponent implements OnInit {
       eventLocation: ['', [Validators.required,]],
       eventDate: [null, [Validators.required]],
       eventTime: [null, [Validators.required,]],
-      evetnDescription: ['', [Validators.maxLength(1000)]]
+      eventDescription: ['', [Validators.maxLength(1000)]]
     })
-
+    this.userDetails = this.loginService.getGeneralUser();
   }
 
   onSubmit() {
@@ -49,34 +59,29 @@ export class OrganizeEventComponent implements OnInit {
         eventName: this.eventForm.value.eventName,
         eventTime: timestamp,
         eventLocation: this.eventForm.value.eventLocation,
-        eventDescription: this.eventForm.value.evetnDescription,
-        eventOrganizer: '65e873e15a9d6183a4670244'
-
+        eventDescription: this.eventForm.value.eventDescription,
+        eventOrganizer: this.userDetails?._id
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
       console.log(jsonData);
-      this.sendFormData(jsonData)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        response => {
-          console.log('Response from backend:', response);
-          alert("Event Created Successfully");
-          this.dialogRef.close();
-        },
-        error => {
-          alert(error.error.error);
-          console.error('Error:', error);
-        }
-        );
+      this.eventService.createEvent(jsonData)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: response => {
+            console.log('Response from backend:', response);
+            alert("Event Created Successfully");
+            this.dialogRef.close();
+          },
+          error: err => {
+            alert(err.error.error);
+            console.error('Error:', err);
+          }
+        });
       }
     }
     
-    private sendFormData(data: any): Observable<any> {
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      console.log(data);
-      return this.http.post<any>('http://localhost:5001/events/organize-event', data, { headers: headers });
-    }
+
 
   onCancel() {
     // Close the dialog without saving

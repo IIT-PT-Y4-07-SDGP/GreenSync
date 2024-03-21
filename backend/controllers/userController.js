@@ -9,7 +9,7 @@ class UserController{
         try{
             // Validate the user data and add ussr to database
             const newUserAccount = await user.userRegister(req.body, res);
-            return res.status(200).json({newUserAccount});
+            return res.status(200).json(newUserAccount);
         }
         catch(error){
             res.status(400).json({error:error.message})
@@ -26,6 +26,20 @@ class UserController{
 
             // Send the updated user details in the response
             return res.status(200).json({ updatedUser });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    static async deleteUser(req, res) {
+        try {
+            const {id} = req.params; // Assuming userId is provided in the request parameters
+
+            // Call the updateUserDetails method from the UserService
+            const deletedUser = await user.deleteUser(id);
+
+            // Send the updated user details in the response
+            return res.status(200).json({ deletedUser });
         } catch (error) {
             res.status(400).json({ error: error.message });
         }

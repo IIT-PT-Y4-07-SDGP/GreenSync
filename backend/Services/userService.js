@@ -182,6 +182,54 @@ class UserService {
         }
     }
 
+
+    async deleteUser(accountId) {
+        let session;
+        try {
+            session = await mongoose.startSession();
+            session.startTransaction();
+    
+            if (!accountId) {
+                throw new Error("Account ID is required.");
+            }
+    
+            const account = await accountModel.findById(accountId);
+            if (!account || account.userRole !== "GP") {
+                throw new Error("No account associated with the provided ID.");
+            }
+
+            if(account.accountStatus==="BANNED" || account.accountStatus==="SUSPENDED"){
+                throw new Error("Account cannot be deleted since its restricted");
+            }
+    
+            if (account.accountStatus === "DELETED") {
+                throw new Error("Account is already deleted.");
+            }
+    
+            account.accountStatus = "DELETED";
+            await account.save({ session });
+    
+            await session.commitTransaction();
+    
+            return {
+                _id: account._id,
+                username: account.username,
+                userRole: account.userRole,
+                email: account.email,
+                accountStatus: account.accountStatus
+            };
+        } catch (error) {
+            if (session && session.inTransaction()) {
+                await session.abortTransaction();
+            }
+            throw new Error(error.message);
+        } finally {
+            if (session) {
+                session.endSession();
+            }
+        }
+    }
+    
    
 }
 

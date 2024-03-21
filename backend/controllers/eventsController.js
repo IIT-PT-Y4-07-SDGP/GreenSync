@@ -25,6 +25,28 @@ class EventsController{
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
+
+    async getMyOrganizingEvents(req, res) {
+        try {
+            const organizerId = req.query.organizerId;
+            const newEvents = await events.getOrganizedEventsList(organizerId);
+            res.status(200).json(newEvents);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
+
+    async startEvents(req, res) {
+        try {
+            const eventId = req.params.eventId;
+            const newToken = await events.startEvent(eventId);
+            res.status(200).json({newToken});
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Event starting error'})
+        }
+    }
 }
 
 // Export the controller

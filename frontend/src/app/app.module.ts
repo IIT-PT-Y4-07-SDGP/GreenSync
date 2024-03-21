@@ -26,12 +26,19 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
+import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
+import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
 import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { PickupComponent } from './pages/public/pickup/pickup.component';
 import { HistoryComponent } from './pages/public/history/history.component';
 import { LocationComponent } from './pages/public/location/location.component';
 import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { ParticipationsComponent } from './components/events/participations/participations.component';
+import { OrganizingComponent } from './components/events/organizing/organizing.component';
+import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +59,14 @@ import { PriceChartComponent } from './pages/public/price-chart/price-chart.comp
     OrganizeEventComponent,
     McRegistrationComponent,
     ViewEventComponent,
-    MyEventsComponent
+    GeneralUserHomepageComponent,
+    PrcAdminHomepageComponent,
+    McAdminHomepageComponent,
+    MyEventsComponent,
+    HeaderComponent,
+    ParticipationsComponent,
+    OrganizingComponent,
+    OrganizedEventPageComponent
   ],
   imports: [
     BrowserModule,

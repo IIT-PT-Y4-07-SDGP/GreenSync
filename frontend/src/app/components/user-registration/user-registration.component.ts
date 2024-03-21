@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
+import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -16,7 +19,12 @@ export class UserRegistrationComponent implements OnInit {
   selectedProfilePicture!: string;
   userRegFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router,
+    private loginService: LoginService,
+    private userService: UserService
+  ) {
     this.userRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -105,24 +113,20 @@ export class UserRegistrationComponent implements OnInit {
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
-      this.sendFormData(jsonData)
+      this.userService.registerUser(jsonData)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          response => {
-            alert("Registration is successful");
-            console.log(response);
-          },
-          error => {
+        .subscribe({
+          next: response => {
+            const user: GeneralUser = response; 
+            this.loginService.setGeneralUser(user);
+            this.router.navigate(['/user-homepage']);
+          }, 
+          error: err =>{
             alert("Registration Failed :-(")
-            console.error('Error:', error);
-          }
-        );
+            console.error('Error:', err);
+          } 
+        });     
     }
-  }
-
-  private sendFormData(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/user/registration', data, { headers: headers });
   }
 }
 

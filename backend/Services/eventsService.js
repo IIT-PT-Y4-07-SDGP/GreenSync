@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const eventsModel = require('../models/eventsModel')
 const userModel = require('../models/userModel');
+const randomstring = require('randomstring');
 
 class EventsService {
     async eventsOrganize(eventsDetails){
@@ -38,6 +39,49 @@ class EventsService {
         } catch (error) {
             throw new Error(`Error fetching events from the database: ${error.message}`);
         }
+    }
+
+    async getOrganizedEventsList(eventOrganizer) {
+        try {
+            const OrganizerEventsList = await eventsModel.find({ eventOrganizer });
+            return OrganizerEventsList;
+        } catch (error) {
+            throw new Error(`Error fetching events from the database: ${error.message}`);
+        }
+    }
+
+    generateUniqueToken() {
+        let token;
+        token = randomstring.generate({ length: 6, charset: 'numeric' });
+        if (eventsModel.findOne({ eventToken: token })) {
+            token = randomstring.generate({ length: 6, charset: 'numeric' });
+        }else {
+            return token;
+        }
+        return token;
+    }
+
+    async updateEventToken(eventId, newToken) {
+        try {
+            await eventsModel.updateOne(
+                { _id: eventId },
+                { $set: { eventToken: newToken, eventStatus: 'Started' } }
+            );
+            console.log('Event token updated successfully.');
+        } catch (error) {
+            console.error('Error updating event token:', error);
+        }
+    }
+
+    async startEvent(eventId) {
+
+        const newToken = this.generateUniqueToken();
+
+        await this.updateEventToken(eventId, newToken);
+
+        console.log('New token generated and updated for event:', newToken);
+        return newToken;
+
     }
 }
 
