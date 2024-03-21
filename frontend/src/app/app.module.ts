@@ -30,6 +30,11 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
+import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
+import { PickupComponent } from './pages/public/pickup/pickup.component';
+import { HistoryComponent } from './pages/public/history/history.component';
+import { LocationComponent } from './pages/public/location/location.component';
+import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ParticipationsComponent } from './components/events/participations/participations.component';
 import { MyOrganizedEventsComponent } from './components/events/my-organized-events/my-organized-events.component';
@@ -37,6 +42,11 @@ import { OrganizedEventPageComponent } from './pages/organized-event-page/organi
 
 @NgModule({
   declarations: [
+    DashbordComponent,
+    PickupComponent,
+    HistoryComponent,
+    LocationComponent,
+    PriceChartComponent,
     AppComponent,
     RegistrationPageComponent,
     UserRegistrationComponent,
@@ -73,7 +83,7 @@ import { OrganizedEventPageComponent } from './pages/organized-event-page/organi
     MatDatepickerModule,
     MatNativeDateModule,
     MatCardModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
