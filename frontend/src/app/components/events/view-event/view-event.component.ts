@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Event } from 'src/app/interfaces/event';
+import { EventDetails } from 'src/app/interfaces/event';
 
 @Component({
   selector: 'app-view-event',
@@ -8,9 +8,9 @@ import { Event } from 'src/app/interfaces/event';
   styleUrls: ['./view-event.component.scss']
 })
 export class ViewEventComponent implements OnInit {
-  event: Event;
+  event: EventDetails;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { event: EventDetails }) {
     this.event = data.event;
    }
 

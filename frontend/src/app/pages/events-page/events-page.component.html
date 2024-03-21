@@ -12,7 +12,7 @@
         <div class="block mt-4 mx-auto w-9/12">
             <div class="card-deck">
                 <div class="card my-6 h-auto w-auto bg-gray-200 rounded-xl shadow-xl hover:scale-110 transition-transform duration-200"
-                    *ngFor="let event of events; let i = index" (click)="onCardClick(event, i)">
+                    *ngFor="let event of this.events; let i = index" (click)="onCardClick(event, i)">
                     <div class="card-body">
                         <div class="ml-4">
                             <div class="flex h-20">
