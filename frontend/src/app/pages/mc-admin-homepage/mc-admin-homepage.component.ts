@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MC } from 'src/app/interfaces/MC';
-import { LoginService } from 'src/app/services/login-service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-mc-admin-homepage',
