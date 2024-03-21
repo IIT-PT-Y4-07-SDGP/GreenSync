@@ -135,6 +135,10 @@ class EventsService {
         event.eventParticipant.push({ userID: userID });
         await event.save();
     }
+
+    async getTotalRegistered(eventId) {
+        const event = await eventsModel.findOne({ _id: eventId });
+    }
 }
 
 module.exports = EventsService
