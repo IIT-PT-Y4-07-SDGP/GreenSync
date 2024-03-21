@@ -55,7 +55,7 @@ export class EventsPageComponent implements OnInit {
 
   fetchEvents() {
     // Make an HTTP request to fetch events from your server
-    this.http.get<Event[]>('http://localhost:5001/api/events/get-events').subscribe(events => {
+    this.http.get<Event[]>('http://localhost:5001/events/get-events').subscribe(events => {
       // Assign the retrieved events to the component property
       this.events = events.map(event => ({
         _id: event._id,

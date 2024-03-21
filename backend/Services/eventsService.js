@@ -74,26 +74,67 @@ class EventsService {
     async startEvent(eventId) {
 
         try {
-        // Check if the event has already started
-        const existingEvent = await eventsModel.findOne({ _id: eventId });
-        if (existingEvent.eventStatus === 'Started' && /^\d{6}$/.test(existingEvent.eventToken)) {
-            console.log('Event already started with token:', existingEvent.eventToken);
-            return 'Event already started';
+            // Check if the event has already started
+            const existingEvent = await eventsModel.findOne({ _id: eventId });
+            if (existingEvent.eventStatus === 'Started' && /^\d{6}$/.test(existingEvent.eventToken)) {
+                console.log('Event already started with token:', existingEvent.eventToken);
+                return 'Event already started';
+            }
+
+            // Generate a unique token
+            const newToken = this.generateUniqueToken();
+
+            // Update event token and status
+            await this.updateEventToken(eventId, newToken);
+
+            console.log('New token generated and updated for event:', newToken);
+        return newToken;
+        } catch (error) {
+            console.error('Error starting event:', error);
+            throw new Error('Error starting event');
+        }
+    }
+
+    async participateUser(eventID, userID){
+        // Check if eventId is provided
+        if (!eventID) {
+            return res.status(400).json({ error: 'Event ID is required' });
         }
 
-        // Generate a unique token
-        const newToken = this.generateUniqueToken();
+        // Check if userID is provided
+        if (!userID) {
+            return res.status(400).json({ error: 'User ID is required' });
+        }
 
-        // Update event token and status
-        await this.updateEventToken(eventId, newToken);
+        // Getting the user and event details
+        const event = await eventsModel.findById(eventID)
+        const user = await userModel.findById(userID);
+        
+        // Validating event
+        if(!event){
+            return res.status(400).json({ error: 'Event not found' });
+        }
+        
+        // Validating User
+        if(!user){
+            return res.status(400).json({ error: 'User not found' });
+        }
+        
+        // organizer shouldn't participate
+        if(userID == event.organizerID){
+            return res.status(400).json({ error: 'Organizer not  allowed to participate' });
+        }
 
-        console.log('New token generated and updated for event:', newToken);
-        return newToken;
-    } catch (error) {
-        console.error('Error starting event:', error);
-        throw new Error('Error starting event');
+        // Check if the user already exists in the event participants array
+        const existingParticipant = event.eventParticipant.find(participant => participant.userID.toString() === userID);
+        if (existingParticipant) {
+            return res.status(400).json({ error: 'User is already a participant in this event' });
+        }
+
+        // Add the new participant to the eventParticipant array
+        event.eventParticipant.push({ userID: userID });
+        await event.save();
     }
-}
 }
 
 module.exports = EventsService
