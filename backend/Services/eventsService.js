@@ -1,17 +1,15 @@
-const mongoose = require('mongoose')
 const eventsModel = require('../models/eventsModel')
 const userModel = require('../models/userModel');
-const randomstring = require('randomstring');
+const randomString = require('randomstring');
 
 class EventsService {
     async eventsOrganize(eventsDetails){
-        let OrganizorID = eventsDetails.eventOrganizer;
-        if (await this.isOrganizerInDB(OrganizorID)){
+        let OrganizerID = eventsDetails.eventOrganizer;
+        if (await this.isOrganizerInDB(OrganizerID)){
             let eventTime = new Date(eventsDetails.eventTime)
             if (eventTime > new Date()){
-                eventsDetails.eventOrganizer = OrganizorID;
+                eventsDetails.eventOrganizer = OrganizerID;
                 const event = await eventsModel.create(eventsDetails);
-
                 return event;
             } else {
                 throw new Error('Event Time is not Valid')
@@ -52,9 +50,9 @@ class EventsService {
 
     generateUniqueToken() {
         let token;
-        token = randomstring.generate({ length: 6, charset: 'numeric' });
+        token = randomString.generate({ length: 6, charset: 'numeric' });
         if (eventsModel.findOne({ eventToken: token })) {
-            token = randomstring.generate({ length: 6, charset: 'numeric' });
+            token = randomString.generate({ length: 6, charset: 'numeric' });
         }else {
             return token;
         }
@@ -75,14 +73,27 @@ class EventsService {
 
     async startEvent(eventId) {
 
+        try {
+        // Check if the event has already started
+        const existingEvent = await eventsModel.findOne({ _id: eventId });
+        if (existingEvent.eventStatus === 'Started' && /^\d{6}$/.test(existingEvent.eventToken)) {
+            console.log('Event already started with token:', existingEvent.eventToken);
+            return 'Event already started';
+        }
+
+        // Generate a unique token
         const newToken = this.generateUniqueToken();
 
+        // Update event token and status
         await this.updateEventToken(eventId, newToken);
 
         console.log('New token generated and updated for event:', newToken);
         return newToken;
-
+    } catch (error) {
+        console.error('Error starting event:', error);
+        throw new Error('Error starting event');
     }
+}
 }
 
 module.exports = EventsService

@@ -37,7 +37,7 @@ import { LocationComponent } from './pages/public/location/location.component';
 import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ParticipationsComponent } from './components/events/participations/participations.component';
-import { OrganizingComponent } from './components/events/organizing/organizing.component';
+import { MyOrganizedEventsComponent } from './components/events/my-organized-events/my-organized-events.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 
 @NgModule({
@@ -65,7 +65,7 @@ import { OrganizedEventPageComponent } from './pages/organized-event-page/organi
     MyEventsComponent,
     HeaderComponent,
     ParticipationsComponent,
-    OrganizingComponent,
+    MyOrganizedEventsComponent,
     OrganizedEventPageComponent
   ],
   imports: [
