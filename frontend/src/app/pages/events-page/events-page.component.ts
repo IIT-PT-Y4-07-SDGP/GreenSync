@@ -13,6 +13,11 @@ import { EventService } from '../../services/event.service';
 })
 export class EventsPageComponent implements OnInit {
   public events: EventDetails[] = [];
+  pagedEvents: any[] = [];
+  pageSize: number = 10;
+  currentPage: number = 1;
+  totalPages: number = 1;
+
   constructor(public dialog: MatDialog, private eventServices: EventService) { }
 
   public imagePaths: string[] = [
@@ -30,6 +35,8 @@ export class EventsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchEvents();
+    this.totalPages = Math.ceil(this.events.length / this.pageSize);
+    this.loadPage();
   }
 
   onClickOrganizeEvents() {
@@ -121,4 +128,23 @@ export class EventsPageComponent implements OnInit {
     });
   }
 
+  loadPage() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = Math.min(startIndex + this.pageSize, this.events.length);
+    this.pagedEvents = this.events.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadPage();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadPage();
+    }
+  }
 }

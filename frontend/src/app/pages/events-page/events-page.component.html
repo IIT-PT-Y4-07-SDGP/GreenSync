@@ -38,5 +38,9 @@
                 </div>
             </div>
         </div>
+        <div class="flex justify-center mt-4">
+            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white" (click)="previousPage()" [hidden]="currentPage === 1">Previous</button>
+            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white ml-4" (click)="nextPage()" [hidden]="currentPage === totalPages">Next</button>
+        </div>
     </div>
 </div>
