@@ -35,7 +35,8 @@ import { MyOrganizedEventsComponent } from './components/events/my-organized-eve
 import { HeaderComponent } from './shared/header/header.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 import { ReportPageComponent } from './pages/report-page/report-page.component';
-import { ReportGarbageComponent } from './components/report-garbage/report-garbage.component';
+import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
+import { ReportComplaintComponent } from './components/report/report-complaint/report-complaint.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ReportGarbageComponent } from './components/report-garbage/report-garba
     HeaderComponent,
     OrganizedEventPageComponent,
     ReportGarbageComponent,
-    ReportPageComponent
+    ReportPageComponent,
+    ReportComplaintComponent
   ],
   imports: [
     BrowserModule,

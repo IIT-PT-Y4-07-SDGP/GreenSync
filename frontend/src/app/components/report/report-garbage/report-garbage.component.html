@@ -1,5 +1,5 @@
 <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
-    <div class="grid grid-cols-2 gap-4 mx-36">
+    <div class="grid grid-cols-2 gap-4">
       <mat-form-field
         [hideRequiredMarker]="reportForm.value.hideRequired"
         [floatLabel]="reportForm.value.floatLabel"
@@ -131,7 +131,7 @@
           placeholder="Enter Description"
           type="text"
           required
-          style="width: 100%; height: 250px"
+          style="width: 100%; height: 200px"
           formControlName="reportDescription"
         ></textarea>
       </mat-form-field>
