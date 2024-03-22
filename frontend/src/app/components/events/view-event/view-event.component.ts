@@ -1,14 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-interface Event {
-  _id: string;
-  eventName: string;
-  eventTime: string;
-  eventLocation: string;
-  eventDescription: string;
-  // Add other properties as needed
-}
+import { error } from 'console';
+import { EventDetails } from 'src/app/interfaces/event';
+import { EventService } from 'src/app/services/event.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-view-event',
@@ -16,9 +11,13 @@ interface Event {
   styleUrls: ['./view-event.component.scss']
 })
 export class ViewEventComponent implements OnInit {
-  event: Event;
+  event: EventDetails;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { event: EventDetails }, 
+    private loginService:LoginService,
+    private eventService: EventService
+  ) {
     this.event = data.event;
    }
 
@@ -42,7 +41,18 @@ export class ViewEventComponent implements OnInit {
   }
 
   onClickParticipateEvent(){
-    
+    const params = {
+      userID: this.loginService.getGeneralUser()?._id,
+      eventID: this.event._id
+    }
+    this.eventService.registerUserToEvent(params).subscribe({
+      next: res => {
+        alert(res.message)
+      },
+      error: err => {
+        console.log(err);
+        alert(err.error);
+      }
+    })
   }
-
 }

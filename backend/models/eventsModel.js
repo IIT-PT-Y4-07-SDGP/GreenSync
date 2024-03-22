@@ -1,8 +1,9 @@
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
+const userModel = require("../models/userModel")
 
-const eventsSchemma = new schema({
+const eventSchema = new schema({
     eventName: {
         type: String,
         required: true
@@ -20,8 +21,15 @@ const eventsSchemma = new schema({
         required: true
     },
     eventParticipant: [{
-        type: ObjectId  ,
-        required: false
+        user:{
+            type: schema.Types.ObjectId,
+            ref: 'general-user-Account',
+        },
+        participationStatus: {
+            type: String,
+            default: "Registered",
+            required: false
+        }
     }],
     eventToken: {
         type: String,
@@ -40,4 +48,4 @@ const eventsSchemma = new schema({
 
 }, {timestamps: true})
 
-module.exports = mongoose.model('Events',eventsSchemma);
+module.exports = mongoose.model('Events',eventSchema);
