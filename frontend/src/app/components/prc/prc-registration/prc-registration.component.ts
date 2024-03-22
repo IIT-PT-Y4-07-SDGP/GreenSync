@@ -1,19 +1,26 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable , Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+import { LoginService } from 'src/app/services/login.service';
+import { PRC } from 'src/app/interfaces/PRC';
+import { Router } from '@angular/router';
+import { PrcService } from 'src/app/services/prc.service';
 @Component({
   selector: 'app-prc-registration',
   templateUrl: './prc-registration.component.html',
   styleUrls: ['./prc-registration.component.scss']
 })
-export class PrcRegistrationComponent implements OnInit, OnDestroy {
+export class PrcRegistrationComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   PRCRegFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private loginService: LoginService,
+    private PRCService: PrcService
+  ) {
     this.PRCRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -56,23 +63,20 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
-      this.sendFormData(jsonData)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        response => {
-          alert("Registration is successful");
-        },
-        error => {
-          console.error('Error:', error);
-          alert("Registration Failed :-(");
-        }
-      );
+      this.PRCService.registerPRC(jsonData)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next : response => {
+            const PRC: PRC = response;
+            this.loginService.setPRC(PRC);
+            this.router.navigate(['/prc-admin-homepage'])
+          },
+          error: err => {
+            alert("Registration Failed :-(");
+            console.error('Error:', err);
+          }
+        });
     }
-  }
-
-  private sendFormData(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/prc/registration', data, { headers: headers });
   }
 }
 

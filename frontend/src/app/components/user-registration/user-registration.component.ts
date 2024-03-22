@@ -1,8 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
+import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -10,20 +13,23 @@ import {takeUntil} from 'rxjs/operators';
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.scss']
 })
-export class UserRegistrationComponent implements OnInit, OnDestroy {
-  selectedProfilePicture!: string;
-  userRegFormGroup: FormGroup;
+export class UserRegistrationComponent implements OnInit {
   private profilePicture!: File;
   private destroy$: Subject<void> = new Subject();
+  selectedProfilePicture!: string;
+  userRegFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder,
-              private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router,
+    private loginService: LoginService,
+    private userService: UserService
+  ) {
     this.userRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
     });
   }
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -91,6 +97,7 @@ export class UserRegistrationComponent implements OnInit, OnDestroy {
 
   onRegister() {
     if (this.userRegFormGroup.valid) {
+      // Construct the data object in the required format
       const formData = {
         firstName: this.userRegFormGroup.value.firstName,
         lastName: this.userRegFormGroup.value.lastName,
@@ -99,30 +106,27 @@ export class UserRegistrationComponent implements OnInit, OnDestroy {
         account: {
           username: this.userRegFormGroup.value.username,
           phoneNumber: this.userRegFormGroup.value.phoneNumber,
-          userRole: 'GP',
+          userRole: 'GP', // Assuming this value is constant
           email: this.userRegFormGroup.value.email,
           password: this.userRegFormGroup.value.password,
         }
       }
+      // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
-      this.sendFormData(jsonData)
+      this.userService.registerUser(jsonData)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          response => {
-            alert("Registration is successful");
-            console.log(response);
-          },
-          error => {
-            alert("Registration Failed :-(");
-            console.error('Error:', error);
-          }
-        );
+        .subscribe({
+          next: response => {
+            const user: GeneralUser = response; 
+            this.loginService.setGeneralUser(user);
+            this.router.navigate(['/user-homepage']);
+          }, 
+          error: err =>{
+            alert("Registration Failed :-(")
+            console.error('Error:', err);
+          } 
+        });     
     }
-  }
-
-  private sendFormData(data: any): Observable<any> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post<any>('http://localhost:5001/user/registration', data, {headers: headers});
   }
 }
 
@@ -130,13 +134,15 @@ export function passwordValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const value: string = control.value;
 
+    // Password should be minimum 8 characters long
     if (value.length < 8) {
-      return {'minlength': true};
+      return { 'minlength': true };
     }
 
+    // Password should contain at least one special character, one lowercase letter, one uppercase letter, and one number
     const regex = /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!regex.test(value)) {
-      return {'invalidPassword': true};
+      return { 'invalidPassword': true };
     }
 
     return null;
@@ -147,7 +153,8 @@ export function confirmPasswordValidator(passwordControlName: string): Validator
   return (control: AbstractControl): { [key: string]: any } | null => {
     const password = control.root.get(passwordControlName)?.value;
     const confirmPassword = control.value;
-    return password === confirmPassword ? null : {'passwordMismatch': true};
-  };
 
+    // Check if passwords match
+    return password === confirmPassword ? null : { 'passwordMismatch': true };
+  };
 }
