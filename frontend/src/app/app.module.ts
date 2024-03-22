@@ -30,10 +30,13 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
-import { ParticipationsComponent } from './components/events/participations/participations.component';
+import { ParticipationComponent } from './components/events/participation/participation.component';
 import { MyOrganizedEventsComponent } from './components/events/my-organized-events/my-organized-events.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
+import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
+import { ReportComplaintComponent } from './components/report/report-complaint/report-complaint.component';
 
 @NgModule({
   declarations: [
@@ -53,10 +56,13 @@ import { OrganizedEventPageComponent } from './pages/organized-event-page/organi
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
     MyEventsComponent,
-    ParticipationsComponent,
+    ParticipationComponent,
     MyOrganizedEventsComponent,
     HeaderComponent,
-    OrganizedEventPageComponent
+    OrganizedEventPageComponent,
+    ReportGarbageComponent,
+    ReportPageComponent,
+    ReportComplaintComponent
   ],
   imports: [
     BrowserModule,

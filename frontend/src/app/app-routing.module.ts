@@ -8,6 +8,7 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'user-homepage', component: GeneralUserHomepageComponent },
   { path: 'prc-admin-homepage', component: PrcAdminHomepageComponent },
   { path: 'mc-admin-homepage', component: McAdminHomepageComponent },
+  { path: 'user-homepage/report', component: ReportPageComponent},
   { path: 'user-homepage/event', component: EventsPageComponent },
   { path: 'user-homepage/event/organized-event-page', component: OrganizedEventPageComponent },
 ];
