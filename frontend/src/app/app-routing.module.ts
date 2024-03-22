@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'prc-admin-homepage', component: PrcAdminHomepageComponent },
   { path: 'mc-admin-homepage', component: McAdminHomepageComponent },
   { path: 'user-homepage/event', component: EventsPageComponent },
-  { path: 'user-homepage/event/organized-event-page', component: OrganizedEventPageComponent },
+  { path: 'user-homepage/event/organized-event-page/:eventId', component: OrganizedEventPageComponent },
 ];
 
 @NgModule({

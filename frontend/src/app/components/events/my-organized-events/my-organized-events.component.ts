@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../../services/event.service';
 import { LoginService } from 'src/app/services/login.service';
+import { EventsPageComponent } from 'src/app/pages/events-page/events-page.component';
 
 
 @Component({
@@ -19,7 +22,9 @@ export class MyOrganizedEventsComponent implements OnInit {
   constructor(
     public dialog: MatDialog, 
     private eventService: EventService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router,
+    private dialogRef: MatDialogRef<EventsPageComponent>
   ) { }
 
   public imagePaths: string[] = [
@@ -117,5 +122,10 @@ export class MyOrganizedEventsComponent implements OnInit {
 
   isEventStarted(event: any){
     return event.eventStatus === 'Started' && /^\d{6}$/.test(event.eventToken);
+  }
+
+  onClickOpenOrganizedEventViewPage(eventId: string){
+    this.dialogRef.close();
+    this.router.navigate(['/user-homepage/event/organized-event-page', eventId]);
   }
 }

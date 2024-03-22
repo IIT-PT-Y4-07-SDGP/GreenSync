@@ -14,8 +14,8 @@ export class OrganizedEventPageComponent implements OnInit {
   constructor(private eventServices: EventService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.eventId = params['id'];
+    this.route.params.subscribe(params => {
+      this.eventId = params['eventId'];
     });
   }
 
