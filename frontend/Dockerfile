@@ -10,8 +10,6 @@ COPY . .
 RUN ng build --prod
 
 # Stage 2: Create a minimal Nginx image to serve the Angular app
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged:latest
 USER 10014
 COPY --from=builder /app/dist/* /usr/share/nginx/html/
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]

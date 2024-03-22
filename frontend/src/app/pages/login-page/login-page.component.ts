@@ -1,8 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MC } from 'src/app/interfaces/MC';
+import { PRC } from 'src/app/interfaces/PRC';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login-page',
@@ -12,7 +16,11 @@ import { takeUntil } from 'rxjs/operators';
 export class LoginPageComponent implements OnInit {
   loginFormGroup: FormGroup;
   private destroy$: Subject<void> = new Subject();
-  constructor(private fb: FormBuilder, private http: HttpClient) { 
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router
+  ) {
     this.loginFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -40,23 +48,43 @@ export class LoginPageComponent implements OnInit {
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
-      this.sendFormData(jsonData)
+      this.loginService.loginUser(jsonData)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          response => {
-            alert("Login is successful");
-            console.log("Response => ", response);
+        .subscribe({
+          next: response => {
+            const userRole = response.account.userRole;
+            switch(userRole) {
+              case 'GP':
+                const generalUser: GeneralUser = response;
+                this.loginService.setGeneralUser(generalUser);
+                // Navigate to user home page component
+                this.router.navigate(['/user-homepage']);
+                break;
+              case 'PRC-ADMIN':
+                const PRC: PRC = response;
+                this.loginService.setPRC(PRC);
+                this.router.navigate(['/prc-admin-homepage']); // Navigate to PRC Admin Panel
+                break;
+              case 'PRC-DRIVER':
+                // this.router.navigate(['/user']); // Navigate to PRC Driver Panel
+                break;
+              case 'MC-ADMIN':
+                const MC: MC = response;
+                this.loginService.setMC(MC);
+                this.router.navigate(['/mc-admin-homepage']); // Navigate to MC-ADMIN Panel
+                break;
+              default:
+                // Handle unexpected roles or errors
+                alert(`Unknown user role: ${userRole}`);
+              break;
+            }
           },
-          error => {
+          error: err => {
             alert("Login Failed :-(")
-            console.error('Error:', error);
+            console.error('Error:', err);
           }
-        );
+        }
+      );
     }
-  }
-
-  private sendFormData(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/auth/login', data, { headers: headers });
   }
 }

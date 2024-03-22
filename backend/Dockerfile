@@ -1,32 +1,11 @@
-# Stage 1: Build the Angular app
-FROM node:21 as builder
-
-# Set the working directory in the container
+FROM node:20.11.0
+ENV PORT=5001
+RUN addgroup --gid 10014 choreo && \
+    adduser  --disabled-password --uid 10014 --ingroup choreo choreouser
+USER 10014
 WORKDIR /app
-
-# Copy package.json and package-lock.json to the container
 COPY package*.json ./
-
-# Install Angular CLI globally
-RUN npm install -g @angular/cli
-
-# Install dependencies
-RUN npm install
-
-# Copy the entire application to the container
+RUN npm clean-install
 COPY . .
-
-# Build the Angular app
-RUN ng build --prod
-
-# Stage 2: Create a minimal Nginx image to serve the Angular app
-FROM nginx:alpine
-
-# Copy the built Angular app from the builder stage to the final image
-COPY --from=builder /app/dist/* /usr/share/nginx/html/
-
-# Expose the default Nginx port
-EXPOSE 80
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 5001
+CMD [ "node", "index.js"]

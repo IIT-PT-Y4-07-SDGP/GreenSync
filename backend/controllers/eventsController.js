@@ -25,6 +25,42 @@ class EventsController{
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
+
+    async getMyOrganizingEvents(req, res) {
+        try {
+            const organizerId = req.query.organizerId;
+            const newEvents = await events.getOrganizedEventsList(organizerId);
+            res.status(200).json(newEvents);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
+
+    async startEvents(req, res) {
+        try {
+            const eventId = req.params.eventId;
+            const newToken = await events.startEvent(eventId);
+            res.status(200).json({newToken});
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Event starting error'})
+        }
+    }
+
+    /*Required values from frontend
+      - Event ID
+      - User ID              
+    */
+    async participateUser(req, res){
+        try{
+            await events.participateUser(req.body.eventID, req.body.userID)
+            res.status(201).json({message: 'Successfully registered to event'})
+        } catch(error) {
+            console.error(error);
+            res.status(500).json({error: "Error occurred during participation"})
+        }
+    }
 }
 
 // Export the controller

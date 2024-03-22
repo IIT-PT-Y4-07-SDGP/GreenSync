@@ -14,6 +14,7 @@ const prcRoute = require("./routes/prc")
 const eventsRoute = require("./routes/events");
 const mcRoute = require("./routes/mc");
 const authRouter = require("./routes/auth");
+const adminRouter = require("./routes/admin");
 
 // Importing Controllers and creating instance
 const UserController = require("./controllers/userController");
@@ -39,12 +40,12 @@ app.post("/prc/registration", PRCController.PRCRegistration);
 app.post("/mc/registration", MCController.MCRegistration);
 
 // Main route and the sub routes 
-app.use(requireAuth);
-app.use("/user", userRoute);
 app.use("/prc", prcRoute);
 app.use("/mc", mcRoute);
+app.use("/admin", adminRouter);
+app.use("/user", userRoute);
 app.use("/events", eventsRoute);
-app.use("/api/events", eventsRoute);
+app.use(requireAuth);
 
 // Verifying the connection to database and starting the server 
 mongoose
