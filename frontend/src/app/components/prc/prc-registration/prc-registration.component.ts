@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable , Subject } from 'rxjs';
@@ -9,11 +9,11 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './prc-registration.component.html',
   styleUrls: ['./prc-registration.component.scss']
 })
-export class PrcRegistrationComponent implements OnInit {
+export class PrcRegistrationComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   PRCRegFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { 
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.PRCRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -63,13 +63,13 @@ export class PrcRegistrationComponent implements OnInit {
           alert("Registration is successful");
         },
         error => {
-          alert("Registration Failed :-(");
           console.error('Error:', error);
+          alert("Registration Failed :-(");
         }
       );
     }
   }
-    
+
   private sendFormData(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>('http://localhost:5001/prc/registration', data, { headers: headers });

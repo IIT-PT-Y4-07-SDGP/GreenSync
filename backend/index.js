@@ -19,6 +19,7 @@ const authRouter = require("./routes/auth");
 const UserController = require("./controllers/userController");
 const PRCController = require("./controllers/PRCController");
 const MCController = require("./controllers/MCController");
+const DriverController = require("./controllers/driverController");
 
 // Initiating Express
 const app = express();
@@ -37,6 +38,7 @@ app.use("/auth", authRouter);
 app.post("/user/registration", UserController.userRegistration);
 app.post("/prc/registration", PRCController.PRCRegistration);
 app.post("/mc/registration", MCController.MCRegistration);
+app.get("/driver/registration", DriverController.getPRCs);
 
 // Main route and the sub routes 
 app.use(requireAuth);

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 
 @Component({
@@ -10,18 +10,20 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.scss']
 })
-export class UserRegistrationComponent implements OnInit {
-  private profilePicture!: File;
-  private destroy$: Subject<void> = new Subject();
+export class UserRegistrationComponent implements OnInit, OnDestroy {
   selectedProfilePicture!: string;
   userRegFormGroup: FormGroup;
+  private profilePicture!: File;
+  private destroy$: Subject<void> = new Subject();
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder,
+              private http: HttpClient) {
     this.userRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
     });
   }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -89,7 +91,6 @@ export class UserRegistrationComponent implements OnInit {
 
   onRegister() {
     if (this.userRegFormGroup.valid) {
-      // Construct the data object in the required format
       const formData = {
         firstName: this.userRegFormGroup.value.firstName,
         lastName: this.userRegFormGroup.value.lastName,
@@ -98,21 +99,21 @@ export class UserRegistrationComponent implements OnInit {
         account: {
           username: this.userRegFormGroup.value.username,
           phoneNumber: this.userRegFormGroup.value.phoneNumber,
-          userRole: 'GP', // Assuming this value is constant
+          userRole: 'GP',
           email: this.userRegFormGroup.value.email,
           password: this.userRegFormGroup.value.password,
         }
       }
-      // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
       this.sendFormData(jsonData)
         .pipe(takeUntil(this.destroy$))
         .subscribe(
           response => {
             alert("Registration is successful");
+            console.log(response);
           },
           error => {
-            alert("Registration Failed :-(")
+            alert("Registration Failed :-(");
             console.error('Error:', error);
           }
         );
@@ -120,8 +121,8 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   private sendFormData(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/user/registration', data, { headers: headers });
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post<any>('http://localhost:5001/user/registration', data, {headers: headers});
   }
 }
 
@@ -129,15 +130,13 @@ export function passwordValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const value: string = control.value;
 
-    // Password should be minimum 8 characters long
     if (value.length < 8) {
-      return { 'minlength': true };
+      return {'minlength': true};
     }
 
-    // Password should contain at least one special character, one lowercase letter, one uppercase letter, and one number
     const regex = /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!regex.test(value)) {
-      return { 'invalidPassword': true };
+      return {'invalidPassword': true};
     }
 
     return null;
@@ -148,8 +147,7 @@ export function confirmPasswordValidator(passwordControlName: string): Validator
   return (control: AbstractControl): { [key: string]: any } | null => {
     const password = control.root.get(passwordControlName)?.value;
     const confirmPassword = control.value;
-
-    // Check if passwords match
-    return password === confirmPassword ? null : { 'passwordMismatch': true };
+    return password === confirmPassword ? null : {'passwordMismatch': true};
   };
+
 }

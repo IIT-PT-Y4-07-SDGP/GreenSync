@@ -1,18 +1,22 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
   loginFormGroup: FormGroup;
   private destroy$: Subject<void> = new Subject();
-  constructor(private fb: FormBuilder, private http: HttpClient) { 
+
+  constructor(private fb: FormBuilder,
+              private http: HttpClient,
+              private router: Router) {
     this.loginFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -46,6 +50,9 @@ export class LoginPageComponent implements OnInit {
           response => {
             alert("Login is successful");
             console.log("Response => ", response);
+            if (response.userRole === 'PRC-ADMIN') {
+              this.router.navigate(['prc-admin']);
+            }
           },
           error => {
             alert("Login Failed :-(")
@@ -56,7 +63,8 @@ export class LoginPageComponent implements OnInit {
   }
 
   private sendFormData(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('http://localhost:5001/auth/login', data, { headers: headers });
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post<any>('http://localhost:5001/auth/login', data, {headers: headers});
   }
+
 }

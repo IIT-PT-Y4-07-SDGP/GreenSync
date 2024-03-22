@@ -1,6 +1,6 @@
-<form 
-    [formGroup]="MCRegFormGroup" 
-    (ngSubmit)="onRegister()" 
+<form
+    [formGroup]="MCRegFormGroup"
+    (ngSubmit)="onRegister()"
     class="grid grid-cols-2 gap-x-8 gap-y-3"
 >
     <!-- MC Name Section -->
@@ -10,12 +10,12 @@
         class="col-span-1"
     >
         <input matInput placeholder="Municipal Council Name" required formControlName="mcName">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('mcName')?.invalid && 
+        <mat-error
+            *ngIf="MCRegFormGroup.get('mcName')?.invalid &&
             (MCRegFormGroup.get('mcName')?.dirty || MCRegFormGroup.get('mcName')?.touched)"
         >
-            <span 
-                *ngIf="MCRegFormGroup.get('mcName')?.errors && 
+            <span
+                *ngIf="MCRegFormGroup.get('mcName')?.errors &&
                 MCRegFormGroup.get('mcName')?.errors?.['required']"
             > Municipal Council Name required.</span>
         </mat-error>
@@ -28,13 +28,13 @@
         class="col-span-1"
     >
         <input matInput placeholder="District" required formControlName="district">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('district')?.invalid && 
+        <mat-error
+            *ngIf="MCRegFormGroup.get('district')?.invalid &&
             (MCRegFormGroup.get('district')?.dirty || MCRegFormGroup.get('district')?.touched)"
         >
-            <span *ngIf="MCRegFormGroup.get('district')?.errors 
+            <span *ngIf="MCRegFormGroup.get('district')?.errors
                 && MCRegFormGroup.get('district')?.errors?.['required']"
-            > 
+            >
                 District is required.
             </span>
         </mat-error>
@@ -47,12 +47,12 @@
         class="col-span-full"
     >
         <input matInput placeholder="Address" required formControlName="address">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('address')?.invalid && 
+        <mat-error
+            *ngIf="MCRegFormGroup.get('address')?.invalid &&
             (MCRegFormGroup.get('address')?.dirty || MCRegFormGroup.get('address')?.touched)"
         >
-            <span 
-                *ngIf="MCRegFormGroup.get('address')?.errors && 
+            <span
+                *ngIf="MCRegFormGroup.get('address')?.errors &&
                 MCRegFormGroup.get('address')?.errors?.['required']"
             > Address is required.</span>
         </mat-error>
@@ -69,12 +69,12 @@
         class="col-span-full"
     >
         <input matInput placeholder="Username" required formControlName="username">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('username')?.invalid && 
+        <mat-error
+            *ngIf="MCRegFormGroup.get('username')?.invalid &&
             (MCRegFormGroup.get('username')?.dirty || MCRegFormGroup.get('username')?.touched)"
         >
-            <span 
-                *ngIf="MCRegFormGroup.get('username')?.errors && 
+            <span
+                *ngIf="MCRegFormGroup.get('username')?.errors &&
                 MCRegFormGroup.get('username')?.errors?.['required']"
             > Username is required.</span>
         </mat-error>
@@ -87,8 +87,8 @@
         class="col-span-1"
     >
         <input matInput placeholder="Email" required formControlName="email" type="email">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('email')?.invalid && 
+        <mat-error
+            *ngIf="MCRegFormGroup.get('email')?.invalid &&
             (MCRegFormGroup.get('email')?.dirty || MCRegFormGroup.get('email')?.touched)"
         >
             <span *ngIf="MCRegFormGroup.get('email')?.errors && MCRegFormGroup.get('email')?.errors?.['required']">Email is required.</span>
@@ -107,7 +107,7 @@
         <mat-error *ngIf="MCRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.</mat-error>
         <mat-error *ngIf="MCRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone number.</mat-error>
     </mat-form-field>
-    
+
     <!-- Password Section -->
     <mat-form-field
         [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
@@ -144,7 +144,7 @@
 
     <!-- Register Section -->
     <div class="col-span-full align-middle justify-center grid grid-rows-2 gap-1">
-        <button 
+        <button
             class="bg-primary px-4 py-1 rounded text-white row-span-1"
             type="submit"
             [class.opacity-50]="!this.MCRegFormGroup.valid"
@@ -153,8 +153,8 @@
         >Register</button>
         <!-- Already have an account -->
         <div class="flex flex-row row-span-1 text-xs">
-            <span>Already have an account? 
-                <a href="http://localhost:4200/registration" class="text-primary"> login page </a>
+            <span>Already have an account?
+                <a routerLink="/login-page" class="text-primary"> login page </a>
             </span>
         </div>
     </div>

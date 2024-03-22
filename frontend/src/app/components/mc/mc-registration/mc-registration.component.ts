@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable , Subject } from 'rxjs';
@@ -9,9 +9,9 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './mc-registration.component.html',
   styleUrls: ['./mc-registration.component.scss']
 })
-export class McRegistrationComponent implements OnInit {
+export class McRegistrationComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
-  MCRegFormGroup: FormGroup;  
+  MCRegFormGroup: FormGroup;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.MCRegFormGroup = fb.group({

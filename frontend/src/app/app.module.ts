@@ -26,6 +26,11 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { PrcAdminComponent } from './pages/prc-admin-page/prc-admin/prc-admin.component';
+import { DriverRegistrationComponent } from './components/prc/driver-registration/driver-registration/driver-registration.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import { ViewPrcListComponent } from './components/prc/prc-registration/view-prc-list/view-prc-list.component';
+import { ViewDrivesListComponent } from './components/prc/driver-registration/view-drives-list/view-drives-list.component';
 
 @NgModule({
   declarations: [
@@ -40,25 +45,30 @@ import { MatButtonModule } from '@angular/material/button';
     LoginPageComponent,
     OrganizeEventComponent,
     McRegistrationComponent,
-    ViewEventComponent
+    ViewEventComponent,
+    PrcAdminComponent,
+    DriverRegistrationComponent,
+    ViewPrcListComponent,
+    ViewDrivesListComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatSelectModule,
-    MatInputModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCardModule,
-    MatButtonModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatSelectModule,
+        MatInputModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCardModule,
+        MatButtonModule,
+        MatSidenavModule,
+    ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })
