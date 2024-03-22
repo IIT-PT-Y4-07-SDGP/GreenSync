@@ -29,6 +29,10 @@ export class EventService {
     return this.http.get<EventDetails[]>(`${this.apiUrl}/events/get-events`)
   }
 
+  registerUserToEvent(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/events/participate`, data, { headers: this.headers });
+  }
+
   getEvent(eventId: string){
     return this.http.get<EventDetails[]>(`${this.apiUrl}/events/get-event-total-registered?eventId=${eventId}`)
   }

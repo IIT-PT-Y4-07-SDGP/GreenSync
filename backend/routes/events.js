@@ -10,5 +10,8 @@ router.get("/get-my-organizing-events", eventsController.getMyOrganizingEvents);
 router.post("/start-event/:eventId", eventsController.startEvents);
 router.post("/participate", eventsController.participateUser);
 router.post("/get-event-total-registered", eventsController.getTotalRegistered);
+router.get("/get-my-organizing-events", eventsController.getMyOrganizingEvents);
+router.post("/start-event/:eventId", eventsController.startEvents);
+router.post("/participate", eventsController.participateUser);
 
 module.exports = router;

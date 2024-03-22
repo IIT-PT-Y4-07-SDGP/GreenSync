@@ -13,17 +13,11 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
+import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
-
-
-  { path: 'public/dashboard', component: DashbordComponent },
-  { path: 'public/pickup', component: PickupComponent },
-  { path: 'public/location', component: LocationComponent },
-  { path: 'public/history', component: HistoryComponent },
-  { path: 'public/price-chart', component: PriceChartComponent },
   { path: 'registration', component: RegistrationPageComponent },
   { path: 'login-page', component: LoginPageComponent },
   { path: 'user-homepage', component: GeneralUserHomepageComponent },
