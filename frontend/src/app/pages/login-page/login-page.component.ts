@@ -52,7 +52,14 @@ export class LoginPageComponent implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: response => {
-            const userRole = response.account.userRole;
+            // const userRole = response.account.userRole;
+            const accessToken = this.loginService.getAccessTokenFromCookie();
+            if(!accessToken){
+              alert("User not logged in");
+            }
+            const decodedAccessToken = this.loginService.decodeAccessToken(accessToken);
+            const userRole=decodedAccessToken.UserInfo.role;
+            const username=decodedAccessToken.UserInfo.username;
             switch(userRole) {
               case 'GP':
                 const generalUser: GeneralUser = response;

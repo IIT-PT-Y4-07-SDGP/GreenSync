@@ -229,6 +229,45 @@ class UserService {
             }
         }
     }
+
+
+    async getUserByUsername(username) {
+        if(!username){
+            throw new Error("Username is required");
+        }
+        try {
+            const account = await accountModel.findOne({ username });
+            if (!account) {
+                throw new Error("User not found");
+            }
+            const accountId=account._id;
+            const user = await userModel.findOne({ account:accountId }).populate('account');
+            if (!account) {
+                throw new Error("User not found");
+            }
+
+
+            return {
+                _id:user._id,
+                firstName:user.firstName,
+                lastName:user.lastName,
+                points:user.points,
+                profilePic:user.profilePic,
+                address:user.address,
+                account:{
+                    _id:user.account._id,
+                    username:user.account.username,
+                    phoneNumber:user.account.phoneNumber,
+                    userRole:user.account.userRole,
+                    email:user.account.email,
+                    accountStatus:user.account.accountStatus,
+                }
+            };
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.message);
+        }
+    }
     
    
 }

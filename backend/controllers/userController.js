@@ -44,7 +44,18 @@ class UserController{
             res.status(400).json({ error: error.message });
         }
     }
+
+    static async getUserByUsername(req, res) {
+        try {
+            const {username} = req.params; 
+
+            const userAccount = await user.getUserByUsername(username);
+            return res.status(200).json(userAccount);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
 }
 
-// Export the controller
+
 module.exports = UserController;
