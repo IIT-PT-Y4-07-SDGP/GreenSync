@@ -5,18 +5,31 @@ const AuthService = require("../Services/authService");
 const prc = new PRCService();
 const authService = new AuthService();
 
-class PRCController{
-    // prc Registration
-    static async PRCRegistration (req,res) {
-        try{
-            // Validate the prc data and add prc to database
-            const newPRC = await prc.PRCRegister(req.body, res);
-            return res.status(200).json({newPRC});
-        }
-        catch(error){
-            res.status(400).json({error:error.message})
-        }
+class PRCController {
+  // prc Registration
+  static async PRCRegistration(req, res) {
+    try {
+      // Validate the prc data and add prc to database
+      const newPRC = await prc.PRCRegister(req.body, res);
+      return res.status(200).json({ newPRC });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
     }
+  }
+
+  /**
+   * Assigne pickups by truck and dirivers
+   * @param {*} req
+   * @param {*} res
+   */
+  static async PRCAssignePickups(req, res) {
+    try {
+      const assignedPickups = await prc.PRCAssignePickups(req, res);
+      return res.status(200).json({ assignedPickups });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 // Export the controller
