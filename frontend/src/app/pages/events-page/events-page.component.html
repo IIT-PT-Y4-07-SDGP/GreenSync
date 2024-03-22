@@ -4,8 +4,7 @@
             <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white row-span-1" (click)="onClickViewMyEvents()">My Events</button>
         </div>
         <div class="col-span-1 align-middle justify-end grid grid-rows-2 gap-1 mr-4">
-            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white row-span-1"
-                (click)="onClickOrganizeEvents()">Organize Event</button>
+            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white row-span-1" (click)="onClickOrganizeEvents()">Organize Event</button>
         </div>
     </div>
     <div class="w-auto h-auto" style="max-height: 500px; overflow-y: auto;">
@@ -36,6 +35,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="flex justify-center mt-4">
+            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white" (click)="previousPage()" [hidden]="currentPage === 1">Previous</button>
+            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white ml-4" (click)="nextPage()" [hidden]="currentPage === totalPages">Next</button>
         </div>
     </div>
 </div>

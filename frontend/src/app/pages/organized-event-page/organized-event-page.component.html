@@ -1,1 +1,8 @@
-<p>organized-event-page works!</p>
+<div>
+  <h3>{{ events[0].eventName }}</h3>
+  <ul>
+    <li *ngFor="let participant of events[0].eventParticipant">
+      {{ participant.user.firstName }} {{ participant.user.lastName }} - {{ participant.participationStatus }}
+    </li>
+  </ul>
+</div>

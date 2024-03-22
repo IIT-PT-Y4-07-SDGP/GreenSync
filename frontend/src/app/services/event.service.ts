@@ -28,4 +28,8 @@ export class EventService {
   getAllEvents(){
     return this.http.get<EventDetails[]>(`${this.apiUrl}/events/get-events`)
   }
+
+  getEvent(eventId: string){
+    return this.http.get<EventDetails[]>(`${this.apiUrl}/events/get-event-total-registered?eventId=${eventId}`)
+  }
 }

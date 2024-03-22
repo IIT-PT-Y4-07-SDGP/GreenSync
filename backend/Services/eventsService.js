@@ -77,7 +77,7 @@ class EventsService {
             // Check if the event has already started
             const existingEvent = await eventsModel.findOne({ _id: eventId });
             if (existingEvent.eventStatus === 'Started' && /^\d{6}$/.test(existingEvent.eventToken)) {
-                console.log('Event already started with token:', existingEvent.eventToken);
+                console.alert('Event token updated successfullyalready started with token:', existingEvent.eventToken);
                 return 'Event already started';
             }
 
@@ -86,8 +86,6 @@ class EventsService {
 
             // Update event token and status
             await this.updateEventToken(eventId, newToken);
-
-            console.log('New token generated and updated for event:', newToken);
         return newToken;
         } catch (error) {
             console.error('Error starting event:', error);
@@ -138,6 +136,10 @@ class EventsService {
 
     async getTotalRegistered(eventId) {
         const event = await eventsModel.findOne({ _id: eventId });
+        return event;
+    } 
+    catch (error) {
+        throw new Error(`Error fetching event from the database: ${error.message}`);
     }
 }
 
