@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'user-homepage', component: GeneralUserHomepageComponent },
   { path: 'prc-admin-homepage', component: PrcAdminHomepageComponent },
   { path: 'mc-admin-homepage', component: McAdminHomepageComponent },
-  { path: 'report', component: ReportPageComponent},
+  { path: 'user-homepage/report', component: ReportPageComponent},
   { path: 'user-homepage/event', component: EventsPageComponent },
   { path: 'user-homepage/event/organized-event-page', component: OrganizedEventPageComponent },
 ];
