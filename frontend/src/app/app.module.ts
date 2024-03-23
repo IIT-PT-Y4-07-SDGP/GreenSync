@@ -31,7 +31,6 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
-import { ParticipationComponent } from './components/events/participation/participation.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 import { MyEventPageComponent } from './pages/my-event-page/my-event-page.component';
@@ -68,7 +67,6 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
     MyEventsComponent,
-    ParticipationComponent,
     HeaderComponent,
     OrganizedEventPageComponent,
     MyEventPageComponent,

@@ -140,6 +140,16 @@ class EventsService {
     catch (error) {
         throw new Error(`Error fetching event from the database: ${error.message}`);
     }
+
+    async getParticipatedEventsList(participantUserID) {
+        try {
+            const participantEventList = await eventsModel.findById({ participantUserID });
+            return participantEventList;
+        } catch (error) {
+            throw new Error(`Error fetching events from the database: ${error.message}`);
+        }
+    }
+
 }
 
 module.exports = EventsService
