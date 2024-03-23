@@ -1,5 +1,5 @@
 <div>
-  <h3>{{ this.events[0].eventName }}</h3>
+  <h3 class="text-primary">{{ this.events[0].eventName }}</h3>
   <ul>
     <li *ngFor="let participant of this.events[0].eventParticipant">
       {{ participant.user.firstName }} {{ participant.user.lastName }} - {{ participant.participationStatus }}

@@ -110,6 +110,7 @@ export class MyEventsComponent implements OnInit {
         console.log('Event started successfully:', response);
         this.eventResponse = response; // Save the response in the property
         this.showButton = false;
+        this.ngOnInit
       }, 
       error: err => {
         console.error('Error starting event:', err);
