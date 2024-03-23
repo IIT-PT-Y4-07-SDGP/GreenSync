@@ -40,6 +40,7 @@ export class OrganizedEventPageComponent implements OnInit {
           updatedAt: event.updatedAt,
           __v: event.__v
         }];
+        console.log(event);
       } else {
         console.log('No event found or invalid data returned.');
       }

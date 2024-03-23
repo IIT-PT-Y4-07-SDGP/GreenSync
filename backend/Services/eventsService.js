@@ -134,7 +134,7 @@ class EventsService {
     }
 
         async getTotalRegistered(eventId) {
-        const event = await eventsModel.findOne({ _id: eventId });
+        const event = await eventsModel.findOne({ _id: eventId }).populate('eventParticipant.user');
         return event;
     } 
     catch (error) {
