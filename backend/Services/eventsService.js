@@ -1,13 +1,17 @@
 const eventsModel = require('../models/eventsModel')
 const userModel = require('../models/userModel');
 const randomString = require('randomstring');
+const randomString = require('randomstring');
 
 class EventsService {
     async eventsOrganize(eventsDetails){
         let OrganizerID = eventsDetails.eventOrganizer;
         if (await this.isOrganizerInDB(OrganizerID)){
+        let OrganizerID = eventsDetails.eventOrganizer;
+        if (await this.isOrganizerInDB(OrganizerID)){
             let eventTime = new Date(eventsDetails.eventTime)
             if (eventTime > new Date()){
+                eventsDetails.eventOrganizer = OrganizerID;
                 eventsDetails.eventOrganizer = OrganizerID;
                 const event = await eventsModel.create(eventsDetails);
                 return event;
@@ -131,6 +135,14 @@ class EventsService {
         await event.save();
 
         // return await eventsModel.findById(eventID).populate('eventParticipant.user');
+    }
+
+        async getTotalRegistered(eventId) {
+        const event = await eventsModel.findOne({ _id: eventId });
+        return event;
+    } 
+    catch (error) {
+        throw new Error(`Error fetching event from the database: ${error.message}`);
     }
 }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { error } from 'console';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from 'src/app/services/event.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -11,7 +12,13 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class ViewEventComponent implements OnInit {
   event: EventDetails;
+  event: EventDetails;
 
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { event: EventDetails }, 
+    private loginService:LoginService,
+    private eventService: EventService
+  ) {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { event: EventDetails }, 
     private loginService:LoginService,
@@ -49,7 +56,8 @@ export class ViewEventComponent implements OnInit {
         alert(res.message)
       },
       error: err => {
-        alert("Failed to register to the event");
+        console.log(err);
+        alert(err.error);
       }
     })
   }

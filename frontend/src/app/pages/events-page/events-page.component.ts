@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
 import { ViewEventComponent } from 'src/app/components/events/view-event/view-event.component';
-import { MyEventsComponent } from 'src/app/components/events/my-events/my-events.component';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
 
@@ -13,6 +12,11 @@ import { EventService } from '../../services/event.service';
 })
 export class EventsPageComponent implements OnInit {
   public events: EventDetails[] = [];
+  pagedEvents: any[] = [];
+  pageSize: number = 10;
+  currentPage: number = 1;
+  totalPages: number = 1;
+
   constructor(public dialog: MatDialog, private eventServices: EventService) { }
 
   public imagePaths: string[] = [
@@ -30,14 +34,12 @@ export class EventsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchEvents();
+    this.totalPages = Math.ceil(this.events.length / this.pageSize);
+    this.loadPage();
   }
 
   onClickOrganizeEvents() {
     this.openOrganizeEventDialog();
-  }
-
-  onClickViewMyEvents() {
-    this.openMyEventDialog();
   }
 
   openOrganizeEventDialog(): void {
@@ -55,6 +57,25 @@ export class EventsPageComponent implements OnInit {
 
   fetchEvents() {
     // Make an HTTP request to fetch events from your server
+    this.eventServices.getAllEvents().subscribe(
+      (events) =>{
+        // Assign the retrieved events to the component property
+        this.events = events.map(event => ({
+          _id: event._id,
+          eventName: event.eventName,
+          eventTime: event.eventTime,
+          eventLocation: event.eventLocation,
+          eventDescription: event.eventDescription,
+          eventOrganizer: event.eventOrganizer,
+          eventParticipant: event.eventParticipant,
+          eventToken: event.eventToken,
+          eventStatus: event.eventStatus,
+          createdAt: event.createdAt,
+          updatedAt: event.updatedAt,
+          __v: event.__v
+        }));
+      }
+    );
     this.eventServices.getAllEvents().subscribe(
       (events) =>{
         // Assign the retrieved events to the component property
@@ -94,9 +115,12 @@ export class EventsPageComponent implements OnInit {
   }
 
   onCardClick(event: EventDetails, index: number) {
+  onCardClick(event: EventDetails, index: number) {
     this.openViewEventDialog(event, index);
   }
+  }
 
+  openViewEventDialog(selectedEvent: EventDetails, index: number) {
   openViewEventDialog(selectedEvent: EventDetails, index: number) {
     const dialogRef = this.dialog.open(ViewEventComponent, {
       height: '700px',
@@ -104,21 +128,33 @@ export class EventsPageComponent implements OnInit {
       data: { event: selectedEvent, imagePath: this.imagePaths }
     });
     dialogRef.afterClosed().subscribe(result => {
-      // Handle any data or actions after the dialog is closed
+      width: '1000px',
+      data: { event: selectedEvent, imagePath: this.imagePaths }
     });
-  }
-
-  openMyEventDialog(): void {
-    const dialogRef = this.dialog.open(MyEventsComponent, {
-      height: '600px',
-      width: '1000px', // Adjust the width as needed
-      // Add any other configuration options for your dialog
-    });
-
     dialogRef.afterClosed().subscribe(result => {
       // Handle any data or actions after the dialog is closed
-      this.ngOnInit();
     });
   }
+  }
 
+
+  loadPage() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = Math.min(startIndex + this.pageSize, this.events.length);
+    this.pagedEvents = this.events.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadPage();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadPage();
+    }
+  }
 }

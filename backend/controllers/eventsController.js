@@ -58,7 +58,18 @@ class EventsController{
             res.status(201).json({message: 'Successfully registered to event'})
         } catch(error) {
             console.error(error);
-            res.status(500).json({error: "Error occurred during participation"})
+            res.status(500).json(error.message);
+        }
+    }
+
+    async getTotalRegistered(req, res){
+        try{
+            const eventId = req.query.eventId;
+            const newEvents = await events.getTotalRegistered(eventId);
+            res.status(200).json(newEvents);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' }); 
         }
     }
 }
