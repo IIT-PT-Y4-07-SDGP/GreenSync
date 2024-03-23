@@ -76,6 +76,25 @@ export class EventsPageComponent implements OnInit {
         }));
       }
     );
+    this.eventServices.getAllEvents().subscribe(
+      (events) =>{
+        // Assign the retrieved events to the component property
+        this.events = events.map(event => ({
+          _id: event._id,
+          eventName: event.eventName,
+          eventTime: event.eventTime,
+          eventLocation: event.eventLocation,
+          eventDescription: event.eventDescription,
+          eventOrganizer: event.eventOrganizer,
+          eventParticipant: event.eventParticipant,
+          eventToken: event.eventToken,
+          eventStatus: event.eventStatus,
+          createdAt: event.createdAt,
+          updatedAt: event.updatedAt,
+          __v: event.__v
+        }));
+      }
+    );
   }
 
   formatDate(dateTime: string): string {
@@ -96,9 +115,12 @@ export class EventsPageComponent implements OnInit {
   }
 
   onCardClick(event: EventDetails, index: number) {
+  onCardClick(event: EventDetails, index: number) {
     this.openViewEventDialog(event, index);
   }
+  }
 
+  openViewEventDialog(selectedEvent: EventDetails, index: number) {
   openViewEventDialog(selectedEvent: EventDetails, index: number) {
     const dialogRef = this.dialog.open(ViewEventComponent, {
       height: '700px',
@@ -106,8 +128,13 @@ export class EventsPageComponent implements OnInit {
       data: { event: selectedEvent, imagePath: this.imagePaths }
     });
     dialogRef.afterClosed().subscribe(result => {
+      width: '1000px',
+      data: { event: selectedEvent, imagePath: this.imagePaths }
+    });
+    dialogRef.afterClosed().subscribe(result => {
       // Handle any data or actions after the dialog is closed
     });
+  }
   }
 
 

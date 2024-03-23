@@ -3,6 +3,7 @@ const CommonService = require("./commonService");
 const mongoose = require("mongoose");
 const common = new CommonService();
 const AuthService = require("./authService");
+const AuthService = require("./authService");
 const PRCModal = require("../models/PRCModel");
 const accountModel = require("../models/accountModel");
 
@@ -126,3 +127,4 @@ class PRCService {
 }
 
 module.exports = PRCService;
+
