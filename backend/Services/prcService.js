@@ -127,6 +127,28 @@ class PRCService {
       },
     };
   }
+
+  async getPrcList() {
+    try {
+      await client.connect();
+      const database = client.db("GreenSync");
+      const collection = database.collection("prc-accounts");
+      const cursor = collection.find({}, {
+        projection: {
+          _id: 0,
+          PRCBusinessRegNumber: 1,
+          District: 1,
+          Address: 1,
+          PRCStatus: 1,
+        }
+      });
+      return await cursor.toArray();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
 }
 
 module.exports = PRCService;

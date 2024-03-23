@@ -20,7 +20,7 @@ class PRCController {
 
     static async getPRCs(req, res) {
         try {
-            const PRCList = await prc.getPRCs();
+            const PRCList = await prc.getPrcList();
             return res.status(200).json(PRCList);
         } catch (error) {
             return res.status(400).json({error: error.message});

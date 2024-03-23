@@ -100,24 +100,25 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     PrcDriverPickupHitoryPageComponent,
     PrcDriverPickupViewPageComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatSelectModule,
-    MatInputModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCardModule,
-    MatButtonModule,
-    MatExpansionModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatSelectModule,
+        MatInputModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCardModule,
+        MatButtonModule,
+        MatExpansionModule,
+        MatSidenavModule
+    ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })
