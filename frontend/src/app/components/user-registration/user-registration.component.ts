@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {GeneralUser} from 'src/app/interfaces/generalUser';
+import {LoginService} from 'src/app/services/login.service';
+import {Router} from '@angular/router';
+import {UserService} from 'src/app/services/user.service';
 
 
 @Component({
@@ -13,14 +13,14 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.scss']
 })
-export class UserRegistrationComponent implements OnInit {
+export class UserRegistrationComponent implements OnInit, OnDestroy {
   private profilePicture!: File;
   private destroy$: Subject<void> = new Subject();
   selectedProfilePicture!: string;
   userRegFormGroup: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private router: Router,
     private loginService: LoginService,
     private userService: UserService
@@ -30,6 +30,7 @@ export class UserRegistrationComponent implements OnInit {
       floatLabel: 'auto',
     });
   }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -117,15 +118,14 @@ export class UserRegistrationComponent implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: response => {
-            const user: GeneralUser = response; 
-            this.loginService.setGeneralUser(user);
+            this.loginService.setGeneralUser(response);
             this.router.navigate(['/user-homepage']);
-          }, 
+          },
           error: err =>{
             alert("Registration Failed :-(")
             console.error('Error:', err);
-          } 
-        });     
+          }
+        });
     }
   }
 }

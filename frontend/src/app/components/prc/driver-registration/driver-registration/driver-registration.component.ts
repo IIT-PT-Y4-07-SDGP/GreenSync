@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {DriverService} from "../../../../services/driver.service";
 
 @Component({
   selector: 'app-driver-registration',
@@ -14,7 +14,8 @@ export class DriverRegistrationComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private http: HttpClient,
-              private router: Router
+              private router: Router,
+              private driverService: DriverService
   ) {
     this.driverRegFormGroup = this.fb.group({
       firstName: ['', Validators.required],
@@ -48,10 +49,10 @@ export class DriverRegistrationComponent implements OnInit {
       }
       const jsonData = JSON.stringify(formData);
 
-      this.sendFormData(jsonData).subscribe((response) => {
-        console.log(response);
-      } );
-      this.onClear();
+      this.driverService.registerDriver(jsonData).subscribe(() => {
+        this.onClear();
+        this.router.navigate(['prc-admin-homepage']);
+      });
     }
   }
 
@@ -59,12 +60,8 @@ export class DriverRegistrationComponent implements OnInit {
     this.driverRegFormGroup.reset();
   }
 
-  private sendFormData(data: any): Observable<any> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post<any>('http://localhost:5001/user/registration', data, {headers: headers});
+  cancelSubmit() {
+    this.router.navigate(['/prc-admin-homepage']);
   }
 
-  cancelSubmit() {
-    this.router.navigate(['/prc-admin']);
-  }
 }

@@ -23,6 +23,10 @@ export class PrcAdminComponent implements OnInit {
     this.router.navigate(['/prc-list']);
   }
 
+  logOut() {
+    this.router.navigate(['/registration'])
+  }
+
   viewDriversList(): void {
     this.router.navigate(['/view-drivers']);
   }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {data} from "autoprefixer";
+import {Component, OnInit} from '@angular/core';
+import {PrcService} from "../../../../services/prc.service";
+import {PRC} from "../../../../interfaces/PRC";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-view-prc-list',
@@ -8,12 +9,21 @@ import {data} from "autoprefixer";
   styleUrls: ['./view-prc-list.component.scss']
 })
 export class ViewPrcListComponent implements OnInit {
-  PRCList: string = '';
+  PRCList: PRC[] = [];
 
-  constructor(private http: HttpClient) { }
-
-  ngOnInit(): void {
-
+  constructor(private prcService: PrcService,
+              private router: Router) {
   }
 
+  ngOnInit(): void {
+    this.prcService.getPRCs().subscribe((data) => {
+      for (const PRC of data) {
+        this.PRCList.push(PRC);
+      }
+    });
+  }
+
+  goBack() {
+    this.router.navigate(['prc-admin-homepage']);
+  }
 }

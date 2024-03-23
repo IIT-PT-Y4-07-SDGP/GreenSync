@@ -5,23 +5,28 @@ const common = new CommonService();
 const AuthService = require("./authService");
 const PRCModal = require("../models/PRCModel");
 const accountModel = require("../models/accountModel");
+const {MongoClient} = require('mongodb');
+const config = require('../configuration/config');
+const uri = config.MONGO_URI;
+const client = new MongoClient(uri);
 
 class PRCService {
-    async PRCRegister(prcDetails, res){
+
+    async PRCRegister(prcDetails, res) {
         // Validate password
         let hashedPassword;
         if (common.isPasswordValid(prcDetails.account.password)) {
             hashedPassword = await common.hashPassword(prcDetails.account.password)
         } else {
             throw new Error("Invalid password. Please ensure it meets the requirements.")
-        } 
-        
+        }
+
         // Validating Email
-        if(!common.validateEmail(prcDetails.account.email)) throw new Error("Invalid email. Please enter a valid email.");
-        
+        if (!common.validateEmail(prcDetails.account.email)) throw new Error("Invalid email. Please enter a valid email.");
+
         // Validating phone number
         const phoneNumber = common.validatePhoneNumber(prcDetails.account.phoneNumber);
-        if(!phoneNumber.isValid) throw new Error("Invalid phone number. Please enter valid phone number");
+        if (!phoneNumber.isValid) throw new Error("Invalid phone number. Please enter valid phone number");
 
         prcDetails.account.password = hashedPassword;
         let session;
@@ -29,12 +34,12 @@ class PRCService {
         let PRC;
 
         // Getting JWT Tokens
-        let tokens = AuthService.generateJWTToken(prcDetails.account.username,prcDetails.account.userRole);
+        let tokens = AuthService.generateJWTToken(prcDetails.account.username, prcDetails.account.userRole);
 
-        try{
+        try {
             session = await mongoose.startSession();
             session.startTransaction();
-            
+
             try {
                 account = await accountModel.create(
                     [{
@@ -44,38 +49,38 @@ class PRCService {
                         email: prcDetails.account.email,
                         password: prcDetails.account.password,
                         accountStatus: "INACTIVE",
-                        refreshToken:[tokens.refreshToken]
-                    }], { session }
+                        refreshToken: [tokens.refreshToken]
+                    }], {session}
                 );
-            } catch(error) {
+            } catch (error) {
                 console.error(error);
                 await session.abortTransaction();
                 throw new Error('Error occurred when creating account');
             }
-            
-            try{
+
+            try {
                 PRC = await PRCModal.create(
-                    [{  
+                    [{
                         PRCName: prcDetails.PRCName,
                         PRCBusinessRegNumber: prcDetails.PRCBusinessRegNumber,
-                        District: prcDetails.District, 
+                        District: prcDetails.District,
                         Address: prcDetails.Address,
                         PRCStatus: "PENDING",
                         account: account[0]._id,
-                    }], { session }
-                    );
-                    await session.commitTransaction();
-                } catch (error) {
-                    console.log(error);
-                    await session.abortTransaction();
-                    throw new Error("Error occurred when uploading user data to database");
-                }
-                
-            } catch (error){
+                    }], {session}
+                );
+                await session.commitTransaction();
+            } catch (error) {
                 console.log(error);
-            } finally {
-                if (session) {
-                    session.endSession();
+                await session.abortTransaction();
+                throw new Error("Error occurred when uploading user data to database");
+            }
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            if (session) {
+                session.endSession();
             }
         }
 
@@ -93,10 +98,10 @@ class PRCService {
             _id: PRC._id,
             PRCName: PRC.PRCName,
             PRCBusinessRegNumber: PRC.PRCBusinessRegNumber,
-            District: PRC.District, 
+            District: PRC.District,
             Address: PRC.Address,
             PRCStatus: PRC.PRCStatus,
-            account:{
+            account: {
                 _id: account._id,
                 username: account.username,
                 phoneNumber: account.phoneNumber,
@@ -105,7 +110,27 @@ class PRCService {
                 accountStatus: account.accountStatus,
                 refreshToken: account.refreshToken,
                 accessToken: tokens.accessToken
-            } 
+            }
+        }
+    }
+
+    async getPRCs() {
+        try {
+            const database = client.db("GreenSync");
+            const collection = database.collection("prc-accounts");
+            const cursor = collection.find({}, {
+                projection: {
+                    _id: 0,
+                    PRCName: 1,
+                    PRCBusinessRegNumber: 1,
+                    District: 1,
+                    PRCStatus: 1,
+                    Address: 1,
+                }
+            });
+            return await cursor.toArray();
+        } catch (error) {
+            console.log(error);
         }
     }
 }

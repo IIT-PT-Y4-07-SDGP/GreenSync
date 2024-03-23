@@ -1,1 +1,20 @@
-<p>view-drives-list works!</p>
+<div class="container mx-auto px-4 py-8 h-screen">
+  <div class="flex justify-between items-center mb-6">
+    <!-- Back Button -->
+    <button (click)="goBack()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-150 ease-in-out">
+      &larr; Back
+    </button>
+    <h2 class="text-3xl font-bold text-green-600">LIST OF DRIVERS</h2>
+  </div>
+  <!-- Scrollable List Container, taking up remaining screen height -->
+  <div class="overflow-y-auto bg-green-50 border-l-4 border-green-500 rounded-lg shadow-lg" style="height: calc(100vh - 12rem);">
+    <ul>
+      <li *ngFor="let driver of this.driversList" class="p-4 border-b border-green-200 last:border-b-0 hover:bg-green-100">
+        <h3 class="text-xl font-semibold text-green-800">Username: {{ driver.username }}</h3>
+        <p class="text-green-700">Email: <span class="font-medium">{{ driver.email }}</span></p>
+        <p class="text-green-700">Phone number: <span class="font-medium">{{ driver.phoneNumber }}</span></p>
+        <p class="text-green-700">Status: <span class="font-medium">{{ driver.accountStatus }}</span></p>
+      </li>
+    </ul>
+  </div>
+</div>

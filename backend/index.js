@@ -15,6 +15,7 @@ const eventsRoute = require("./routes/events");
 const mcRoute = require("./routes/mc");
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
+const driverRoute = require('./routes/driver');
 
 // Importing Controllers and creating instance
 const UserController = require("./controllers/userController");
@@ -39,7 +40,6 @@ app.use("/auth", authRouter);
 app.post("/user/registration", UserController.userRegistration);
 app.post("/prc/registration", PRCController.PRCRegistration);
 app.post("/mc/registration", MCController.MCRegistration);
-app.get("/driver/registration", DriverController.getPRCs);
 
 // Main route and the sub routes 
 app.use("/prc", prcRoute);
@@ -47,6 +47,7 @@ app.use("/mc", mcRoute);
 app.use("/admin", adminRouter);
 app.use("/user", userRoute);
 app.use("/events", eventsRoute);
+app.use("/driver", driverRoute);
 app.use(requireAuth);
 
 // Verifying the connection to database and starting the server 

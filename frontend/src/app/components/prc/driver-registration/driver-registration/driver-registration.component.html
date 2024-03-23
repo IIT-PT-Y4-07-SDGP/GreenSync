@@ -1,6 +1,5 @@
-<mat-sidenav-container  style="height: 100vh;">
-  <mat-sidenav-content>
-
+<mat-sidenav-container style="height: auto;">
+  <mat-sidenav-content style="height:80vh; margin: 2%">
     <div class="p-8 bg-gray-100 rounded-lg shadow-lg max-w-4xl mx-auto">
       <div class="grid grid-cols-2 gap-6">
         <h1>Driver Details</h1>
@@ -31,8 +30,10 @@
           >
             <input matInput placeholder="Phone number" required formControlName="phoneNumber" type="tel">
             <mat-hint>Phone number format - +9471****768</mat-hint>
-            <mat-error *ngIf="driverRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.</mat-error>
-            <mat-error *ngIf="driverRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone number.
+            <mat-error *ngIf="driverRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.
+            </mat-error>
+            <mat-error *ngIf="driverRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone
+              number.
             </mat-error>
           </mat-form-field>
 
@@ -61,18 +62,18 @@
               Password should be minimum 8 characters long.
             </mat-error>
             <mat-error *ngIf="driverRegFormGroup.get('password')?.hasError('invalidPassword')">
-              Password should contain at least one special character, one lowercase letter, one uppercase letter, and one
+              Password should contain at least one special character, one lowercase letter, one uppercase letter, and
+              one
               number.
             </mat-error>
           </mat-form-field>
-
-          <!-- Password Confirmation -->
           <mat-form-field
             [hideRequiredMarker]="driverRegFormGroup.value.hideRequired"
             [floatLabel]="driverRegFormGroup.value.floatLabel"
             class="col-span-1 mb-4"
           >
-            <input matInput placeholder="Confirm password" required formControlName="passwordConfirmation" type="password">
+            <input matInput placeholder="Confirm password" required formControlName="passwordConfirmation"
+                   type="password">
             <mat-error *ngIf="driverRegFormGroup.get('passwordConfirmation')?.hasError('required')">
               Confirm password is required.
             </mat-error>
@@ -81,15 +82,14 @@
             </mat-error>
           </mat-form-field>
         </div>
-
         <div class="flex justify-end gap-4 mt-6">
-          <button type="button" mat-stroked-button (click)="onClear()"
-                  class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition ease-in-out duration-150">
-            Clear
-          </button>
           <button type="submit" mat-flat-button color="primary" [disabled]="!driverRegFormGroup.valid"
                   class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-150">
             Submit
+          </button>
+          <button type="button" mat-stroked-button (click)="onClear()"
+                  class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition ease-in-out duration-150">
+            Clear
           </button>
           <button type="button" mat-flat-button color="warn" (click)="cancelSubmit()"
                   class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-150">
