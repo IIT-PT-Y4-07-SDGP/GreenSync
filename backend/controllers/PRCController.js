@@ -3,7 +3,6 @@ const PRCService = require("../Services/prcService");
 const AuthService = require("../Services/authService");
 const { param } = require("../routes/prc");
 
-
 // creating instances for service class
 const prc = new PRCService();
 const authService = new AuthService();
@@ -65,7 +64,7 @@ class PRCController {
 
   /**
    * GP request for on demand pickups
-   * @param {*} req
+   * @param {*} req proccessing
    * @param {*} res
    */
   static async PRCRequestDemandPickups(req) {
