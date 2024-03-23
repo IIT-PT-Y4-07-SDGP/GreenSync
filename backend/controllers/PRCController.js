@@ -1,6 +1,7 @@
 // Importing the service class
 const PRCService = require("../Services/prcService");
 const AuthService = require("../Services/authService");
+
 // creating instances for service class
 const prc = new PRCService();
 const authService = new AuthService();
@@ -17,7 +18,8 @@ class PRCController{
             res.status(400).json({error:error.message})
         }
     }
-}
+  }
+
 
 // Export the controller
 module.exports = PRCController;
