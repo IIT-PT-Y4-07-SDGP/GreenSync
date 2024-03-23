@@ -28,6 +28,16 @@ const generalUserSchema = new schema({
         ref: 'accountSchema',
         required:true
     },
+    participatedEvents: [{
+        event:{
+            type: schema.Types.ObjectId,
+            ref: 'Events',
+        },
+        participationStatus: {
+            type: String,
+            required: false
+        }
+    }]
 }, { timestamps: true })
 
 module.exports = mongoose.model('general-user-Account', generalUserSchema);

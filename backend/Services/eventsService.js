@@ -130,10 +130,30 @@ class EventsService {
         event.eventParticipant.push({ user: userID });
         await event.save();
 
+        // Add the event to the relevant user  
+        // user.participatedEvents.push({event:eventID, participationStatus:"Registered"})
+        // await event.save();
+
+        await userModel.updateOne(
+            { _id: userID }, // Query to find the user
+            { 
+                $push: { 
+                    participatedEvents: {
+                        event: eventID,
+                        participationStatus: "Registered"
+                    }
+                },
+
+            },
+            { upsert: true }
+        );
+
         // return await eventsModel.findById(eventID).populate('eventParticipant.user');
     }
 
-        async getTotalRegistered(eventId) {
+    
+
+    async getTotalRegistered(eventId) {
         const event = await eventsModel.findOne({ _id: eventId });
         return event;
     } 
