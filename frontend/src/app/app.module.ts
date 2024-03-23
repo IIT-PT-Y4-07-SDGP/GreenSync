@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,6 +43,12 @@ import { HistoryComponent } from './pages/public/history/history.component';
 import { PickupComponent } from './pages/public/pickup/pickup.component';
 import { LocationComponent } from './pages/public/location/location.component';
 import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
+import { PrcDriverDashboardComponent } from './pages/prc-driver-page/prc-driver-dashboard/prc-driver-dashboard.component';
+import { PrcDriverPendingPickupsComponent } from './pages/prc-driver-page/prc-driver-pending-pickups/prc-driver-pending-pickups.component';
+import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc-driver-pickup-confirm-page/prc-driver-pickup-confirm-page.component';
+import { PrcDriverPriceChartComponent } from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
+import { PrcDriverPickupHitoryPageComponent } from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
+import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +79,13 @@ import { PriceChartComponent } from './pages/public/price-chart/price-chart.comp
     PickupComponent,
     HistoryComponent,
     LocationComponent,
-    PriceChartComponent
+    PriceChartComponent,
+    PrcDriverDashboardComponent,
+    PrcDriverPendingPickupsComponent,
+    PrcDriverPickupConfirmPageComponent,
+    PrcDriverPriceChartComponent,
+    PrcDriverPickupHitoryPageComponent,
+    PrcDriverPickupViewPageComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +103,7 @@ import { PriceChartComponent } from './pages/public/price-chart/price-chart.comp
     MatNativeDateModule,
     MatCardModule,
     MatButtonModule,
+    MatExpansionModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
