@@ -85,6 +85,16 @@ class MCController{
         }
     }
 
+    static async reportGarbage (req,res) {
+        try{
+            const report = await MCService.reportGarbage(req.body);
+            return res.status(200).json({report});
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+
 }
 
 // Export the controller

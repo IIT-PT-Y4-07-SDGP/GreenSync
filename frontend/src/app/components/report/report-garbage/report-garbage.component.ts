@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
+import { LoginService } from 'src/app/services/login.service';
+import { ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-report-garbage',
@@ -12,10 +16,15 @@ export class ReportGarbageComponent implements OnInit {
 
   selectedReportPictures: File[] = [];
   reportForm: FormGroup;
+  public userDetails?: GeneralUser;
   private destroy$: Subject<void> = new Subject();
   dialogRef: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, 
+    private http: HttpClient,
+    private loginService: LoginService,
+    private reportService: ReportService) {
+    
     this.reportForm = this.fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -33,7 +42,8 @@ export class ReportGarbageComponent implements OnInit {
       reportDate: [null, [Validators.required]],
       reportTime: [null, [Validators.required]],
       reportDescription: ['', [Validators.maxLength(1000)]],
-    }); // Assuming selectedReportPictures is an array to hold multiple selected files
+    });
+    this.userDetails = this.loginService.getGeneralUser(); // Assuming selectedReportPictures is an array to hold multiple selected files
 
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     const label = document.querySelector('label[for="fileInput"]');
@@ -81,7 +91,8 @@ export class ReportGarbageComponent implements OnInit {
         }
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.selectedReportPictures.push(e.target.result);
+          const imageDataUrl = e.target.result;
+          this.selectedReportPictures.push(imageDataUrl);
         };
         reader.readAsDataURL(file);
       }
@@ -91,8 +102,8 @@ export class ReportGarbageComponent implements OnInit {
   onSubmit() {
     // Close the dialog after submission
     const timestamp = this.convertToTimestamp(
-      this.reportForm.value.eventDate,
-      this.reportForm.value.eventTime
+      this.reportForm.value.reportDate,
+      this.reportForm.value.reportTime
     );
 
     if (this.reportForm.valid) {
@@ -102,26 +113,26 @@ export class ReportGarbageComponent implements OnInit {
         reportTime: timestamp,
         reportLocation: this.reportForm.value.reportLocation,
         reportDescription: this.reportForm.value.reportDescription,
-        reportOrganizer: '65e873e15a9d6183a4670244',
+        reportAuthor: this.userDetails?._id,
+        reportPictures: JSON.stringify(this.selectedReportPictures),
       };
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
       console.log(jsonData);
-      // this.sendFormData(jsonData)
-      // .pipe(takeUntil(this.destroy$))
-      // .subscribe(
-      //   response => {
-      //     console.log('Response from backend:', response);
-      //     alert("Event Created Successfully");
-      //     this.dialogRef.close();
-      //   },
-      //   error => {
-      //     alert(error.error.error);
-      //     console.error('Error:', error);
-      //   }
-      // );
+      this.reportService.createReportGarbage(jsonData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: response => {
+          console.log('Response from backend:', response);
+          alert("Your Report Submitted Successfully");
+    },
+    error: err => {
+      alert(err.error.error);
+      console.error('Error:', err);
     }
-  }
+  });
+}
+}
 
   onCancel() {
     // Close the dialog without saving
@@ -131,7 +142,6 @@ export class ReportGarbageComponent implements OnInit {
   private convertToTimestamp(dateString: string, timeString: string): string {
     const combinedDateTimeString = `${dateString} ${timeString}`;
     const dateTime = new Date(combinedDateTimeString); // Create a Date object
-    const timestamp = dateTime.getTime(); // Get the timestamp in milliseconds
     const isoString = dateTime.toISOString(); // Convert to ISO string format (e.g., "2024-04-06T07:00:00.000Z")
     return isoString;
   }

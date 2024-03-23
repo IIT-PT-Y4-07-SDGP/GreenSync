@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require('cors');
 const cookieParser = require("cookie-parser")
 const requireAuth=require("./middlewares/requireAuth")
+const bodyParser = require('body-parser');
 
 // Getting the configuration values
 const config = require("./configuration/config");
@@ -29,6 +30,7 @@ app.use(cookieParser())
 app.use(cors({
     origin: 'http://localhost:4200' // Allow requests only from localhost:4200
 }));
+app.use(bodyParser.json({ limit: '10mb' }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
