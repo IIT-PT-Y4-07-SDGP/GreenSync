@@ -7,6 +7,18 @@ const pickup = new PickupService();
 
 class PickupManagementController {
   /**
+   * Find all pickups
+   */
+  static async findAllPickups(req, res) {
+    try {
+      const allPickups = await pickup.findAllPickups();
+      return res.status(200).json({ allPickups });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  /**
    * Assigne pickups by truck and dirivers
    * @param {*} req
    * @param {*} res
@@ -19,21 +31,7 @@ class PickupManagementController {
       res.status(400).json({ error: error.message });
     }
   }
-  // /**
-  //  * Change driver for pickup
-  //  * @param {*} req in request pickupId as a param and req.body in driverIds
-  //  */
-  // static async pickupChangeDriver(req, res) {
-  //   try {
-  //     const changedDriver = await pickup.pickupChangeDriver(
-  //       req.params.pickupId,
-  //       req.body
-  //     );
-  //     return res.status(200).json({ changedDriver });
-  //   } catch (error) {
-  //     res.status(403).json({ error: error.message });
-  //   }
-  // }
+
   /**
    * pickup update driver task
    * @param {*} req  req.params include pickupId and req.query in task
@@ -65,7 +63,7 @@ class PickupManagementController {
    * @Param pickupId
    * @Query driverId
    */
-  static async DeleteDriverFromPickup(req, req) {
+  static async DeleteDriverFromPickup(req, res) {
     try {
       const deleteDriver = await pickup.DeleteDriverFromPickup(req);
       return res.status(200).json({ deleteDriver });

@@ -4,9 +4,14 @@ const prc = new PickupController();
 const express = require("express");
 const router = express.Router();
 
-router.put("/assign-pickups/:prcId", PickupController.AssignePickupForDriver);
+router.get("/find-all-pickups", PickupController.findAllPickups);
 
-router.put("/delete-driver/:prcId", PickupController.DeleteDriverFromPickup);
+router.put(
+  "/assign-pickups/:pickupId",
+  PickupController.AssignePickupForDriver
+);
+
+router.put("/delete-driver/:pickupId", PickupController.DeleteDriverFromPickup);
 
 router.patch(
   "/update-driver-status/:pickupId",

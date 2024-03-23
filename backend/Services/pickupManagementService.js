@@ -6,12 +6,22 @@ const PickupModel = require("../models/pickupModel");
 
 const pickup = new PickupModel();
 class PickupManagementService {
+  async findAllPickups() {
+    try {
+      // Find all pickups
+      const pickups = await PickupModel.find();
+      return pickups;
+    } catch (error) {
+      console.error("Error finding all pickups:", error);
+      return error;
+    }
+  }
+
   /**
    * Delete Driver by pickupId and driverId
    * @Param pickupId
    * @Query driverId
    */
-
   async DeleteDriverFromPickup(req) {
     const pickupId = req.params.pickupId;
     const driverId = req.body.driverId;
@@ -35,22 +45,7 @@ class PickupManagementService {
     //send the emails using dirverIds
     return assign;
   }
-  // /**
-  //  * Change driver for pickup
-  //  * @param {*} @prcId unique prcId
-  //  * @param {*} driverIds[] are array
-  //  */
-  // async PRCChangeDriver(req) {
-  //   const id = prcId;
-  //   try {
-  //     let prc = await pickup.findByIdAndUpdate(id, {
-  //       driverIds: driverIds,
-  //     });
-  //     return prc;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+
   /**
    * Update driver task status
    */
