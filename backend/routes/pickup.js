@@ -6,10 +6,7 @@ const router = express.Router();
 
 router.get("/find-all-pickups", PickupController.findAllPickups);
 
-router.put(
-  "/assign-pickups/:pickupId",
-  PickupController.AssignePickupForDriver
-);
+router.put("/assign-pickup/:pickupId", PickupController.AssignePickupForDriver);
 
 router.put("/delete-driver/:pickupId", PickupController.DeleteDriverFromPickup);
 

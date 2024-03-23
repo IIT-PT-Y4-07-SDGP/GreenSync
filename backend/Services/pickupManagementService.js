@@ -25,6 +25,12 @@ class PickupManagementService {
   async DeleteDriverFromPickup(req) {
     const pickupId = req.params.pickupId;
     const driverId = req.body.driverId;
+    console.log("req res");
+    const pickup = await PickupModel.findById(pickupId);
+
+    if (!pickup) {
+      throw new Error("Pickup not found");
+    }
     const assign = await PickupModel.findByIdAndDelete(pickupId, {
       driverId: driverId,
     });
