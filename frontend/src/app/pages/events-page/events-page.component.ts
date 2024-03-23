@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
 import { ViewEventComponent } from 'src/app/components/events/view-event/view-event.component';
-import { MyEventsComponent } from 'src/app/components/events/my-events/my-events.component';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
 
@@ -41,10 +40,6 @@ export class EventsPageComponent implements OnInit {
 
   onClickOrganizeEvents() {
     this.openOrganizeEventDialog();
-  }
-
-  onClickViewMyEvents() {
-    this.openMyEventDialog();
   }
 
   openOrganizeEventDialog(): void {
@@ -115,18 +110,6 @@ export class EventsPageComponent implements OnInit {
     });
   }
 
-  openMyEventDialog(): void {
-    const dialogRef = this.dialog.open(MyEventsComponent, {
-      height: '600px',
-      width: '1000px', // Adjust the width as needed
-      // Add any other configuration options for your dialog
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Handle any data or actions after the dialog is closed
-      this.ngOnInit();
-    });
-  }
 
   loadPage() {
     const startIndex = (this.currentPage - 1) * this.pageSize;

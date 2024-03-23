@@ -10,15 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class OrganizedEventPageComponent implements OnInit {
   public events: EventDetails[] = [];
-  eventId: string = '65fca7debb560277cb2dfd26';
+  eventId: string = "";
   constructor(private eventServices: EventService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    const eventIdFromService = this.eventServices.getViewEventID();
+    this.eventId = eventIdFromService !== undefined ? eventIdFromService : "";
     this.fetchEvents(this.eventId);
-    // this.route.params.subscribe(params => {
-    //   this.eventId = params['eventId'];
-    //   console.log(this.eventId);
-    // });
   }
 
   fetchEvents(eventId: string): void {
