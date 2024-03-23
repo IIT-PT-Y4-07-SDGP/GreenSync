@@ -11,17 +11,8 @@ export class EventService {
   public headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   public apiUrl = environment.apiUrl;
   public events: EventDetails[] = [];
-  public viewedEventID?: string;
 
   constructor(private http: HttpClient) { }
-
-  setViewEventID(eventID: string){
-    this.viewedEventID = eventID;
-  }
-
-  getViewEventID(){
-    return this.viewedEventID;
-  } 
 
   createEvent(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/events/organize-event`, data, { headers: this.headers });
@@ -40,9 +31,5 @@ export class EventService {
 
   registerUserToEvent(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/events/participate`, data, { headers: this.headers });
-  }
-
-  getEvent(eventId: string){
-    return this.http.get<EventDetails>(`${this.apiUrl}/events/get-event-total-registered?eventId=${eventId}`)
   }
 }
