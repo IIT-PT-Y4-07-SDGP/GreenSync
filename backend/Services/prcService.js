@@ -5,7 +5,7 @@ const common = new CommonService();
 const AuthService = require("./authService");
 const PRCModal = require("../models/PRCModel");
 const accountModel = require("../models/accountModel");
-const districtModel = require("../models/district");
+
 
 class PRCService {
   async PRCRegister(prcDetails, res) {
@@ -123,61 +123,6 @@ class PRCService {
       },
     };
   }
-  /**
-   *  Assigne pickups by truck and dirivers
-   */
-  async PRCAssignePickups(req, res) {
-    const prcId = req.params.prcId;
-    const driverIds = req.body.driverIds;
-
-    console.log(driverIdS);
-    const assign = await PRCModal.findByIdAndUpdate(prcId, {
-      driverIds: driverIds,
-    });
-    // after assign the dirvers for pickup . then use  your sms or email funtion
-    // get driver  email by driverIds
-    //send the emails using dirverIds
-    return assign;
-  }
-
-  /**
-   * Change driver for pickup
-   * @param {*} @prcId unique prcId
-   * @param {*} driverIds[] are array
-   */
-  async PRCChangeDriver(prcId, driverIds) {
-    const id = prcId;
-    try {
-      let prc = await PRCModal.findByIdAndUpdate(id, {
-        driverIds: driverIds,
-      });
-      return prc;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  /**
-   * Update driver task status
-   */
-  async PRCDriverUpdateTask(req) {
-    try {
-      const prcId = req.params.prcId;
-      const task = req.query.task;
-      let updateTask = await PRCModal.findByIdAndUpdate(new ObjectId(prcId), {
-        PRCStatus: task,
-      });
-      return updateTask;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  /**
-   * GP request for on demand pickups
-   * @param {*} req
-   * @param {*} res
-   */
-  async PRCRequestDemandPickups() {}
 }
 
 module.exports = PRCService;
