@@ -32,9 +32,9 @@ import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
 import { ParticipationComponent } from './components/events/participation/participation.component';
-import { MyOrganizedEventsComponent } from './components/events/my-organized-events/my-organized-events.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
+import { MyEventPageComponent } from './pages/my-event-page/my-event-page.component';
 import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
 import { ReportComplaintComponent } from './components/report/report-complaint/report-complaint.component';
@@ -69,9 +69,9 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     McAdminHomepageComponent,
     MyEventsComponent,
     ParticipationComponent,
-    MyOrganizedEventsComponent,
     HeaderComponent,
     OrganizedEventPageComponent,
+    MyEventPageComponent,
     ReportGarbageComponent,
     ReportPageComponent,
     ReportComplaintComponent,

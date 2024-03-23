@@ -8,6 +8,7 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
+import { MyEventPageComponent } from './pages/my-event-page/my-event-page.component';
 import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { PickupComponent } from './pages/public/pickup/pickup.component';
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: 'mc-admin-homepage', component: McAdminHomepageComponent },
   { path: 'user-homepage/report', component: ReportPageComponent},
   { path: 'user-homepage/event', component: EventsPageComponent },
-  { path: 'user-homepage/event/organized-event-page', component: OrganizedEventPageComponent },
+  { path: 'user-homepage/event/my-events', component: MyEventPageComponent },
+  { path: 'user-homepage/event/my-events/organized-event-page', component: OrganizedEventPageComponent },
 
   { path: 'public/dashboard', component: DashbordComponent },
   { path: 'public/pickup', component: PickupComponent },
