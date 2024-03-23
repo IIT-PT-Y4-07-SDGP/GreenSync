@@ -4,9 +4,11 @@ const AuthService = require("./authService");
 const mongoose = require("mongoose");
 const common = new CommonService();
 const MCModel = require("../models/MCModel");
+const userModel = require('../models/userModel');
 const accountModel = require("../models/accountModel");
 const districtModel = require("../models/district");
-const scheduleModel= require("../models/schedule")
+const scheduleModel= require("../models/schedule");
+const reportGarbageModel = require("../models/reportGarbageModel");
 
 class MCService {
   static async MCRegister(MCDetails, res) {
@@ -377,10 +379,25 @@ static async updateSchedule(scheduleId, updatedSchedule) {
   }
 }
 
+static async reportGarbage(reportDetails){
+  let authorID = reportDetails.reportAuthor;
+        if (await this.isAuthorInDB(authorID)){
+          reportDetails.reportAuthor = authorID;
+          const event = await reportGarbageModel.create(reportDetails);
+          return event;
+        } else {
+            throw new Error('Organizer is not a registered users')
+        }  
+}
 
-
-
-
+static async isAuthorInDB(authorID){
+  try {
+    const author = await userModel.findById(authorID);
+            return !!author; // Returns true if organizer exists, false otherwise
+        } catch (error) {
+            throw new Error('User not exist in the database:', error); // Handle the error accordingly
+        }
+  }
 }
 
 module.exports = MCService;
