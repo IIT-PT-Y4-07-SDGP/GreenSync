@@ -15,14 +15,12 @@ const eventsRoute = require("./routes/events");
 const mcRoute = require("./routes/mc");
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
-const pickupRouter = require("./routes/pickup");
-
+require("./routes/pickup");
 // Importing Controllers and creating instance
 const UserController = require("./controllers/userController");
 const PRCController = require("./controllers/PRCController");
 const MCController = require("./controllers/MCController");
-const DriverController = require("./controllers/driverController");
-
+require("./controllers/PRCDriverController");
 // Initiating Express
 const app = express();
 const port = "5001";

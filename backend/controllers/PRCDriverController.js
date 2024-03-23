@@ -2,10 +2,10 @@ const {MongoClient} = require('mongodb');
 const config = require('../configuration/config');
 const DriverService = require("../Services/driverService");
 const uri = config.MONGO_URI;
-const client = new MongoClient(uri);
+new MongoClient(uri);
 const driverService = new DriverService();
 
-class DriverController {
+class PRCDriverController {
 
     static async getDriversList(req, res) {
         try {
@@ -17,5 +17,5 @@ class DriverController {
     }
 }
 
-module.exports = DriverController;
+module.exports = PRCDriverController;
 

@@ -1,8 +1,7 @@
 const PRCController = require("../controllers/PRCController");
-const prc = new PRCController();
-
+new PRCController();
 const express = require("express");
-const DriverController = require("../controllers/driverController");
+const DriverController = require("../controllers/PRCDriverController");
 const router = express.Router();
 
 router.get("/prc-list", PRCController.getPRCs);
