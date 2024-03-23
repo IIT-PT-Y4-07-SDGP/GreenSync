@@ -1,4 +1,4 @@
-const { Timestamp } = require("mongodb");
+const { Timestamp, ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
@@ -8,16 +8,16 @@ const reportGarbageSchema = new schema({
         required: true,
     },
      reportTime: {
-        type: Timestamp,
-        required: true,
-     },
-     reportDate: {
         type: Date,
         required: true,
      },
-     reportImages: {
+     reportPictures: {
         type: String,
         required: false,
+     },
+     reportAuthor: {
+        type: ObjectId,
+        required: true,
      },
      reportDescription: {
         type: String,
