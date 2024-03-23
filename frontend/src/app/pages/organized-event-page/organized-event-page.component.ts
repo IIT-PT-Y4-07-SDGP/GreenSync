@@ -4,6 +4,9 @@ import { EventService } from '../../services/event.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { ParticipantDetails } from 'src/app/interfaces/participantsDetails';
+import { EventDetails } from 'src/app/interfaces/event';
+import { EventService } from '../../services/event.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-organized-event-page',
@@ -13,8 +16,9 @@ import { ParticipantDetails } from 'src/app/interfaces/participantsDetails';
 export class OrganizedEventPageComponent implements OnInit {
   public events: EventDetails[] = [];
   dataSource = new MatTableDataSource<ParticipantDetails>();
+  eventId: string = "";  public events: EventDetails[] = [];
   eventId: string = "";
-  constructor(private eventServices: EventService, private route: ActivatedRoute) { }
+  constructor(private eventServices: EventService, private route: ActivatedRouteprivate eventServices: EventService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const eventIdFromService = this.eventServices.getViewEventID();
@@ -43,7 +47,6 @@ export class OrganizedEventPageComponent implements OnInit {
           updatedAt: event.updatedAt,
           __v: event.__v
         }];
-        console.log(event);
       } else {
         console.log('No event found or invalid data returned.');
       }
@@ -54,8 +57,8 @@ export class OrganizedEventPageComponent implements OnInit {
   });
   }
 
-  getParticipatedCount(participants: any[]): number {
-    if (!participants) return 0;
-    return participants.filter(participant => participant.participationStatus === 'Participated').length;
-  }
+
+  // totalRegistered(event.eventParticipant) {
+  //   totalRegistered = event.eventParticipant.participants.length;
+  // }
 }
