@@ -1,23 +1,29 @@
-<!-- organized-event-page.component.html -->
-<div class="flex justify-between items-start">
+<div class="flex justify-between items-start my-6 mx-10">
   <h1 class="text-primary text-xl">{{ events[0]?.eventName }}</h1>
-  <h3 class="text-primary text-xl">Total Register: {{ events[0]?.eventParticipant?.length }}</h3>
+  <div class="text-primary text-xl">
+    <h3>Total Register: {{ events[0]?.eventParticipant?.length }}</h3>
+    <h3>Total Participated: {{ getParticipatedCount(events[0]?.eventParticipant) }}</h3>
+  </div>
 </div>
 
-<mat-table [dataSource]="events[0]?.eventParticipant" class="mat-elavation-z8 mx-40">
-  <!-- Participant Name Column -->
-  <ng-container matColumnDef="participantName">
-    <mat-header-cell *matHeaderCellDef class="text-center"> Participant Name </mat-header-cell>
-    <mat-cell *matCellDef="let participant" class="text-center"> {{ participant?.user?.firstName }} {{ participant?.user?.lastName }} </mat-cell>
-  </ng-container>
-
-  <!-- Participant Status Column -->
-  <ng-container matColumnDef="participationStatus">
-    <mat-header-cell *matHeaderCellDef class="text-center"> Participation Status </mat-header-cell>
-    <mat-cell *matCellDef="let participant" class="text-center"> {{ participant?.participationStatus }} </mat-cell>
-  </ng-container>
-
-  <!-- Define the table rows -->
-  <mat-header-row *matHeaderRowDef="['participantName', 'participationStatus']"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: ['participantName', 'participationStatus']"></mat-row>
-</mat-table>
+<div class="flex justify-center">
+  <div class="table-container max-h-96 mx-40 w-2/3 overflow-auto rounded-lg">
+    <mat-table [dataSource]="events[0]?.eventParticipant" class="shadow-lg rounded-lg w-full bg-gray-200">
+      <!-- Participant Name Column -->
+      <ng-container matColumnDef="participantName">
+        <mat-header-cell *matHeaderCellDef class="text-center"> Participant Name </mat-header-cell>
+        <mat-cell *matCellDef="let participant" class="text-center"> {{ participant?.user?.firstName }} {{ participant?.user?.lastName }} </mat-cell>
+      </ng-container>
+  
+      <!-- Participant Status Column -->
+      <ng-container matColumnDef="participationStatus">
+        <mat-header-cell *matHeaderCellDef class="text-center"> Participation Status </mat-header-cell>
+        <mat-cell *matCellDef="let participant" class="text-center"> {{ participant?.participationStatus }} </mat-cell>
+      </ng-container>
+  
+      <!-- Define the table rows -->
+      <mat-header-row class="bg-gray-400" *matHeaderRowDef="['participantName', 'participationStatus']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['participantName', 'participationStatus']"></mat-row>
+    </mat-table>
+  </div>
+</div>

@@ -54,8 +54,8 @@ export class OrganizedEventPageComponent implements OnInit {
   });
   }
 
-
-  // totalRegistered(event.eventParticipant) {
-  //   totalRegistered = event.eventParticipant.participants.length;
-  // }
+  getParticipatedCount(participants: any[]): number {
+    if (!participants) return 0;
+    return participants.filter(participant => participant.participationStatus === 'Participated').length;
+  }
 }
