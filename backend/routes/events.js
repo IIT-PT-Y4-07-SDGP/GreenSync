@@ -9,6 +9,5 @@ router.get("/get-events", eventsController.getEvents);
 router.get("/get-my-organizing-events", eventsController.getMyOrganizingEvents);
 router.post("/start-event/:eventId", eventsController.startEvents);
 router.post("/participate", eventsController.participateUser);
-router.get("/get-event-total-registered", eventsController.getTotalRegistered);
 
 module.exports = router;

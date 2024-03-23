@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
 import { ViewEventComponent } from 'src/app/components/events/view-event/view-event.component';
+import { MyEventsComponent } from 'src/app/components/events/my-events/my-events.component';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
 
@@ -12,11 +13,6 @@ import { EventService } from '../../services/event.service';
 })
 export class EventsPageComponent implements OnInit {
   public events: EventDetails[] = [];
-  pagedEvents: any[] = [];
-  pageSize: number = 10;
-  currentPage: number = 1;
-  totalPages: number = 1;
-
   constructor(public dialog: MatDialog, private eventServices: EventService) { }
 
   public imagePaths: string[] = [
@@ -34,12 +30,14 @@ export class EventsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchEvents();
-    this.totalPages = Math.ceil(this.events.length / this.pageSize);
-    this.loadPage();
   }
 
   onClickOrganizeEvents() {
     this.openOrganizeEventDialog();
+  }
+
+  onClickViewMyEvents() {
+    this.openMyEventDialog();
   }
 
   openOrganizeEventDialog(): void {
