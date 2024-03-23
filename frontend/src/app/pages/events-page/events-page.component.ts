@@ -13,6 +13,12 @@ import { EventService } from '../../services/event.service';
 })
 export class EventsPageComponent implements OnInit {
   public events: EventDetails[] = [];
+  pagedEvents: any[] = [];
+  pageSize: number = 10;
+  currentPage: number = 1;
+  totalPages: number = 1;
+
+  
   constructor(public dialog: MatDialog, private eventServices: EventService) { }
 
   public imagePaths: string[] = [
@@ -36,9 +42,9 @@ export class EventsPageComponent implements OnInit {
     this.openOrganizeEventDialog();
   }
 
-  onClickViewMyEvents() {
-    this.openMyEventDialog();
-  }
+  // onClickViewMyEvents() {
+  //   this.openMyEventDialog();
+  // }
 
   openOrganizeEventDialog(): void {
     const dialogRef = this.dialog.open(OrganizeEventComponent, {
@@ -102,9 +108,6 @@ export class EventsPageComponent implements OnInit {
       height: '700px',
       width: '1000px',
       data: { event: selectedEvent, imagePath: this.imagePaths }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // Handle any data or actions after the dialog is closed
     });
   }
 
