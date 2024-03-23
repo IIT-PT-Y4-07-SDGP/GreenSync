@@ -12,13 +12,7 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class ViewEventComponent implements OnInit {
   event: EventDetails;
-  event: EventDetails;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { event: EventDetails }, 
-    private loginService:LoginService,
-    private eventService: EventService
-  ) {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { event: EventDetails }, 
     private loginService:LoginService,

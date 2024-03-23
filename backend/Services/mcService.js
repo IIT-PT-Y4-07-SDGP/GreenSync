@@ -1,7 +1,6 @@
 // Import necessary modules
 const CommonService = require("./commonService");
 const AuthService = require("./authService");
-const AuthService = require("./authService");
 const mongoose = require("mongoose");
 const common = new CommonService();
 const MCModel = require("../models/MCModel");
@@ -12,28 +11,6 @@ const scheduleModel= require("../models/schedule");
 const reportGarbageModel = require("../models/reportGarbageModel");
 
 class MCService {
-  static async MCRegister(MCDetails, res) {
-    // Validate password
-    if (common.isPasswordValid(MCDetails.account.password)) {
-      MCDetails.account.password = await common.hashPassword(
-        MCDetails.account.password
-      );
-    } else {
-      throw new Error(
-        "Invalid password. Please ensure it meets the requirements."
-      );
-    }
-
-    // Validating Email
-    if (!common.validateEmail(MCDetails.account.email))
-      throw new Error("Invalid email. Please enter a valid email.");
-
-    // Validating phone number
-    const phoneNumber = common.validatePhoneNumber(
-      MCDetails.account.phoneNumber
-    );
-    if (!phoneNumber.isValid)
-      throw new Error("Invalid phone number. Please enter valid phone number");
   static async MCRegister(MCDetails, res) {
     // Validate password
     if (common.isPasswordValid(MCDetails.account.password)) {
@@ -424,4 +401,3 @@ static async isAuthorInDB(authorID){
 }
 
 module.exports = MCService;
-

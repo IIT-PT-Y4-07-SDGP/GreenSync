@@ -1,17 +1,13 @@
 const eventsModel = require('../models/eventsModel')
 const userModel = require('../models/userModel');
 const randomString = require('randomstring');
-const randomString = require('randomstring');
 
 class EventsService {
     async eventsOrganize(eventsDetails){
         let OrganizerID = eventsDetails.eventOrganizer;
         if (await this.isOrganizerInDB(OrganizerID)){
-        let OrganizerID = eventsDetails.eventOrganizer;
-        if (await this.isOrganizerInDB(OrganizerID)){
             let eventTime = new Date(eventsDetails.eventTime)
             if (eventTime > new Date()){
-                eventsDetails.eventOrganizer = OrganizerID;
                 eventsDetails.eventOrganizer = OrganizerID;
                 const event = await eventsModel.create(eventsDetails);
                 return event;

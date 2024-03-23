@@ -45,10 +45,7 @@ app.use("/admin", adminRouter);
 app.use("/user", userRoute);
 app.use("/prc", prcRoute);
 app.use("/mc", mcRoute);
-app.use("/admin", adminRouter);
-app.use("/user", userRoute);
 app.use("/events", eventsRoute);
-app.use(requireAuth);
 app.use(requireAuth);
 
 // Verifying the connection to database and starting the server

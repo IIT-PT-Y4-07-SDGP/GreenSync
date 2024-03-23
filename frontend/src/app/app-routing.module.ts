@@ -25,7 +25,6 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
-  { path: '', component: LandingPageComponent },
   { path: 'registration', component: RegistrationPageComponent },
   { path: 'login-page', component: LoginPageComponent },
   { path: 'user-homepage', component: GeneralUserHomepageComponent },
