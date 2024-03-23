@@ -1,0 +1,21 @@
+<div class="container mx-auto px-4 py-8 h-screen">
+  <div class="flex justify-between items-center mb-6">
+    <!-- Back Button -->
+    <button (click)="goBack()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-150 ease-in-out">
+      &larr; Back
+    </button>
+    <h2 class="text-3xl font-bold text-green-600">LIST OF PRCs</h2>
+  </div>
+  <!-- Scrollable List Container, taking up remaining screen height -->
+  <div class="overflow-y-auto bg-green-50 border-l-4 border-green-500 rounded-lg shadow-lg" style="height: calc(100vh - 12rem);">
+    <ul>
+      <li *ngFor="let PRC of PRCList" class="p-4 border-b border-green-200 last:border-b-0 hover:bg-green-100">
+        <h3 class="text-xl font-semibold text-green-800">{{ PRC.PRCName }}</h3>
+        <p class="text-green-700">Registration Number: <span class="font-medium">{{ PRC.PRCBusinessRegNumber }}</span></p>
+        <p class="text-green-700">District: <span class="font-medium">{{ PRC.District }}</span></p>
+        <p class="text-green-700">Address: <span class="font-medium">{{ PRC.Address }}</span></p>
+        <p class="text-green-700">Status: <span class="font-medium">{{ PRC.PRCStatus }}</span></p>
+      </li>
+    </ul>
+  </div>
+</div>

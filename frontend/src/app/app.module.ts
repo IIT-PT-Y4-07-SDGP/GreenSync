@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,7 +30,15 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
+import {PrcAdminComponent} from './pages/prc-admin-page/prc-admin/prc-admin.component';
+import {
+  DriverRegistrationComponent
+} from './components/prc/driver-registration/driver-registration/driver-registration.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {ViewPrcListComponent} from './components/prc/prc-registration/view-prc-list/view-prc-list.component';
+import {
+  ViewDrivesListComponent
+} from './components/prc/driver-registration/view-drives-list/view-drives-list.component';import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
@@ -67,6 +75,11 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     OrganizeEventComponent,
     McRegistrationComponent,
     ViewEventComponent,
+    PrcAdminComponent,
+    DriverRegistrationComponent,
+    ViewPrcListComponent,
+    ViewDrivesListComponent,
+    ViewEventComponent,
     GeneralUserHomepageComponent,
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
@@ -90,26 +103,28 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     PrcDriverPickupHitoryPageComponent,
     PrcDriverPickupViewPageComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatSelectModule,
-    MatInputModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCardModule,
-    MatButtonModule,
-    MatExpansionModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatSelectModule,
+        MatInputModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCardModule,
+        MatButtonModule,
+        MatExpansionModule,
+        MatSidenavModule,
     MatTableModule,
-  ],
+    ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
