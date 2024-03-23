@@ -16,6 +16,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+
+
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
 import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
 import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-registration.component';
@@ -103,7 +106,8 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     MatNativeDateModule,
     MatCardModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTableModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

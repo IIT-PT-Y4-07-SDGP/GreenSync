@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { ParticipantDetails } from 'src/app/interfaces/participantsDetails';
 
 @Component({
   selector: 'app-organized-event-page',
@@ -10,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class OrganizedEventPageComponent implements OnInit {
   public events: EventDetails[] = [];
+  dataSource = new MatTableDataSource<ParticipantDetails>();
   eventId: string = "";
   constructor(private eventServices: EventService, private route: ActivatedRoute) { }
 

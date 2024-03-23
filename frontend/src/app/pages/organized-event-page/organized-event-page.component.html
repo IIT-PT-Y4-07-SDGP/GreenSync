@@ -1,8 +1,23 @@
-<div>
-  <h3 class="text-primary">{{ this.events[0].eventName }}</h3>
-  <ul>
-    <li *ngFor="let participant of this.events[0].eventParticipant">
-      {{ participant.user.firstName }} - {{ participant.user.lastName }} - {{ participant.participationStatus }}
-    </li>
-  </ul>
+<!-- organized-event-page.component.html -->
+<div class="flex justify-between items-start">
+  <h1 class="text-primary text-xl">{{ events[0]?.eventName }}</h1>
+  <h3 class="text-primary text-xl">Total Register: {{ events[0]?.eventParticipant?.length }}</h3>
 </div>
+
+<mat-table [dataSource]="events[0]?.eventParticipant" class="mat-elavation-z8 mx-40">
+  <!-- Participant Name Column -->
+  <ng-container matColumnDef="participantName">
+    <mat-header-cell *matHeaderCellDef class="text-center"> Participant Name </mat-header-cell>
+    <mat-cell *matCellDef="let participant" class="text-center"> {{ participant?.user?.firstName }} {{ participant?.user?.lastName }} </mat-cell>
+  </ng-container>
+
+  <!-- Participant Status Column -->
+  <ng-container matColumnDef="participationStatus">
+    <mat-header-cell *matHeaderCellDef class="text-center"> Participation Status </mat-header-cell>
+    <mat-cell *matCellDef="let participant" class="text-center"> {{ participant?.participationStatus }} </mat-cell>
+  </ng-container>
+
+  <!-- Define the table rows -->
+  <mat-header-row *matHeaderRowDef="['participantName', 'participationStatus']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['participantName', 'participationStatus']"></mat-row>
+</mat-table>
