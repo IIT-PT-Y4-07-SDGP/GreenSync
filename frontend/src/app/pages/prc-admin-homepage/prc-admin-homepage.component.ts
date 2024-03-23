@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PRC } from 'src/app/interfaces/PRC';
-import { LoginService } from 'src/app/services/login-service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-prc-admin-homepage',
@@ -13,6 +13,7 @@ export class PrcAdminHomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.PRC = this.loginService.getPRC(); 
+    console.log(this.PRC);
   }
 
 }

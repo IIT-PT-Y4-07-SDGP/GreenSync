@@ -8,7 +8,7 @@ class MCController{
         try{
             // Validate the mc data and add mc to database
             const newMC = await MCService.MCRegister(req.body, res);
-            return res.status(200).json({newMC});
+            return res.status(200).json(newMC);
         }
         catch(error){
             console.log(error);
@@ -81,6 +81,16 @@ class MCController{
         }
         catch(error){
             console.log(error);
+            res.status(400).json({error:error.message})
+        }
+    }
+
+    static async reportGarbage (req,res) {
+        try{
+            const report = await MCService.reportGarbage(req.body);
+            return res.status(200).json({report});
+        }
+        catch(error){
             res.status(400).json({error:error.message})
         }
     }

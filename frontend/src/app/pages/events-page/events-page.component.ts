@@ -1,25 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
 import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
 import { ViewEventComponent } from 'src/app/components/events/view-event/view-event.component';
 import { MyEventsComponent } from 'src/app/components/events/my-events/my-events.component';
-
-interface Event {
-  _id: string;
-  eventName: string;
-  eventTime: string;
-  eventLocation: string;
-  eventOrganizer: string;
-  eventParticipant: any[]; // Update the type based on your actual data structure
-  eventToken: number;
-  eventDescription: string;
-  eventStatus: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+import { EventDetails } from 'src/app/interfaces/event';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-events-page',
@@ -27,8 +12,8 @@ interface Event {
   styleUrls: ['./events-page.component.scss']
 })
 export class EventsPageComponent implements OnInit {
-  public events: Event[] = [];
-  constructor(public dialog: MatDialog, private http: HttpClient, private datePipe: DatePipe) { }
+  public events: EventDetails[] = [];
+  constructor(public dialog: MatDialog, private eventServices: EventService) { }
 
   public imagePaths: string[] = [
     'app/assets/event-list-img-1.jpg',
@@ -47,11 +32,11 @@ export class EventsPageComponent implements OnInit {
     this.fetchEvents();
   }
 
-  onClickOrganizeEvents(){
-      this.openOrganizeEventDialog();
+  onClickOrganizeEvents() {
+    this.openOrganizeEventDialog();
   }
 
-  onClickViewMyEvents(){
+  onClickViewMyEvents() {
     this.openMyEventDialog();
   }
 
@@ -70,23 +55,25 @@ export class EventsPageComponent implements OnInit {
 
   fetchEvents() {
     // Make an HTTP request to fetch events from your server
-    this.http.get<Event[]>('http://localhost:5001/api/events/get-events').subscribe(events => {
-      // Assign the retrieved events to the component property
-      this.events = events.map(event => ({
-        _id: event._id,
-        eventName: event.eventName,
-        eventTime: event.eventTime,
-        eventLocation: event.eventLocation,
-        eventDescription: event.eventDescription,
-        eventOrganizer: event.eventOrganizer,
-        eventParticipant: event.eventParticipant,
-        eventToken: event.eventToken,
-        eventStatus: event.eventStatus,
-        createdAt: event.createdAt,
-        updatedAt: event.updatedAt,
-        __v: event.__v
-      }));
-    });
+    this.eventServices.getAllEvents().subscribe(
+      (events) =>{
+        // Assign the retrieved events to the component property
+        this.events = events.map(event => ({
+          _id: event._id,
+          eventName: event.eventName,
+          eventTime: event.eventTime,
+          eventLocation: event.eventLocation,
+          eventDescription: event.eventDescription,
+          eventOrganizer: event.eventOrganizer,
+          eventParticipant: event.eventParticipant,
+          eventToken: event.eventToken,
+          eventStatus: event.eventStatus,
+          createdAt: event.createdAt,
+          updatedAt: event.updatedAt,
+          __v: event.__v
+        }));
+      }
+    );
   }
 
   formatDate(dateTime: string): string {
@@ -106,22 +93,22 @@ export class EventsPageComponent implements OnInit {
     });
   }
 
-  onCardClick(event: Event, index: number) {
+  onCardClick(event: EventDetails, index: number) {
     this.openViewEventDialog(event, index);
-}
+  }
 
-  openViewEventDialog(selectedEvent: Event, index: number){
+  openViewEventDialog(selectedEvent: EventDetails, index: number) {
     const dialogRef = this.dialog.open(ViewEventComponent, {
       height: '700px',
-      width: '1000px', 
-      data: { event: selectedEvent, imagePath: this.imagePaths }   
-  });
-  dialogRef.afterClosed().subscribe(result => {
+      width: '1000px',
+      data: { event: selectedEvent, imagePath: this.imagePaths }
+    });
+    dialogRef.afterClosed().subscribe(result => {
       // Handle any data or actions after the dialog is closed
     });
-}
+  }
 
-openMyEventDialog(): void {
+  openMyEventDialog(): void {
     const dialogRef = this.dialog.open(MyEventsComponent, {
       height: '600px',
       width: '1000px', // Adjust the width as needed
@@ -129,8 +116,8 @@ openMyEventDialog(): void {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.ngOnInit();
       // Handle any data or actions after the dialog is closed
+      this.ngOnInit();
     });
   }
 

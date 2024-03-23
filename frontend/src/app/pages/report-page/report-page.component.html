@@ -1,0 +1,23 @@
+<div class="flex w-full justify-center mt-5">
+  <div class="block  justify-center items-center w-8/12">
+    <div class="flex items-center justify-center w-full">
+      <span class="flex flex-row mb-1 mr-2">Report type :</span>
+      <mat-form-field>
+          <mat-select [(ngModel)]="this.complainType" value="illegal-garbage-dump-report" class="pl-1 border-none">
+              <mat-option value="illegal-garbage-dump-report">Report garbage dump</mat-option>
+              <mat-option value="complaint">Report complain</mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="flex bg-white rounded-lg p-5 h-fit shadow-2xl">
+      <div class="w-full" *ngIf="this.complainType == 'illegal-garbage-dump-report'">
+        <app-report-garbage class=""></app-report-garbage>    
+      </div>
+      <div *ngIf="this.complainType == 'complaint'">
+        <app-report-complaint></app-report-complaint>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  

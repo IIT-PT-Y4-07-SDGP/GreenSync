@@ -6,6 +6,10 @@ const PickupModel = require("../models/pickupModel");
 
 const pickup = new PickupModel();
 class PickupManagementService {
+  /**
+   * Find all pickups
+   * @returns pickup entity as array
+   */
   async findAllPickups() {
     try {
       // Find all pickups

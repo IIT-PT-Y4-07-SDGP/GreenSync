@@ -30,6 +30,18 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
+import { ParticipationComponent } from './components/events/participation/participation.component';
+import { MyOrganizedEventsComponent } from './components/events/my-organized-events/my-organized-events.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
+import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
+import { ReportComplaintComponent } from './components/report/report-complaint/report-complaint.component';
+import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
+import { HistoryComponent } from './pages/public/history/history.component';
+import { PickupComponent } from './pages/public/pickup/pickup.component';
+import { LocationComponent } from './pages/public/location/location.component';
+import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +60,19 @@ import { MyEventsComponent } from './components/events/my-events/my-events.compo
     GeneralUserHomepageComponent,
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
-    MyEventsComponent
+    MyEventsComponent,
+    ParticipationComponent,
+    MyOrganizedEventsComponent,
+    HeaderComponent,
+    OrganizedEventPageComponent,
+    ReportGarbageComponent,
+    ReportPageComponent,
+    ReportComplaintComponent,
+    DashbordComponent,
+    PickupComponent,
+    HistoryComponent,
+    LocationComponent,
+    PriceChartComponent
   ],
   imports: [
     BrowserModule,
