@@ -37,6 +37,11 @@ import { OrganizedEventPageComponent } from './pages/organized-event-page/organi
 import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
 import { ReportComplaintComponent } from './components/report/report-complaint/report-complaint.component';
+import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
+import { HistoryComponent } from './pages/public/history/history.component';
+import { PickupComponent } from './pages/public/pickup/pickup.component';
+import { LocationComponent } from './pages/public/location/location.component';
+import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +67,12 @@ import { ReportComplaintComponent } from './components/report/report-complaint/r
     OrganizedEventPageComponent,
     ReportGarbageComponent,
     ReportPageComponent,
-    ReportComplaintComponent
+    ReportComplaintComponent,
+    DashbordComponent,
+    PickupComponent,
+    HistoryComponent,
+    LocationComponent,
+    PriceChartComponent
   ],
   imports: [
     BrowserModule,

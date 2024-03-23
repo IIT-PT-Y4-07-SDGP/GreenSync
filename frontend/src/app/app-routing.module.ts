@@ -9,6 +9,11 @@ import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 import { ReportPageComponent } from './pages/report-page/report-page.component';
+import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
+import { PickupComponent } from './pages/public/pickup/pickup.component';
+import { LocationComponent } from './pages/public/location/location.component';
+import { HistoryComponent } from './pages/public/history/history.component';
+import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 
 
 const routes: Routes = [
@@ -21,6 +26,11 @@ const routes: Routes = [
   { path: 'user-homepage/report', component: ReportPageComponent},
   { path: 'user-homepage/event', component: EventsPageComponent },
   { path: 'user-homepage/event/organized-event-page', component: OrganizedEventPageComponent },
+  { path: 'public/dashboard', component: DashbordComponent },
+  { path: 'public/pickup', component: PickupComponent },
+  { path: 'public/location', component: LocationComponent },
+  { path: 'public/history', component: HistoryComponent },
+  { path: 'public/price-chart', component: PriceChartComponent }
 ];
 
 @NgModule({
