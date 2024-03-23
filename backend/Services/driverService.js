@@ -1,28 +1,23 @@
-const {MongoClient} = require('mongodb');
+const mongoose = require('mongoose')
 const config = require('../configuration/config');
+const {Schema} = require("mongoose");
+const eventsModel = require("../models/eventsModel");
 const uri = config.MONGO_URI;
-const client = new MongoClient(uri);
+const accountsModel = require('../models/accountModel');
 
 class DriverService {
 
     async getDriversList() {
         try {
-            await client.connect();
-            const database = client.db("GreenSync");
-            const collection = database.collection("accounts");
-            const query = {'userRole': 'DRIVER'};
-            const cursor = collection.find(query, {
-                projection: {
-                    _id: 0,
-                    username: 1,
-                    email: 1,
-                    phoneNumber: 1,
-                    accountStatus: 1,
-                }
+            return await accountsModel.find({'userRole': 'DRIVER'}, {
+                _id: 0,
+                username: 1,
+                email: 1,
+                phoneNumber: 1,
+                accountStatus: 1,
             });
-            return await cursor.toArray();
         } catch (error) {
-            console.log(error);
+            throw new Error(`Error fetching events from the database: ${error.message}`);
         }
     }
 }

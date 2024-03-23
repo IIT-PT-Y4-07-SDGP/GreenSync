@@ -19,7 +19,7 @@ export class DriverService {
   }
 
   getDriversList() {
-    return this.http.get<Driver[]>(`${this.apiUrl}/driver/driver-list`);
+    return this.http.get<Driver[]>(`${this.apiUrl}/prc/driver-list`);
   }
 
 }
