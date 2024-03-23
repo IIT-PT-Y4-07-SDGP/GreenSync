@@ -242,7 +242,7 @@ class UserService {
             }
             const accountId=account._id;
             const user = await userModel.findOne({ account:accountId }).populate('account');
-            if (!account) {
+            if (!user) {
                 throw new Error("User not found");
             }
 

@@ -10,6 +10,8 @@ router.post("/add/pickup", MCController.addPickupPoint);
 router.get("/pickups/:id", MCController.getPickupPoints);
 router.post("/schedule", MCController.createSchedule);
 router.put("/schedule", MCController.updateSchedule);
+router.get("/:username", MCController.getMCByUsername);
+
 
 
 module.exports = router;

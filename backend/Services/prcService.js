@@ -108,6 +108,45 @@ class PRCService {
             } 
         }
     }
+
+     async getPRCByUsername(username) {
+        if(!username){
+            throw new Error("Username is required");
+        }
+        try {
+            const account = await accountModel.findOne({ username });
+            if (!account) {
+                throw new Error("PRC not found");
+            }
+            const accountId=account._id;
+            const PRC = await PRCModal.findOne({ account:accountId }).populate('account');
+            if (!PRC) {
+                throw new Error("PRC not found");
+            }
+      
+      
+            return {
+              _id:PRC._id,
+              PRCName:PRC.PRCName,
+              PRCBusinessRegNumber:PRC.PRCBusinessRegNumber,
+              District:PRC.District,
+              Address:PRC.Address,
+              PRCStatus:PRC.PRCStatus,
+              account:{
+                  _id:PRC.account[0]._id,
+                  username:PRC.account[0].username,
+                  phoneNumber:PRC.account[0].phoneNumber,
+                  userRole:PRC.account[0].userRole,
+                  email:PRC.account[0].email,
+                  accountStatus:PRC.account[0].accountStatus,
+              }
+          };
+        
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.message);
+        }
+      }
 }
 
 module.exports = PRCService;

@@ -8,17 +8,18 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
+import {AuthGuard} from "./auth.guard"
 
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'registration', component: RegistrationPageComponent },
   { path: 'login-page', component: LoginPageComponent },
-  { path: 'user-homepage', component: GeneralUserHomepageComponent },
-  { path: 'prc-admin-homepage', component: PrcAdminHomepageComponent },
-  { path: 'mc-admin-homepage', component: McAdminHomepageComponent },
-  { path: 'user-homepage/event', component: EventsPageComponent },
-  { path: 'user-homepage/event/organized-event-page', component: OrganizedEventPageComponent },
+  { path: 'user-homepage', component: GeneralUserHomepageComponent, canActivate: [AuthGuard] },
+  { path: 'prc-admin-homepage', component: PrcAdminHomepageComponent, canActivate: [AuthGuard] },
+  { path: 'mc-admin-homepage', component: McAdminHomepageComponent, canActivate: [AuthGuard] },
+  { path: 'user-homepage/event', component: EventsPageComponent, canActivate: [AuthGuard] },
+  { path: 'user-homepage/event/organized-event-page', component: OrganizedEventPageComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

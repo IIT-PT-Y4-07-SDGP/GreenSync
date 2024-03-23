@@ -85,6 +85,17 @@ class MCController{
         }
     }
 
+    static async getMCByUsername(req, res) {
+        try {
+            const {username} = req.params; 
+
+            const MC = await MCService.getMCByUsername(username);
+            return res.status(200).json(MC);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
 }
 
 // Export the controller

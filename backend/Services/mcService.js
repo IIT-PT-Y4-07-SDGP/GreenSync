@@ -378,6 +378,44 @@ static async updateSchedule(scheduleId, updatedSchedule) {
 }
 
 
+static async getMCByUsername(username) {
+  if(!username){
+      throw new Error("Username is required");
+  }
+  try {
+      const account = await accountModel.findOne({ username });
+      if (!account) {
+          throw new Error("MC not found");
+      }
+      const accountId=account._id;
+      const MC = await MCModel.findOne({ account:accountId }).populate('account');
+      if (!MC) {
+          throw new Error("MC not found");
+      }
+
+
+      return {
+        _id:MC._id,
+        MCName:MC.MCName,
+        District:MC.District,
+        Address:MC.Address,
+        MCStatus:MC.MCStatus,
+        account:{
+            _id:MC.account[0]._id,
+            username:MC.account[0].username,
+            phoneNumber:MC.account[0].phoneNumber,
+            userRole:MC.account[0].userRole,
+            email:MC.account[0].email,
+            accountStatus:MC.account[0].accountStatus,
+        }
+    };
+  } catch (error) {
+      console.error(error);
+      throw new Error(error.message);
+  }
+}
+
+
 
 
 

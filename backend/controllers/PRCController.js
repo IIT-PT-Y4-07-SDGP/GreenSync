@@ -17,6 +17,17 @@ class PRCController{
             res.status(400).json({error:error.message})
         }
     }
+
+    static async getPRCByUsername(req, res) {
+        try {
+            const {username} = req.params; 
+
+            const PRC = await prc.getPRCByUsername(username);
+            return res.status(200).json(PRC);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
 }
 
 // Export the controller

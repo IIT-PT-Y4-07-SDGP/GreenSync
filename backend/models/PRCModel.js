@@ -28,7 +28,7 @@ const PRCSchema = new schema({
     },
     account: [{
         type: schema.Types.ObjectId,
-        ref: 'accountSchema',
+        ref: 'accounts',
         required:true
     }],
 }, { timestamps: true })
