@@ -31,7 +31,9 @@
         <div *ngIf="username !== undefined" class="flex justify-start items-start h-1/2 pb-5">
           <img src="app/assets/coin.png" alt="coin icon" class="object-fill mr-1 h-2/3">
           <!-- points -->
-          <span class="text-primary font-extrabold tracking-widest">{{ points }}</span>
+          <a href="#" (click)="openRedeemPopUp(points); $event.preventDefault();">
+            <span class="text-primary font-extrabold tracking-widest">{{ points }}</span>
+          </a>
         </div>
       </div>
     </div>
