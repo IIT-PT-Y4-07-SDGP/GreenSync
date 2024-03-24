@@ -95,6 +95,16 @@ class MCController{
         }
     }
 
+    static async createComplaint (req,res) {
+        try{
+            const report = await MCService.createComplaint(req.body);
+            return res.status(200).json({report});
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+
 }
 
 // Export the controller

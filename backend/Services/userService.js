@@ -30,7 +30,7 @@ class UserService {
         // Getting JWT Tokens
         let tokens = AuthService.generateJWTToken(userDetails.account.username,userDetails.account.userRole)
 
-        try{
+        /* try{
             session = await mongoose.startSession();
             session.startTransaction();
             
@@ -74,6 +74,43 @@ class UserService {
             console.error(error);
         } finally {
             if (session) { session.endSession(); }
+        } */
+
+        try {
+            session = await mongoose.startSession();
+            const transactionOptions = { readPreference: 'primary', readConcern: { level: 'local' }, writeConcern: { w: 'majority' } };
+        
+            const result = await session.withTransaction(async () => {
+                account = await accountModel.create(
+                    [{
+                        username: userDetails.account.username,
+                        phoneNumber: userDetails.account.phoneNumber,
+                        userRole: userDetails.account.userRole,
+                        email: userDetails.account.email,
+                        password: userDetails.account.password,
+                        accountStatus: "ACTIVE",
+                        refreshToken:[tokens.refreshToken]
+                    }], { session }
+                );
+        
+                generalUserDetails = await userModel.create(
+                    [{  
+                        firstName: userDetails.firstName,
+                        lastName: userDetails.lastName,
+                        profilePic: "Default",
+                        address: userDetails.address,
+                        account: account[0]._id
+                    }], { session }
+                );
+            }, transactionOptions);
+        
+            if (result) {
+                console.log("The transaction was committed.");
+            }
+        } catch (error) {
+            console.error('Error occurred:', error);
+        } finally {
+            session.endSession();
         }
         generalUserDetails = generalUserDetails[0];
         account = account[0];
@@ -229,8 +266,19 @@ class UserService {
             }
         }
     }
-    
    
+    //geting user for the redeem points function
+   async getUserById(userId) {
+        try {
+            const user = await userModel.findById(userId);
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        }catch (error) {
+            throw new Error(`Error fetching user from the database: ${error.message}`);
+        }
+    }
 }
 
 module.exports = UserService;
