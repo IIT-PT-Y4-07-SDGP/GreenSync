@@ -12,7 +12,7 @@ export class McAdminHomepageComponent implements OnInit {
   constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
-    this.MC = this.loginService.getMC();
+    this.MC = this.loginService.getMC(); // Fetching MC data when the component initializes
   }
 
 }

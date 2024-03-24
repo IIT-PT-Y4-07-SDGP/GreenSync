@@ -9,7 +9,9 @@ const bcrypt = require('bcrypt');
 
 class UserService {
     async userRegister(userDetails, res){
+        //validate password
         if (common.isPasswordValid(userDetails.account.password)) {
+            //hash password
             userDetails.account.password = await common.hashPassword(userDetails.account.password);
         } else {
             throw new Error("Invalid password. Please ensure it meets the requirements.")
@@ -35,6 +37,7 @@ class UserService {
             session.startTransaction();
             
             try {
+                //create an account
                 account = await accountModel.create(
                     [{
                         username: userDetails.account.username,
@@ -53,6 +56,7 @@ class UserService {
             }
             
             try {
+                //create an user record
                 generalUserDetails = await userModel.create(
                     [{  
                         firstName: userDetails.firstName,
@@ -78,6 +82,7 @@ class UserService {
         generalUserDetails = generalUserDetails[0];
         account = account[0];
 
+        //set the refresh token in the response cookie
         res.cookie("jwt", tokens.refreshToken, {
             httpOnly: true,
             secure: true,
@@ -144,10 +149,12 @@ class UserService {
                 if (!account) {
                     throw new Error('Account not found');
                 }
+                //validate if the provided existing password is correct
                 const isMatch = await bcrypt.compare(userDetails.oldPassword, account.password);
                 if (!isMatch) {
                     throw new Error('Invalid previous password');
                 }
+                //hash new password
                 const hashedPassword = await common.hashPassword(userDetails.password);
                 updatedAccount.password = hashedPassword;
                 await updatedAccount.save();
@@ -188,24 +195,29 @@ class UserService {
         try {
             session = await mongoose.startSession();
             session.startTransaction();
-    
+            
+            //validate input
             if (!accountId) {
                 throw new Error("Account ID is required.");
             }
     
             const account = await accountModel.findById(accountId);
+            //check whether the provided id is associated to a gp user
             if (!account || account.userRole !== "GP") {
                 throw new Error("No account associated with the provided ID.");
             }
 
+            //cannot delete an account thats restricted
             if(account.accountStatus==="BANNED" || account.accountStatus==="SUSPENDED"){
                 throw new Error("Account cannot be deleted since its restricted");
             }
     
+            //cannot delete an account thats already deleted
             if (account.accountStatus === "DELETED") {
                 throw new Error("Account is already deleted.");
             }
     
+            //update the status to deleted 
             account.accountStatus = "DELETED";
             await account.save({ session });
     

@@ -17,6 +17,8 @@ class PRCService {
     // Validate password
     let hashedPassword;
     if (common.isPasswordValid(prcDetails.account.password)) {
+
+      //hash provided password
       hashedPassword = await common.hashPassword(prcDetails.account.password);
     } else {
       throw new Error(
@@ -51,6 +53,7 @@ class PRCService {
       session.startTransaction();
 
       try {
+        //create PRC account 
         account = await accountModel.create(
           [
             {
@@ -72,6 +75,7 @@ class PRCService {
       }
 
       try {
+        //create PRC record
         PRC = await PRCModal.create(
           [
             {
@@ -102,6 +106,7 @@ class PRCService {
     PRC = PRC[0];
     account = account[0];
 
+    //set the refresh token in the response cookie
     res.cookie("jwt", tokens.refreshToken, {
       httpOnly: true,
       secure: true,
@@ -131,6 +136,7 @@ class PRCService {
 
   async getPrcList() {
     try {
+      //fetch all prcs
       return await prcModel.find({}, {
         _id: 0,
         PRCName: 1,

@@ -13,30 +13,37 @@ class AuthService {
                 throw new Error("Missing Credentials");
             }
 
+            //get related account
             const account = await accountModel.findOne({ email: userIdentity }) || await accountModel.findOne({ username: userIdentity });
             if (!account) {
                 throw new Error("User not found");
             }
 
+            //comapre the inputted password with the hashed password
             const match = await bcrypt.compare(password, account.password);
             if (!match) {
                 throw new Error("Incorrect Password");
             }
 
+            //generate access and refresh tokens
             const tokens = this.generateJWTToken(account.username,account.userRole);
             const accessToken = tokens.accessToken;
             const newRefreshToken = tokens.refreshToken;
 
+        
             let newRefreshTokenArray = !cookies?.jwt
                 ? account.refreshToken
                 : account.refreshToken.filter((rt) => rt !== cookies.jwt);
 
+            
             if (cookies?.jwt) {
                 const refreshToken = cookies.jwt;
+                //find account from refresh token preent in req cookie
                 const foundToken = await accountModel.findOne({ refreshToken }).exec();
                 if (!foundToken) {
                     newRefreshTokenArray = [];
                 }
+                //clear the cookie
                 res.clearCookie("jwt", {
                     httpOnly: true,
                     sameSite: "None",
@@ -48,6 +55,8 @@ class AuthService {
             await account.save();
 
             const userRole = account.userRole;
+
+            //dynamically fetch user details based on role
             if(userRole == "GP"){
                 let userDetails = await userModel.findOne({account: account.id});
                 return {
@@ -154,7 +163,7 @@ class AuthService {
             if (!user) {
                 return;
             }
-
+            //clear out refresh token from record
             user.refreshToken = user.refreshToken.filter((rt) => rt !== refreshToken);
             await user.save();
 
@@ -166,6 +175,7 @@ class AuthService {
 
     static async handleRefreshToken(req, res) {
         try {
+            //obtain refresh token from cookie
             const cookies = req.cookies;
             if (!cookies?.jwt) {
                 throw new Error("Unauthorized");
@@ -180,6 +190,8 @@ class AuthService {
                     if (err) {
                         throw new Error("Invalid or expired token");
                     }
+
+                    //if the token is valid but there is no user associated to it currently
                     const hackedUser = await accountModel
                         .findOne({ username: decoded.username })
                         .exec();
@@ -189,6 +201,7 @@ class AuthService {
                 throw new Error("Unauthorized");
             }
 
+            //create new array excluding the provided refresh token
             const newRefreshTokenArray = user.refreshToken.filter(
                 (rt) => rt !== refreshToken
             );
@@ -203,6 +216,7 @@ class AuthService {
                     throw new Error("Unauthorized");
                 }
 
+                //create new access token
                 const accessToken = jwt.sign(
                     {
                         UserInfo: {
@@ -213,15 +227,18 @@ class AuthService {
                     { expiresIn: "20m" }
                 );
 
+                //create new refresh token
                 const newRefreshToken = jwt.sign(
                     { username: user.username },
                     config.REFRESH_TOKEN_SECRET,
                     { expiresIn: "3d" }
                 );
 
+                //add the new refresh token to the refresh tokens array
                 user.refreshToken = [...newRefreshTokenArray, newRefreshToken];
                 await user.save();
 
+                //set the new refresh token in the response cookie
                 res.cookie("jwt", newRefreshToken, {
                     httpOnly: true,
                     secure: true,
