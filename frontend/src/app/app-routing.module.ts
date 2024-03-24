@@ -38,6 +38,8 @@ import {
 import {
   PrcDriverPickupViewPageComponent
 } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
+import { DumpTypeComponent } from "./pages/prc-admin/dump-type/dump-type.component";
+import { PickupsListComponent } from "./pages/prc-admin/pickups-list/pickups-list.component";
 
 
 const routes: Routes = [
@@ -68,7 +70,10 @@ const routes: Routes = [
   {path: 'prc-driver/confirm-pickup', component: PrcDriverPickupConfirmPageComponent},
   {path: 'prc-driver/pickup-history', component: PrcDriverPickupHitoryPageComponent},
   {path: 'prc-driver/price-chart', component: PrcDriverPriceChartComponent},
-  {path: 'prc-driver/pickup-view', component: PrcDriverPickupViewPageComponent}
+  {path: 'prc-driver/pickup-view', component: PrcDriverPickupViewPageComponent},
+
+  {path: 'admin/dump-type', component: DumpTypeComponent},
+  {path: 'admin/pickup-list', component: PickupsListComponent}
 ];
 
 @NgModule({
