@@ -51,56 +51,55 @@ export class MyEventsComponent implements OnInit {
     this.fetchOrganizingEvents(this.userID);
     this.fetchParticipatedEvents(this.userID);
     this.user = this.loginService.getGeneralUser();
-    this.attendingEvent(this.userID)
   }
-
+  
   fetchOrganizingEvents(eventOrganizer: string): void {
     this.eventService.getOrganizingEvents(eventOrganizer)
-      .subscribe({
-        next: events => {
-          // Assign the retrieved events to the component property
-          this.events = events.map(event => ({
-            _id: event._id,
-            eventName: event.eventName,
-            eventTime: event.eventTime,
-            eventLocation: event.eventLocation,
-            eventDescription: event.eventDescription,
-            eventOrganizer: event.eventOrganizer,
-            eventParticipant: event.eventParticipant,
-            eventToken: event.eventToken,
-            eventStatus: event.eventStatus,
-            createdAt: event.createdAt,
-            updatedAt: event.updatedAt,
-            __v: event.__v
-          }));
-        }, error: err => {
-          console.log(err);
-        }
+    .subscribe({
+      next: events => {
+        // Assign the retrieved events to the component property
+        this.events = events.map(event => ({
+          _id: event._id,
+          eventName: event.eventName,
+          eventTime: event.eventTime,
+          eventLocation: event.eventLocation,
+          eventDescription: event.eventDescription,
+          eventOrganizer: event.eventOrganizer,
+          eventParticipant: event.eventParticipant,
+          eventToken: event.eventToken,
+          eventStatus: event.eventStatus,
+          createdAt: event.createdAt,
+          updatedAt: event.updatedAt,
+          __v: event.__v
+        }));
+      }, error: err => {
+        console.log(err);
+      }
     });
   }
-
+  
   fetchParticipatedEvents(userID: string): void {
     this.eventService.getParticipateEvents(userID)
-      .subscribe({
-        next: response => {
-          // Assign the retrieved participatedEvents to the component property
-          this.participatedEvents = response.participatedEvents.map(event => ({
-            _id: event._id,
-            eventName: event.event.eventName,
-            eventTime: event.event.eventTime,
-            eventLocation: event.event.eventLocation,
-            eventDescription: event.event.eventDescription,
-            eventOrganizer: event.event.eventOrganizer,
-            eventParticipant: event.event.eventParticipant,
-            eventToken: event.event.eventToken,
-            eventStatus: event.event.eventStatus,
-            createdAt: event.event.createdAt,
-            updatedAt: event.event.updatedAt,
-            __v: event.event.__v
-          }));
-          console.log(this.participatedEvents);
-        }, error: err => {
-          console.log(err);
+    .subscribe({
+      next: response => {
+        // Assign the retrieved participatedEvents to the component property
+        this.participatedEvents = response.participatedEvents.map(event => ({
+          _id: event._id,
+          eventName: event.event.eventName,
+          eventTime: event.event.eventTime,
+          eventLocation: event.event.eventLocation,
+          eventDescription: event.event.eventDescription,
+          eventOrganizer: event.event.eventOrganizer,
+          eventParticipant: event.event.eventParticipant,
+          eventToken: event.event.eventToken,
+          eventStatus: event.event.eventStatus,
+          createdAt: event.event.createdAt,
+          updatedAt: event.event.updatedAt,
+          __v: event.event.__v
+        }));
+        this.attendingEvent(userID);
+      }, error: err => {
+        console.log(err);
         }
     });
   }
@@ -123,7 +122,7 @@ export class MyEventsComponent implements OnInit {
   }
 
   onClickOrganizeEvents(){
-      this.openOrganizeEventDialog();
+    this.openOrganizeEventDialog();
   }
 
   openOrganizeEventDialog(): void {
@@ -173,39 +172,46 @@ export class MyEventsComponent implements OnInit {
       });
     }
 
-    // Function to call API for token verification
-    verifyToken(participatedEventId: string, token: string): void {
-      if(participatedEventId){
-        console.log("i got executed");
-        const params = {
-          userID: this.userID,
-          eventID: participatedEventId,
-          token: token
-        }
-
-        this.eventService.verifyToken(params).subscribe({
-          next: result => {
-            console.log(result);
-            if(result){
-              alert("Token is verified. Thank you for participating the event");
-            } else {
-              alert("Invalid token. Please try again");
-            }
-            this.ngOnInit();
-          },
-          error: err => {
-            console.log(err.error);
-            alert(err.error.error)
-          }
-        })
+  // Function to call API for token verification
+  verifyToken(participatedEventId: string, token: string): void {
+    if(participatedEventId){
+      console.log("i got executed");
+      const params = {
+        userID: this.userID,
+        eventID: participatedEventId,
+        token: token
       }
-    }
 
-    onClickView(eventID: string) {
-      this.eventService.setViewEventID(eventID)
+      this.eventService.verifyToken(params).subscribe({
+        next: result => {
+          console.log(result);
+          if(result){
+            alert("Token is verified. Thank you for participating the event");
+          } else {
+            alert("Invalid token. Please try again");
+          }
+          this.ngOnInit();
+        },
+        error: err => {
+          console.log(err.error);
+          alert(err.error.error)
+        }
+      })
     }
+  }
 
-    attendingEvent(userID: string): void {
-      
-    }
+  onClickView(eventID: string) {
+    this.eventService.setViewEventID(eventID)
+  }
+
+  attendingEvent(userID: string): void {
+    this.participatedEvents.forEach((participatedEvent) => {
+      participatedEvent.eventParticipant.forEach((event:any) => {
+        console.log(event);
+        if (event.user == userID && event.participationStatus == "Attending"){
+          this.attendingEvents.push(participatedEvent._id);
+        }
+      })
+    })
+  }
 }
