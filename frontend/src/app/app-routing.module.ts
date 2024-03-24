@@ -54,8 +54,6 @@ const routes: Routes = [
   {path: 'create-driver', component: DriverRegistrationComponent},
   {path: 'view-drivers', component: ViewDrivesListComponent},
   {path: 'prc-list', component: ViewPrcListComponent},
-  {path: '', component: LandingPageComponent},
-  {path: 'prc-admin-homepage', component: PrcAdminComponent},
   {path: 'user-homepage/event/my-events', component: MyEventPageComponent},
   {path: 'user-homepage/event/my-events/organized-event-page', component: OrganizedEventPageComponent},
 
@@ -73,7 +71,9 @@ const routes: Routes = [
   {path: 'prc-driver/pickup-view', component: PrcDriverPickupViewPageComponent},
 
   {path: 'admin/dump-type', component: DumpTypeComponent},
-  {path: 'admin/pickup-list', component: PickupsListComponent}
+  {path: 'admin/pickup-list', component: PickupsListComponent},
+  {path: 'admin/driver-manager', component: PrcAdminComponent}
+
 ];
 
 @NgModule({

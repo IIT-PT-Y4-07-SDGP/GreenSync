@@ -69,7 +69,7 @@ export class PrcRegistrationComponent implements OnInit {
           next : response => {
             const PRC: PRC = response;
             this.loginService.setPRC(PRC);
-            this.router.navigate(['/prc-admin-homepage'])
+            this.router.navigate(['admin/driver-manager'])
           },
           error: err => {
             alert("Registration Failed :-(");

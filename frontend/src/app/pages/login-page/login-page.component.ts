@@ -64,10 +64,12 @@ export class LoginPageComponent implements OnInit {
                 case 'PRC-ADMIN':
                   const PRC: PRC = response;
                   this.loginService.setPRC(PRC);
-                  this.router.navigate(['/prc-admin-homepage']); // Navigate to PRC Admin Panel
+                  this.router.navigate(['/admin/dump-type']); // Navigate to PRC Admin Panel
                   break;
-                case 'PRC-DRIVER':
-                  // this.router.navigate(['/user']); // Navigate to PRC Driver Panel
+                case 'DRIVER':
+                  const DRIVER: PRC = response;
+                  this.loginService.setPRC(DRIVER);
+                  this.router.navigate(['/prc-driver/dashboard']); // Navigate to PRC Driver Panel
                   break;
                 case 'MC-ADMIN':
                   const MC: MC = response;
