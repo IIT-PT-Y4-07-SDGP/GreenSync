@@ -4,10 +4,12 @@ const randomString = require('randomstring');
 const { ObjectId } = require('mongodb');
 
 class EventsService {
+    //used to create an event
     async eventsOrganize(eventsDetails) {
         let OrganizerID = eventsDetails.eventOrganizer;
         if (await this.isOrganizerInDB(OrganizerID)) {
             let eventTime = new Date(eventsDetails.eventTime)
+            //check whther the event time is in the future
             if (eventTime > new Date()) {
                 eventsDetails.eventOrganizer = OrganizerID;
                 const event = await eventsModel.create(eventsDetails);
@@ -21,16 +23,18 @@ class EventsService {
         //Handle the case when the organizer doesn't exist
 
     }
+
+    //checks whether the organizer is valid
     async isOrganizerInDB(organizerID) {
         try {
-            // Assuming Account is your mongoose model for the 'accounts' collection
             const organizer = await userModel.findById(organizerID);
-            return !!organizer; // Returns true if organizer exists, false otherwise
+            return !!organizer; 
         } catch (error) {
-            throw new Error('User not exist in the database:', error); // Handle the error accordingly
+            throw new Error('User not exist in the database:', error); 
         }
     }
 
+    //obtain events list
     async getEventsList() {
         try {
             const eventsList = await eventsModel.find();
@@ -40,6 +44,7 @@ class EventsService {
         }
     }
 
+    //obtain events related to an organizer
     async getOrganizedEventsList(eventOrganizer) {
         try {
             const OrganizerEventsList = await eventsModel.find({ eventOrganizer });
@@ -49,6 +54,7 @@ class EventsService {
         }
     }
 
+    //used to generate unique event tokens
     generateUniqueToken() {
         let token;
         token = randomString.generate({ length: 6, charset: 'numeric' });
@@ -60,6 +66,7 @@ class EventsService {
         return token;
     }
 
+    //used to update unique event tokens
     async updateEventToken(eventId, newToken) {
         try {
             await eventsModel.updateOne(

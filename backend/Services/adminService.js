@@ -12,6 +12,7 @@ const bcrypt = require("bcrypt");
 
 class AdminService {
   async adminRegister(userDetails, res) {
+    //validate password
     if (common.isPasswordValid(userDetails.password)) {
       userDetails.password = await common.hashPassword(userDetails.password);
     } else {
@@ -33,7 +34,7 @@ class AdminService {
     let session;
     let account;
 
-    // Getting JWT Tokens
+    // Getting JWT Tokens by embedding the username and user role
     let tokens = AuthService.generateJWTToken(
       userDetails.username,
       userDetails.userRole
@@ -44,6 +45,7 @@ class AdminService {
       session.startTransaction();
 
       try {
+        //create a record in the account model
         account = await accountModel.create(
           [
             {
@@ -73,6 +75,7 @@ class AdminService {
     }
     account = account[0];
 
+    //set the refresh token to the response cookie
     res.cookie("jwt", tokens.refreshToken, {
       httpOnly: true,
       secure: true,
@@ -117,10 +120,13 @@ class AdminService {
         if (!account) {
           throw new Error("Account not found");
         }
+
+        //check whther the existing password is correct before updating
         const isMatch = await bcrypt.compare(
           userDetails.oldPassword,
           account.password
         );
+
         if (!isMatch) {
           throw new Error("Invalid previous password");
         }
@@ -150,6 +156,7 @@ class AdminService {
     }
   }
 
+  //used to approve a business by the super admin
   async approveBusiness(Id, businessType,status) {
     let session;
     try {
@@ -171,6 +178,8 @@ class AdminService {
         if (!prcUser) {
           throw new Error("No business found");
         }
+
+        //only the business with pending status can be approved
         if (prcUser.PRCStatus !== "PENDING") {
           throw new Error("Business is not awaiting approval");
         }
@@ -196,6 +205,8 @@ class AdminService {
         if (!mcUser) {
           throw new Error("No business found");
         }
+
+        //only the business with pending status can be approved
         if (mcUser.MCStatus !== "PENDING") {
           throw new Error("Business is not awaiting approval");
         }
@@ -256,6 +267,8 @@ class AdminService {
         if (!account) {
           throw new Error("Account not found");
         }
+
+        //check whether the existing password is correct
         const isMatch = await bcrypt.compare(
           userDetails.oldPassword,
           account.password
@@ -289,6 +302,7 @@ class AdminService {
     }
   }
 
+  //used to restrict (ban or suspend) a general public user
   async restrictGP(Id, status, duration) {
     let session;
     try {
@@ -299,10 +313,14 @@ class AdminService {
       if (status !== "BANNED" && status !== "SUSPENDED") {
         throw new Error("Invalid status");
       }
+
+
       const GPaccount = await accountModel.findOne({ _id: Id });
       if (!GPaccount || GPaccount.userRole !== "GP") {
         throw new Error("General public account not found");
       }
+
+      //cannot restrict an account which is already banned
       if (GPaccount.accountStatus === "BANNED") {
         throw new Error("Account is already banned");
       }
@@ -339,12 +357,15 @@ class AdminService {
     }
   }
 
+  //used to restrict a business (MC or PRC)
   async restrictBusiness(Id, type , status) {
     let session;
     let business;
     try {
       session = await mongoose.startSession();
       session.startTransaction();
+
+      //validate status inputted
       if (status !== "DELETED" && status !== "SUSPENDED" && status !== "ACTIVE" ) {
         throw new Error("Invalid status");
       }
@@ -353,22 +374,31 @@ class AdminService {
         if(!business){
           throw new Error("no account found for this id")
         }
+
+        //cannot restrict an account which is pending for approval
         if(business.MCStatus==="PENDING"){
           throw new Error("you are trying to alter a pending account")
         }
+
+        //cannot restrict an account that has already been deleted
         if(business.MCStatus==="DELETED"){
           throw new Error("you are trying to alter a deleted account")
         }
         business.MCStatus=status;
       }
+
       if(type==="PRC"){
         business=await PRCModel.findOne({_id:Id});
         if(!business){
           throw new Error("no account found for this id")
         }
+
+        //cannot restrict an account which is pending for approval
         if(business.PRCStatus==="PENDING"){
           throw new Error("you are trying to alter a pending account")
         }
+
+        //cannot restrict an account that has already been deleted
         if(business.PRCStatus==="DELETED"){
           throw new Error("you are trying to alter a deleted account")
         }
@@ -395,6 +425,7 @@ class AdminService {
     }
   }
 
+  //used to add a new district
   async registerDistrict(name) {
     let session;
     let district;
@@ -407,10 +438,13 @@ class AdminService {
 
       try {
         const existingDistrict=await districtModel.findOne({name});
+
+        //validate if provided disctrict name is unique
         if(existingDistrict){
           throw new Error("A district has been already registered for the given name")
         }
 
+        //create district record
         district = await districtModel.create(
           [
             {
