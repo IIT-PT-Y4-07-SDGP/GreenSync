@@ -1,5 +1,4 @@
 const PickupController = require("../controllers/pickupManagementController");
-const prc = new PickupController();
 
 const express = require("express");
 const router = express.Router();
@@ -17,5 +16,14 @@ router.patch(
 );
 
 router.post("/request-for-pickup", PickupController.GPRequestForPickups);
+router.get(
+  "/find-pickups-by-driverId/:driverId",
+  PickupController.FindPickupByDriverId
+);
+
+router.get(
+  "/find-pickups-by-customerId/:customerId",
+  PickupController.FindPickupHistoryByCustomerId
+);
 
 module.exports = router;

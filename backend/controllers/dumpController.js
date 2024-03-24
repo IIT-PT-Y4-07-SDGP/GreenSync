@@ -11,7 +11,7 @@ class DumpController {
    */
   static async findAllDumps(req, res) {
     try {
-      const allDumps = await dump.findAllPickups();
+      const allDumps = await dump.findAllDumps();
       return res.status(200).json({ allDumps });
     } catch (error) {
       res.status(400).json({ error: error.message });

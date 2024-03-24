@@ -15,8 +15,8 @@ const eventsRoute = require("./routes/events");
 const mcRoute = require("./routes/mc");
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
-const pickupRouter = require("./routes/pickup");
 const dumpRouter = require("./routes/dump");
+const pickupRouter = require("./routes/pickup");
 
 // Importing Controllers and creating instance
 const UserController = require("./controllers/userController");
@@ -50,6 +50,7 @@ app.use("/prc", prcRoute);
 app.use("/mc", mcRoute);
 app.use("/events", eventsRoute);
 app.use("/dump", dumpRouter);
+app.use("/pickup", pickupRouter);
 app.use(requireAuth);
 
 // Verifying the connection to database and starting the server

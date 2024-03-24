@@ -8,7 +8,7 @@ const dumpSchema = new schema(
       type: String,
     },
     Price: {
-      type: String,
+      type: Number,
     },
   },
   { timestamps: true }

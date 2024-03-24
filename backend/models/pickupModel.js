@@ -22,10 +22,12 @@ const pickupSchema = new schema(
     DriverId: {
       type: String,
     },
-    DriverId: {
+    Status: {
+      // accept ,reject , pending ,new
       type: String,
     },
-    Status: { // accept  or reject , pending
+
+    CustomerId: {
       type: String,
     },
   },
