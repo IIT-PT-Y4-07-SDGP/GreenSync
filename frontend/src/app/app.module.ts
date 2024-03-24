@@ -60,6 +60,10 @@ import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc
 import { PrcDriverPriceChartComponent } from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
 import { PrcDriverPickupHitoryPageComponent } from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
 import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
+import { DumpTypeComponent } from './pages/prc-admin/dump-type/dump-type.component';
+import { PickupsListComponent } from './pages/prc-admin/pickups-list/pickups-list.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +105,9 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     PrcDriverPickupConfirmPageComponent,
     PrcDriverPriceChartComponent,
     PrcDriverPickupHitoryPageComponent,
-    PrcDriverPickupViewPageComponent
+    PrcDriverPickupViewPageComponent,
+    DumpTypeComponent,
+    PickupsListComponent
   ],
     imports: [
         BrowserModule,
@@ -121,7 +127,9 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
         MatButtonModule,
         MatExpansionModule,
         MatSidenavModule,
-    MatTableModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatListModule
     ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
