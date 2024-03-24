@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+
+
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
 import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
 import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-registration.component';
@@ -27,7 +30,15 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
+import {PrcAdminComponent} from './pages/prc-admin-page/prc-admin/prc-admin.component';
+import {
+  DriverRegistrationComponent
+} from './components/prc/driver-registration/driver-registration/driver-registration.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {ViewPrcListComponent} from './components/prc/prc-registration/view-prc-list/view-prc-list.component';
+import {
+  ViewDrivesListComponent
+} from './components/prc/driver-registration/view-drives-list/view-drives-list.component';import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
@@ -49,6 +60,10 @@ import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc
 import { PrcDriverPriceChartComponent } from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
 import { PrcDriverPickupHitoryPageComponent } from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
 import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
+import { DumpTypeComponent } from './pages/prc-admin/dump-type/dump-type.component';
+import { PickupsListComponent } from './pages/prc-admin/pickups-list/pickups-list.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +78,11 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     LoginPageComponent,
     OrganizeEventComponent,
     McRegistrationComponent,
+    ViewEventComponent,
+    PrcAdminComponent,
+    DriverRegistrationComponent,
+    ViewPrcListComponent,
+    ViewDrivesListComponent,
     ViewEventComponent,
     GeneralUserHomepageComponent,
     PrcAdminHomepageComponent,
@@ -85,27 +105,34 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     PrcDriverPickupConfirmPageComponent,
     PrcDriverPriceChartComponent,
     PrcDriverPickupHitoryPageComponent,
-    PrcDriverPickupViewPageComponent
+    PrcDriverPickupViewPageComponent,
+    DumpTypeComponent,
+    PickupsListComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatSelectModule,
-    MatInputModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCardModule,
-    MatButtonModule,
-    MatExpansionModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatSelectModule,
+        MatInputModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCardModule,
+        MatButtonModule,
+        MatExpansionModule,
+        MatSidenavModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatListModule
+    ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { McService } from 'src/app/services/mc.service';
   templateUrl: './mc-registration.component.html',
   styleUrls: ['./mc-registration.component.scss']
 })
-export class McRegistrationComponent implements OnInit {
+export class McRegistrationComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   MCRegFormGroup: FormGroup;
 

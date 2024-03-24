@@ -14,6 +14,10 @@ export class PrcService {
 
   constructor(private http: HttpClient) { }
 
+  getPRCs() {
+    return this.http.get<PRC[]>(`${this.apiUrl}/prc/prc-list`);
+  }
+
   registerPRC(data: any): Observable<PRC> {
     return this.http.post<PRC>(`${this.apiUrl}/prc/registration`, data, { headers: this.headers });
   }
