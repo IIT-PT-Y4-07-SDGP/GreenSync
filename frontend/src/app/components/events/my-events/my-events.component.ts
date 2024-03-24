@@ -4,6 +4,7 @@ import { EventService } from '../../../services/event.service';
 import { EventDetails } from 'src/app/interfaces/event';
 import { LoginService } from 'src/app/services/login.service';
 import { OrganizeEventComponent } from '../organize-event/organize-event.component';
+import { TokenVerificationDialogComponent } from '../token-verification-dialog/token-verification-dialog.component';
 
 @Component({
   selector: 'app-my-events',
@@ -14,7 +15,9 @@ export class MyEventsComponent implements OnInit {
   selectedButton: string = 'Participation'; // Default selected button
   showButton: boolean = true; // Flag to control the visibility of the button
   eventResponse: any; // Property to hold the response from the server
+  eventParticipationResponse: any; // Property to hold the response from the server
   public events: EventDetails[] = [];
+  public participatedEvents: any[] = [];
   
   selectButton(button: string) {
     this.selectedButton = button;
@@ -40,8 +43,9 @@ export class MyEventsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const organizerId: string = this.loginService.getGeneralUser()?._id!;
-    this.fetchOrganizingEvents(organizerId);
+    const userID: string = this.loginService.getGeneralUser()?._id!;
+    this.fetchOrganizingEvents(userID);
+    this.fetchParticipatedEvents(userID)
   }
 
   fetchOrganizingEvents(eventOrganizer: string): void {
@@ -63,6 +67,32 @@ export class MyEventsComponent implements OnInit {
             updatedAt: event.updatedAt,
             __v: event.__v
           }));
+        }, error: err => {
+          console.log(err);
+        }
+    });
+  }
+
+  fetchParticipatedEvents(userID: string): void {
+    this.eventService.getParticipateEvents(userID)
+      .subscribe({
+        next: response => {
+          // Assign the retrieved participatedEvents to the component property
+          this.participatedEvents = response.participatedEvents.map(event => ({
+            _id: event._id,
+            eventName: event.event.eventName,
+            eventTime: event.event.eventTime,
+            eventLocation: event.event.eventLocation,
+            eventDescription: event.event.eventDescription,
+            eventOrganizer: event.event.eventOrganizer,
+            eventParticipant: event.event.eventParticipant,
+            eventToken: event.event.eventToken,
+            eventStatus: event.event.eventStatus,
+            createdAt: event.event.createdAt,
+            updatedAt: event.event.updatedAt,
+            __v: event.event.__v
+          }));
+          console.log(this.participatedEvents);
         }, error: err => {
           console.log(err);
         }
@@ -123,7 +153,35 @@ export class MyEventsComponent implements OnInit {
     return event.eventStatus === 'Started' && /^\d{6}$/.test(event.eventToken);
   }
 
-  onClickView(eventID: string) {
-    this.eventService.setViewEventID(eventID)
-  }
+  // Function to handle the "Attend" button click event
+  attendEvent(participatedEventId: string): void {
+      const dialogRef = this.dialog.open(TokenVerificationDialogComponent, {
+        width: '400px',
+        data: { participatedEventId }
+      });
+  
+      // Subscribe to the dialog closed event to handle the result
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'verified') {
+          // Token is verified, perform the necessary action
+          // Call your API here to perform further actions
+          this.verifyToken(participatedEventId);
+        }
+      });
+    }
+
+    // Function to call API for token verification
+    verifyToken(participatedEventId: string): void {
+      console.log("Api waylaseidhu");
+      // Call your API here to verify the token
+      // You can use Angular HttpClient for HTTP requests
+      // Example:
+      // this.http.post('your_verification_api_url', { token, participatedEventId }).subscribe(response => {
+      //   // Handle API response
+      // });
+    }
+
+    onClickView(eventID: string) {
+      this.eventService.setViewEventID(eventID)
+    }
 }

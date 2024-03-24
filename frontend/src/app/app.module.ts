@@ -49,6 +49,7 @@ import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc
 import { PrcDriverPriceChartComponent } from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
 import { PrcDriverPickupHitoryPageComponent } from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
 import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
+import { TokenVerificationDialogComponent } from './components/events/token-verification-dialog/token-verification-dialog.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     PrcDriverPickupConfirmPageComponent,
     PrcDriverPriceChartComponent,
     PrcDriverPickupHitoryPageComponent,
-    PrcDriverPickupViewPageComponent
+    PrcDriverPickupViewPageComponent,
+    TokenVerificationDialogComponent
   ],
   imports: [
     BrowserModule,
