@@ -146,6 +146,7 @@ class EventsService {
         // pass eventId and change the status to Ended
         // then update the users who have participated relevant users points their participation status in userModel
         // Update the organizer's point based on how many participated
+        
     }
 }
 

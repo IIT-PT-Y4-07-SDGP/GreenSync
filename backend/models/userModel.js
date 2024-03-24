@@ -28,6 +28,11 @@ const generalUserSchema = new schema({
         ref: 'accountSchema',
         required:true
     },
+    tokenBalance: {
+        type: String,
+        required: false
+    }
+
 }, { timestamps: true })
 
 module.exports = mongoose.model('general-user-Account', generalUserSchema);
