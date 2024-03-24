@@ -37,19 +37,16 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {ViewPrcListComponent} from './components/prc/prc-registration/view-prc-list/view-prc-list.component';
 import {
   ViewDrivesListComponent
-} from './components/prc/driver-registration/view-drives-list/view-drives-list.component';import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
+} from './components/prc/driver-registration/view-drives-list/view-drives-list.component';
+import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
 import { ParticipationComponent } from './components/events/participation/participation.component';
-import { HeaderComponent } from './shared/header/header.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 import { MyEventPageComponent } from './pages/my-event-page/my-event-page.component';
-import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
 import { ReportComplaintComponent } from './components/report/report-complaint/report-complaint.component';
-import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
-import { HistoryComponent } from './pages/public/history/history.component';
 import { PrcDriverDashboardComponent } from './pages/prc-driver-page/prc-driver-dashboard/prc-driver-dashboard.component';
 import { PrcDriverPendingPickupsComponent } from './pages/prc-driver-page/prc-driver-pending-pickups/prc-driver-pending-pickups.component';
 import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc-driver-pickup-confirm-page/prc-driver-pickup-confirm-page.component';
@@ -63,6 +60,10 @@ import { PickupsListComponent } from './pages/prc-admin/pickups-list/pickups-lis
 import { PickupComponent } from './pages/public/pickup/pickup.component';
 import { LocationComponent } from './pages/public/location/location.component';
 import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
+import { HeaderComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
+import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
+import { HistoryComponent } from './pages/public/history/history.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,6 @@ import { PriceChartComponent } from './pages/public/price-chart/price-chart.comp
     McAdminHomepageComponent,
     MyEventsComponent,
     ParticipationComponent,
-    HeaderComponent,
     OrganizedEventPageComponent,
     MyEventPageComponent,
     ReportGarbageComponent,
