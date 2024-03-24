@@ -60,10 +60,10 @@ import { PickupsListComponent } from './pages/prc-admin/pickups-list/pickups-lis
 import { PickupComponent } from './pages/public/pickup/pickup.component';
 import { LocationComponent } from './pages/public/location/location.component';
 import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
-import { HeaderComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { HistoryComponent } from './pages/public/history/history.component';
+import { HeaderComponent } from './shared/header/header.component'
 
 @NgModule({
   declarations: [
@@ -106,7 +106,8 @@ import { HistoryComponent } from './pages/public/history/history.component';
     PrcDriverPickupHitoryPageComponent,
     PrcDriverPickupViewPageComponent,
     DumpTypeComponent,
-    PickupsListComponent
+    PickupsListComponent,
+    HeaderComponent
   ],
     imports: [
         BrowserModule,
