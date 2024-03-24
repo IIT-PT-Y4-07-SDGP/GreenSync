@@ -70,7 +70,7 @@ const routes: Routes = [
 
   {path: 'admin/dump-type', component: DumpTypeComponent},
   {path: 'admin/pickup-list', component: PickupsListComponent},
-  {path: 'admin/driver-manager', component: PrcAdminComponent}
+  {path: 'admin/driver-manager', component: PrcAdminHomepageComponent}
 
 ];
 
