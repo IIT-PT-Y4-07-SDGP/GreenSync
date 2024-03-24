@@ -1,6 +1,7 @@
 const eventsModel = require('../models/eventsModel')
 const userModel = require('../models/userModel');
 const randomString = require('randomstring');
+const { ObjectId } = require('mongodb');
 
 class EventsService {
     async eventsOrganize(eventsDetails) {
@@ -152,10 +153,20 @@ class EventsService {
     async getParticipatedEvents(userID) {
         try {
             let user = await userModel.findOne({ _id: userID }).populate('participatedEvents.event');
-            console.log(user);
+            if (!user) {
+                throw new Error("User not found");
+            }
+
+            console.log(user.participatedEvents.length);
+            // Manually update event ObjectIds
+            user.participatedEvents.forEach(participatedEvent => {
+                participatedEvent._id = new ObjectId(participatedEvent.event);
+                console.log(participatedEvent.id);
+            });
+
             return user;
         } catch (err) {
-            console.log(err);
+            console.error(err);
             throw new Error("Couldn't fetch participating events");
         }
     }
@@ -192,7 +203,7 @@ class EventsService {
         // Check if the user is already attending the event
         const isAlreadyAttending = user.participatedEvents.some(event => event.event.toString() === eventID && event.participationStatus === 'Attending');
         if (isAlreadyAttending) {
-            throw new Error("User is already attending the event");
+            throw new Error("Already attending the event");
         }
 
 

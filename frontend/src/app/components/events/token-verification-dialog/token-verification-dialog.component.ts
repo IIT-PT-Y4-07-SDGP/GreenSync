@@ -19,7 +19,7 @@ export class TokenVerificationDialogComponent implements OnInit {
   verifyToken(): void {
     // You can add additional validation here if needed
     if (this.token.trim() !== '') {
-      this.dialogRef.close('verified');
+      this.dialogRef.close({verificationStatus:'verified' , token: this.token.trim()});
     }
   }
 }

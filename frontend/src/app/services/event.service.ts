@@ -37,6 +37,10 @@ export class EventService {
     return this.http.get<ParticipateEventsResponse>(`${this.apiUrl}/events/get-participated-events?participantId=${userID}`)
   }
 
+  verifyToken(data: any) {
+    return this.http.post<boolean>(`${this.apiUrl}/events/verify-event-token`, data, { headers: this.headers });
+  }
+
   startEvent(eventId: string,) {
     return this.http.post(`${this.apiUrl}/events/start-event/${eventId}`, {})
   }

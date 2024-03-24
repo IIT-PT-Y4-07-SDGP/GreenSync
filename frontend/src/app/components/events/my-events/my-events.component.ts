@@ -5,6 +5,7 @@ import { EventDetails } from 'src/app/interfaces/event';
 import { LoginService } from 'src/app/services/login.service';
 import { OrganizeEventComponent } from '../organize-event/organize-event.component';
 import { TokenVerificationDialogComponent } from '../token-verification-dialog/token-verification-dialog.component';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
 
 @Component({
   selector: 'app-my-events',
@@ -18,6 +19,9 @@ export class MyEventsComponent implements OnInit {
   eventParticipationResponse: any; // Property to hold the response from the server
   public events: EventDetails[] = [];
   public participatedEvents: any[] = [];
+  public userID?: string;
+  public isAttendButtonDisabled: boolean = false;
+  public user?: GeneralUser
   
   selectButton(button: string) {
     this.selectedButton = button;
@@ -43,9 +47,11 @@ export class MyEventsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const userID: string = this.loginService.getGeneralUser()?._id!;
-    this.fetchOrganizingEvents(userID);
-    this.fetchParticipatedEvents(userID)
+    this.userID = this.loginService.getGeneralUser()?._id!;
+    this.fetchOrganizingEvents(this.userID);
+    this.fetchParticipatedEvents(this.userID);
+    this.user = this.loginService.getGeneralUser();
+
   }
 
   fetchOrganizingEvents(eventOrganizer: string): void {
@@ -160,25 +166,39 @@ export class MyEventsComponent implements OnInit {
         data: { participatedEventId }
       });
   
-      // Subscribe to the dialog closed event to handle the result
       dialogRef.afterClosed().subscribe(result => {
-        if (result === 'verified') {
-          // Token is verified, perform the necessary action
-          // Call your API here to perform further actions
-          this.verifyToken(participatedEventId);
+        if (result.verificationStatus === 'verified') {
+          this.verifyToken(participatedEventId, result.token);
         }
       });
     }
 
     // Function to call API for token verification
-    verifyToken(participatedEventId: string): void {
-      console.log("Api waylaseidhu");
-      // Call your API here to verify the token
-      // You can use Angular HttpClient for HTTP requests
-      // Example:
-      // this.http.post('your_verification_api_url', { token, participatedEventId }).subscribe(response => {
-      //   // Handle API response
-      // });
+    verifyToken(participatedEventId: string, token: string): void {
+      if(participatedEventId){
+        console.log("i got executed");
+        const params = {
+          userID: this.userID,
+          eventID: participatedEventId,
+          token: token
+        }
+
+        this.eventService.verifyToken(params).subscribe({
+          next: result => {
+            console.log(result);
+            if(result){
+              alert("Token is verified. Thank you for participating the event");
+            } else {
+              alert("Invalid token. Please try again");
+            }
+            this.ngOnInit();
+          },
+          error: err => {
+            console.log(err.error);
+            alert(err.error.error)
+          }
+        })
+      }
     }
 
     onClickView(eventID: string) {
