@@ -71,6 +71,23 @@ class PickupManagementController {
       res.status(400).json({ error: error.message });
     }
   }
+
+  static async FindPickupByDriverId(req, res) {
+    try {
+      const findByDirverId = await pickup.FindPickupByDriverId(req);
+      return res.status(200).json({ findByDirverId });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+  static async FindPickupHistoryByCustomerId(req, res) {
+    try {
+      const findByCustomerId = await pickup.FindPickupHistoryByCustomerId(req);
+      return res.status(200).json({ findByCustomerId });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 // Export the controller

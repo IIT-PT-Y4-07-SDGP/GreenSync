@@ -1,166 +1,170 @@
-<form 
-    [formGroup]="MCRegFormGroup" 
-    (ngSubmit)="onRegister()" 
-    class="grid grid-cols-2 gap-x-8 gap-y-3"
+<form
+  [formGroup]="MCRegFormGroup"
+  (ngSubmit)="onRegister()"
+  class="grid grid-cols-2 gap-x-8 gap-y-3"
 >
-    <!-- MC Name Section -->
-    <mat-form-field
-        [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
-        [floatLabel]="MCRegFormGroup.value.floatLabel"
-        class="col-span-1"
-    >
-        <input matInput placeholder="Municipal Council Name" required formControlName="mcName">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('mcName')?.invalid && 
+  <!-- MC Name Section -->
+  <mat-form-field
+    [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
+    [floatLabel]="MCRegFormGroup.value.floatLabel"
+    class="col-span-1"
+  >
+    <input matInput placeholder="Municipal Council Name" required formControlName="mcName">
+    <mat-error
+      *ngIf="MCRegFormGroup.get('mcName')?.invalid &&
             (MCRegFormGroup.get('mcName')?.dirty || MCRegFormGroup.get('mcName')?.touched)"
-        >
-            <span 
-                *ngIf="MCRegFormGroup.get('mcName')?.errors && 
+    >
+            <span
+              *ngIf="MCRegFormGroup.get('mcName')?.errors &&
                 MCRegFormGroup.get('mcName')?.errors?.['required']"
             > Municipal Council Name required.</span>
-        </mat-error>
-    </mat-form-field>
+    </mat-error>
+  </mat-form-field>
 
-    <!-- District Section -->
-    <mat-form-field
-        [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
-        [floatLabel]="MCRegFormGroup.value.floatLabel"
-        class="col-span-1"
-    >
-        <input matInput placeholder="District" required formControlName="district">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('district')?.invalid && 
+  <!-- District Section -->
+  <mat-form-field
+    [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
+    [floatLabel]="MCRegFormGroup.value.floatLabel"
+    class="col-span-1"
+  >
+    <input matInput placeholder="District" required formControlName="district">
+    <mat-error
+      *ngIf="MCRegFormGroup.get('district')?.invalid &&
             (MCRegFormGroup.get('district')?.dirty || MCRegFormGroup.get('district')?.touched)"
-        >
-            <span *ngIf="MCRegFormGroup.get('district')?.errors 
+    >
+            <span *ngIf="MCRegFormGroup.get('district')?.errors
                 && MCRegFormGroup.get('district')?.errors?.['required']"
-            > 
+            >
                 District is required.
             </span>
-        </mat-error>
-    </mat-form-field>
+    </mat-error>
+  </mat-form-field>
 
-    <!-- Address Section -->
-    <mat-form-field
-        [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
-        [floatLabel]="MCRegFormGroup.value.floatLabel"
-        class="col-span-full"
-    >
-        <input matInput placeholder="Address" required formControlName="address">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('address')?.invalid && 
+  <!-- Address Section -->
+  <mat-form-field
+    [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
+    [floatLabel]="MCRegFormGroup.value.floatLabel"
+    class="col-span-full"
+  >
+    <input matInput placeholder="Address" required formControlName="address">
+    <mat-error
+      *ngIf="MCRegFormGroup.get('address')?.invalid &&
             (MCRegFormGroup.get('address')?.dirty || MCRegFormGroup.get('address')?.touched)"
-        >
-            <span 
-                *ngIf="MCRegFormGroup.get('address')?.errors && 
+    >
+            <span
+              *ngIf="MCRegFormGroup.get('address')?.errors &&
                 MCRegFormGroup.get('address')?.errors?.['required']"
             > Address is required.</span>
-        </mat-error>
-    </mat-form-field>
+    </mat-error>
+  </mat-form-field>
 
-    <hr class="col-span-2">
+  <hr class="col-span-2">
 
-    <h5 class="col-span-full admin-section gap-y-1">Admin Account Information</h5>
+  <h5 class="col-span-full admin-section gap-y-1">Admin Account Information</h5>
 
-    <!-- UserName Section -->
-    <mat-form-field
-        [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
-        [floatLabel]="MCRegFormGroup.value.floatLabel"
-        class="col-span-full"
-    >
-        <input matInput placeholder="Username" required formControlName="username">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('username')?.invalid && 
+  <!-- UserName Section -->
+  <mat-form-field
+    [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
+    [floatLabel]="MCRegFormGroup.value.floatLabel"
+    class="col-span-full"
+  >
+    <input matInput placeholder="Username" required formControlName="username">
+    <mat-error
+      *ngIf="MCRegFormGroup.get('username')?.invalid &&
             (MCRegFormGroup.get('username')?.dirty || MCRegFormGroup.get('username')?.touched)"
-        >
-            <span 
-                *ngIf="MCRegFormGroup.get('username')?.errors && 
+    >
+            <span
+              *ngIf="MCRegFormGroup.get('username')?.errors &&
                 MCRegFormGroup.get('username')?.errors?.['required']"
             > Username is required.</span>
-        </mat-error>
-    </mat-form-field>
+    </mat-error>
+  </mat-form-field>
 
-    <!-- Email Section -->
-    <mat-form-field
-        [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
-        [floatLabel]="MCRegFormGroup.value.floatLabel"
-        class="col-span-1"
-    >
-        <input matInput placeholder="Email" required formControlName="email" type="email">
-        <mat-error 
-            *ngIf="MCRegFormGroup.get('email')?.invalid && 
+  <!-- Email Section -->
+  <mat-form-field
+    [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
+    [floatLabel]="MCRegFormGroup.value.floatLabel"
+    class="col-span-1"
+  >
+    <input matInput placeholder="Email" required formControlName="email" type="email">
+    <mat-error
+      *ngIf="MCRegFormGroup.get('email')?.invalid &&
             (MCRegFormGroup.get('email')?.dirty || MCRegFormGroup.get('email')?.touched)"
-        >
-            <span *ngIf="MCRegFormGroup.get('email')?.errors && MCRegFormGroup.get('email')?.errors?.['required']">Email is required.</span>
-            <span *ngIf="MCRegFormGroup.get('email')?.errors?.['email']">Please enter a valid email address.</span>
-        </mat-error>
-    </mat-form-field>
-
-    <!-- Phone Number Section -->
-    <mat-form-field
-        [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
-        [floatLabel]="MCRegFormGroup.value.floatLabel"
-        class="col-span-1"
     >
-        <input matInput placeholder="Phone number" required formControlName="phoneNumber" type="tel">
-        <mat-hint>Phone Number format - +9471****768</mat-hint>
-        <mat-error *ngIf="MCRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.</mat-error>
-        <mat-error *ngIf="MCRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone number.</mat-error>
-    </mat-form-field>
-    
-    <!-- Password Section -->
-    <mat-form-field
-        [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
-        [floatLabel]="MCRegFormGroup.value.floatLabel"
-        class="col-span-1 mb-4"
-    >
-        <input matInput placeholder="Password" required formControlName="password" type="password">
-        <mat-hint>Password should consist of minimum 8 length, special character, lowercase, uppercase and numbers</mat-hint>
-        <mat-error *ngIf="MCRegFormGroup.get('password')?.hasError('required')">
-            Password is required.
-        </mat-error>
-        <mat-error *ngIf="MCRegFormGroup.get('password')?.hasError('minlength')">
-            Password should be minimum 8 characters long.
-        </mat-error>
-        <mat-error *ngIf="MCRegFormGroup.get('password')?.hasError('invalidPassword')">
-            Password should contain at least one special character, one lowercase letter, one uppercase letter, and one number.
-        </mat-error>
-    </mat-form-field>
+      <span *ngIf="MCRegFormGroup.get('email')?.errors && MCRegFormGroup.get('email')?.errors?.['required']">Email is required.</span>
+      <span *ngIf="MCRegFormGroup.get('email')?.errors?.['email']">Please enter a valid email address.</span>
+    </mat-error>
+  </mat-form-field>
 
-    <!-- Password Confirmation -->
-    <mat-form-field
-        [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
-        [floatLabel]="MCRegFormGroup.value.floatLabel"
-        class="col-span-1 mb-4"
-    >
-        <input matInput placeholder="Confirm password" required formControlName="passwordConfirmation" type="password">
-        <mat-error *ngIf="MCRegFormGroup.get('passwordConfirmation')?.hasError('required')">
-            Confirm password is required.
-        </mat-error>
-        <mat-error *ngIf="MCRegFormGroup.get('passwordConfirmation')?.hasError('passwordMismatch')">
-            Passwords do not match.
-        </mat-error>
-    </mat-form-field>
+  <!-- Phone Number Section -->
+  <mat-form-field
+    [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
+    [floatLabel]="MCRegFormGroup.value.floatLabel"
+    class="col-span-1"
+  >
+    <input matInput placeholder="Phone number" required formControlName="phoneNumber" type="tel">
+    <mat-hint>Phone Number format - +947*****768</mat-hint>
+    <mat-error *ngIf="MCRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.</mat-error>
+    <mat-error *ngIf="MCRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone number.
+    </mat-error>
+  </mat-form-field>
 
-    <!-- Register Section -->
-    <div class="flex w-full col-span-2 sticky bottom-0 ">   
-        <div class="block w-full bg-secondary-background">
-            <div class="flex items-center justify-center w-full bg-primary p-2">
-                <button 
-                    class="bg-primary px-4 py-1 rounded text-white"
-                    type="submit"
-                    [class.opacity-50]="!this.MCRegFormGroup.valid"
-                    [disabled]="!this.MCRegFormGroup.valid"
-                    onclick="this.onRegister"
-                >Register</button>
-            </div>
-                <!-- Already have an account -->
-                <div class="flex justify-center mt-1">
-                    <span class="text-xs">Already have an account? 
+  <!-- Password Section -->
+  <mat-form-field
+    [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
+    [floatLabel]="MCRegFormGroup.value.floatLabel"
+    class="col-span-1 mb-4"
+  >
+    <input matInput placeholder="Password" required formControlName="password" type="password">
+    <mat-hint>Password should consist of minimum 8 length, special character, lowercase, uppercase and numbers
+    </mat-hint>
+    <mat-error *ngIf="MCRegFormGroup.get('password')?.hasError('required')">
+      Password is required.
+    </mat-error>
+    <mat-error *ngIf="MCRegFormGroup.get('password')?.hasError('minlength')">
+      Password should be minimum 8 characters long.
+    </mat-error>
+    <mat-error *ngIf="MCRegFormGroup.get('password')?.hasError('invalidPassword')">
+      Password should contain at least one special character, one lowercase letter, one uppercase letter, and one
+      number.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Password Confirmation -->
+  <mat-form-field
+    [hideRequiredMarker]="MCRegFormGroup.value.hideRequired"
+    [floatLabel]="MCRegFormGroup.value.floatLabel"
+    class="col-span-1 mb-4"
+  >
+    <input matInput placeholder="Confirm password" required formControlName="passwordConfirmation" type="password">
+    <mat-error *ngIf="MCRegFormGroup.get('passwordConfirmation')?.hasError('required')">
+      Confirm password is required.
+    </mat-error>
+    <mat-error *ngIf="MCRegFormGroup.get('passwordConfirmation')?.hasError('passwordMismatch')">
+      Passwords do not match.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Register Section -->
+  <div class="flex w-full col-span-2 sticky bottom-0 border-t-2">
+    <div class="block w-full bg-secondary-background">
+      <div class="flex items-center justify-center w-full  p-2">
+        <button
+          class="bg-primary px-4 py-1 rounded text-white"
+          type="submit"
+          [class.opacity-50]="!this.MCRegFormGroup.valid"
+          [disabled]="!this.MCRegFormGroup.valid"
+          onclick="this.onRegister"
+        >Register
+        </button>
+      </div>
+      <!-- Already have an account -->
+      <div class="flex justify-center mt-1">
+                    <span class="text-xs">Already have an account?
                         <a href="/login-page" class="text-primary ml-1"> Login Page </a>
                     </span>
-                </div>
-        </div>
+      </div>
     </div>
-    
+  </div>
+
 </form>

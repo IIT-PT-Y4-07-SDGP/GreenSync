@@ -1,5 +1,6 @@
-export enum UserType{
-    GENERAL_USER = "GENERAL-USER",
-    PRC = "PRC",
-    MC = "MC"
+export enum UserType {
+  GENERAL_USER = "GENERAL-USER",
+  PRC = "PRC",
+  MC = "MC",
+  DRIVER = "DRIVER"
 }

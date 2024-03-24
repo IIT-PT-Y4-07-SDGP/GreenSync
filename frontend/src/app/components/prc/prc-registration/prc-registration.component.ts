@@ -16,11 +16,11 @@ export class PrcRegistrationComponent implements OnInit {
   PRCRegFormGroup: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private router: Router,
     private loginService: LoginService,
     private PRCService: PrcService
-  ) { 
+  ) {
     this.PRCRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',

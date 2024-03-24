@@ -5,6 +5,11 @@ const common = new CommonService();
 const AuthService = require("./authService");
 const PRCModal = require("../models/PRCModel");
 const accountModel = require("../models/accountModel");
+const {MongoClient} = require('mongodb');
+const config = require('../configuration/config');
+const uri = config.MONGO_URI;
+const prcModel = require('../models/PRCModel')
+
 
 
 class PRCService {
@@ -123,6 +128,22 @@ class PRCService {
       },
     };
   }
+
+  async getPrcList() {
+    try {
+      return await prcModel.find({}, {
+        _id: 0,
+        PRCName: 1,
+        PRCBusinessRegNumber: 1,
+        District: 1,
+        Address: 1,
+        PRCStatus: 1
+      });
+    } catch (error) {
+      throw new Error(`Error fetching events from the database: ${error.message}`);
+    }
+  }
+
 }
 
 module.exports = PRCService;

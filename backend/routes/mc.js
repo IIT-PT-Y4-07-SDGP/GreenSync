@@ -11,6 +11,7 @@ router.get("/pickups/:id", MCController.getPickupPoints);
 router.post("/schedule", MCController.createSchedule);
 router.put("/schedule", MCController.updateSchedule);
 router.post("/report-garbage", MCController.reportGarbage);
+router.post("/create-complaint", MCController.createComplaint)
 
 
 module.exports = router;
