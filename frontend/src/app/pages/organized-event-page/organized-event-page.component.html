@@ -1,5 +1,17 @@
 <div class="flex justify-between items-start my-6 mx-10">
-  <h1 class="text-primary text-xl">{{ events[0]?.eventName }}</h1>
+  <h1 class="text-primary text-xl flex items-center">
+    {{ events[0]?.eventName }}
+    <a href="#" class="ml-4 text-black">
+      &#9998;
+    </a>
+    <a href="#" class="ml-4 text-black">
+      &#10003;
+    </a>
+    <a href="#" class="ml-4 text-black">
+      <!-- Bin Symbol -->
+      <span class="icon-bin">🗑</span>
+    </a>
+  </h1>
   <div class="text-primary text-xl">
     <h3>Total Register: {{ events[0]?.eventParticipant?.length }}</h3>
     <h3>Total Participated: {{ getParticipatedCount(events[0]?.eventParticipant) }}</h3>
