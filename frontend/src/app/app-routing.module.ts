@@ -1,4 +1,3 @@
-import {PrcAdminComponent} from "./pages/prc-admin-page/prc-admin/prc-admin.component";
 import {
   DriverRegistrationComponent
 } from "./components/prc/driver-registration/driver-registration/driver-registration.component";
@@ -18,10 +17,7 @@ import {OrganizedEventPageComponent} from './pages/organized-event-page/organize
 import {MyEventPageComponent} from './pages/my-event-page/my-event-page.component';
 import {ReportPageComponent} from './pages/report-page/report-page.component';
 import {DashbordComponent} from './pages/public/dashbord/dashbord.component';
-import {PickupComponent} from './pages/public/pickup/pickup.component';
-import {LocationComponent} from './pages/public/location/location.component';
 import {HistoryComponent} from './pages/public/history/history.component';
-import {PriceChartComponent} from './pages/public/price-chart/price-chart.component';
 import {PrcDriverDashboardComponent} from './pages/prc-driver-page/prc-driver-dashboard/prc-driver-dashboard.component';
 import {
   PrcDriverPendingPickupsComponent
@@ -40,6 +36,10 @@ import {
 } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
 import { DumpTypeComponent } from "./pages/prc-admin/dump-type/dump-type.component";
 import { PickupsListComponent } from "./pages/prc-admin/pickups-list/pickups-list.component";
+import { PrcAdminHomepageComponent } from "./pages/prc-admin-homepage/prc-admin-homepage.component";
+import { PickupComponent } from "./pages/public/pickup/pickup.component";
+import { LocationComponent } from "./pages/public/location/location.component";
+import { PriceChartComponent } from "./pages/public/price-chart/price-chart.component";
 
 
 const routes: Routes = [
@@ -55,7 +55,7 @@ const routes: Routes = [
   {path: 'view-drivers', component: ViewDrivesListComponent},
   {path: 'prc-list', component: ViewPrcListComponent},
   {path: '', component: LandingPageComponent},
-  {path: 'prc-admin-homepage', component: PrcAdminComponent},
+  {path: 'prc-admin-homepage', component: PrcAdminHomepageComponent},
   {path: 'user-homepage/event/my-events', component: MyEventPageComponent},
   {path: 'user-homepage/event/my-events/organized-event-page', component: OrganizedEventPageComponent},
 

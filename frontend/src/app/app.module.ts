@@ -30,7 +30,6 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import {PrcAdminComponent} from './pages/prc-admin-page/prc-admin/prc-admin.component';
 import {
   DriverRegistrationComponent
 } from './components/prc/driver-registration/driver-registration/driver-registration.component';
@@ -51,9 +50,6 @@ import { ReportGarbageComponent } from './components/report/report-garbage/repor
 import { ReportComplaintComponent } from './components/report/report-complaint/report-complaint.component';
 import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { HistoryComponent } from './pages/public/history/history.component';
-import { PickupComponent } from './pages/public/pickup/pickup.component';
-import { LocationComponent } from './pages/public/location/location.component';
-import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 import { PrcDriverDashboardComponent } from './pages/prc-driver-page/prc-driver-dashboard/prc-driver-dashboard.component';
 import { PrcDriverPendingPickupsComponent } from './pages/prc-driver-page/prc-driver-pending-pickups/prc-driver-pending-pickups.component';
 import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc-driver-pickup-confirm-page/prc-driver-pickup-confirm-page.component';
@@ -64,6 +60,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import { DumpTypeComponent } from './pages/prc-admin/dump-type/dump-type.component';
 import { PickupsListComponent } from './pages/prc-admin/pickups-list/pickups-list.component';
+import { PickupComponent } from './pages/public/pickup/pickup.component';
+import { LocationComponent } from './pages/public/location/location.component';
+import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +78,7 @@ import { PickupsListComponent } from './pages/prc-admin/pickups-list/pickups-lis
     OrganizeEventComponent,
     McRegistrationComponent,
     ViewEventComponent,
-    PrcAdminComponent,
+    PrcAdminHomepageComponent,
     DriverRegistrationComponent,
     ViewPrcListComponent,
     ViewDrivesListComponent,
