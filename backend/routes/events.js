@@ -12,5 +12,6 @@ router.post("/start-event/:eventId", eventsController.startEvents);
 router.post("/participate", eventsController.participateUser);
 router.get("/get-event-total-registered", eventsController.getTotalRegistered);
 router.post("/verify-event-token", eventsController.verifyEventToken);
+router.post("/end-event", eventsController.endEvent);
 
 module.exports = router;
