@@ -1,1 +1,29 @@
-<p>report-complaint works!</p>
+<form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+    <div class="grid grid-cols-2 gap-4">
+  
+      <mat-form-field class="col-span-1">
+        <mat-label>Complaint Title:</mat-label>
+        <input matInput placeholder="Enter Complaint Title" type="text" required formControlName="reportTitle">
+        <mat-error *ngIf="reportForm.get('reportTitle')?.hasError('required')">Complaint Title is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="col-span-1">
+        <mat-label>Relevant District/Municipality:</mat-label>
+        <input matInput placeholder="Enter Relevant District/Municipality" type="text" required formControlName="reportLocation">
+        <mat-error *ngIf="reportForm.get('reportLocation')?.hasError('required')">Relevant District/Municipalityn is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="col-span-2">
+        <mat-label>Description of complaint (max 1000 characters):</mat-label>
+        <textarea matInput placeholder="Enter Description" type="text" required formControlName="reportDescription" style="height: 200px"></textarea>
+      </mat-form-field>
+    
+      <button class="bg-primary px-4 py-1 rounded text-white row-span-1" type="submit" [disabled]="reportForm.invalid">
+        Submit
+      </button>
+      <button class="bg-warn px-4 py-1 rounded text-white row-span-1" type="button" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+  

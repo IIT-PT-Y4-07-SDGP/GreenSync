@@ -15,4 +15,7 @@ export class ReportService {
   createReportGarbage(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/mc/report-garbage`, data, { headers: this.headers});
   }
+  createComplaint(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/mc/create-complaint`, data, { headers: this.headers});
+  }
 }
