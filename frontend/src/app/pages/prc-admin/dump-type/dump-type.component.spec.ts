@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrcAdminComponent } from './prc-admin.component';
+import { DumpTypeComponent } from './dump-type.component';
 
-describe('PrcAdminComponent', () => {
-  let component: PrcAdminComponent;
-  let fixture: ComponentFixture<PrcAdminComponent>;
+describe('DumpTypeComponent', () => {
+  let component: DumpTypeComponent;
+  let fixture: ComponentFixture<DumpTypeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PrcAdminComponent ]
+      declarations: [ DumpTypeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrcAdminComponent);
+    fixture = TestBed.createComponent(DumpTypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

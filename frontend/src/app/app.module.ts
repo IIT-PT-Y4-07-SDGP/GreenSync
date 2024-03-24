@@ -30,7 +30,6 @@ import { McRegistrationComponent } from './components/mc/mc-registration/mc-regi
 import { ViewEventComponent } from './components/events/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import {PrcAdminComponent} from './pages/prc-admin-page/prc-admin/prc-admin.component';
 import {
   DriverRegistrationComponent
 } from './components/prc/driver-registration/driver-registration/driver-registration.component';
@@ -38,28 +37,33 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {ViewPrcListComponent} from './components/prc/prc-registration/view-prc-list/view-prc-list.component';
 import {
   ViewDrivesListComponent
-} from './components/prc/driver-registration/view-drives-list/view-drives-list.component';import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
+} from './components/prc/driver-registration/view-drives-list/view-drives-list.component';
+import { GeneralUserHomepageComponent } from './pages/general-user-homepage/general-user-homepage.component';
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
 import { ParticipationComponent } from './components/events/participation/participation.component';
-import { HeaderComponent } from './shared/header/header.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 import { MyEventPageComponent } from './pages/my-event-page/my-event-page.component';
-import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
 import { ReportComplaintComponent } from './components/report/report-complaint/report-complaint.component';
-import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
-import { HistoryComponent } from './pages/public/history/history.component';
-import { PickupComponent } from './pages/public/pickup/pickup.component';
-import { LocationComponent } from './pages/public/location/location.component';
-import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
 import { PrcDriverDashboardComponent } from './pages/prc-driver-page/prc-driver-dashboard/prc-driver-dashboard.component';
 import { PrcDriverPendingPickupsComponent } from './pages/prc-driver-page/prc-driver-pending-pickups/prc-driver-pending-pickups.component';
 import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc-driver-pickup-confirm-page/prc-driver-pickup-confirm-page.component';
 import { PrcDriverPriceChartComponent } from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
 import { PrcDriverPickupHitoryPageComponent } from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
 import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
+import { DumpTypeComponent } from './pages/prc-admin/dump-type/dump-type.component';
+import { PickupsListComponent } from './pages/prc-admin/pickups-list/pickups-list.component';
+import { PickupComponent } from './pages/public/pickup/pickup.component';
+import { LocationComponent } from './pages/public/location/location.component';
+import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
+import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
+import { HistoryComponent } from './pages/public/history/history.component';
+import { HeaderComponent } from './shared/header/header.component'
 
 @NgModule({
   declarations: [
@@ -75,7 +79,7 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     OrganizeEventComponent,
     McRegistrationComponent,
     ViewEventComponent,
-    PrcAdminComponent,
+    PrcAdminHomepageComponent,
     DriverRegistrationComponent,
     ViewPrcListComponent,
     ViewDrivesListComponent,
@@ -85,7 +89,6 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     McAdminHomepageComponent,
     MyEventsComponent,
     ParticipationComponent,
-    HeaderComponent,
     OrganizedEventPageComponent,
     MyEventPageComponent,
     ReportGarbageComponent,
@@ -101,7 +104,10 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
     PrcDriverPickupConfirmPageComponent,
     PrcDriverPriceChartComponent,
     PrcDriverPickupHitoryPageComponent,
-    PrcDriverPickupViewPageComponent
+    PrcDriverPickupViewPageComponent,
+    DumpTypeComponent,
+    PickupsListComponent,
+    HeaderComponent
   ],
     imports: [
         BrowserModule,
@@ -121,7 +127,9 @@ import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-dr
         MatButtonModule,
         MatExpansionModule,
         MatSidenavModule,
-    MatTableModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatListModule
     ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
