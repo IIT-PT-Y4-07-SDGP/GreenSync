@@ -1,10 +1,8 @@
-// Importing the service class
 const { ethers } = require("ethers");
 const RewardService = require("../Services/rewardService");
 const UserService = require("../Services/userService");
 const WalletService = require("../Services/walletService");
 const userModel = require("../models/userModel");
-// creating instances for service class
 const user = new UserService();
 const wallet = new WalletService();
 const reward = new RewardService();
@@ -12,7 +10,6 @@ class UserController{
     // User Registration
     static async userRegistration (req,res, next) {
         try{
-            // Validate the user data and add ussr to database
             const newUserAccount = await user.userRegister(req.body, res);
             // wallet creation
             // Generate a new wallet using ethers wallet
@@ -36,7 +33,6 @@ class UserController{
             // Call the updateUserDetails method from the UserService
             const updatedUser = await user.updateUser(id, updatedDetails);
 
-            // Send the updated user details in the response
             return res.status(200).json({ updatedUser });
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -50,7 +46,6 @@ class UserController{
             // Call the updateUserDetails method from the UserService
             const deletedUser = await user.deleteUser(id);
 
-            // Send the updated user details in the response
             return res.status(200).json({ deletedUser });
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -59,7 +54,6 @@ class UserController{
 
     static async redeemPoints(req, res, next) {
         try {
-            console.log("Ho wsaad");
             const {userId} = req.body;
             const userData = await userModel.findById(userId);
             if(!userData){
