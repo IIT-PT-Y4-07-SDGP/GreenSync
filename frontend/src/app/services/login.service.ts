@@ -48,7 +48,7 @@ export class LoginService {
 
   loginUser(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.apiUrl}/auth/login`, data, { headers: headers });
+    return this.http.post<GeneralUser>(`${this.apiUrl}/auth/login`, data, { headers: headers });
   }
 
 }

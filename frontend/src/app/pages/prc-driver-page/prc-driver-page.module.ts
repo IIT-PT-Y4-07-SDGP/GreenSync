@@ -5,7 +5,6 @@ import { PrcDriverPendingPickupsComponent } from './prc-driver-pending-pickups/p
 import { PrcDriverPickupConfirmPageComponent } from './prc-driver-pickup-confirm-page/prc-driver-pickup-confirm-page.component';
 import { PrcDriverPickupViewPageComponent } from './prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
 import { PrcDriverPickupHitoryPageComponent } from './prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
-import { PrcDriverPickupHistoryViewPageComponent } from './prc-driver-pickup-history-view-page/prc-driver-pickup-history-view-page.component';
 import { PrcDriverPriceChartComponent } from './prc-driver-price-chart/prc-driver-price-chart.component';
 
 
@@ -17,7 +16,6 @@ import { PrcDriverPriceChartComponent } from './prc-driver-price-chart/prc-drive
     PrcDriverPickupConfirmPageComponent,
     PrcDriverPickupViewPageComponent,
     PrcDriverPickupHitoryPageComponent,
-    PrcDriverPickupHistoryViewPageComponent,
     PrcDriverPriceChartComponent
   ],
   imports: [

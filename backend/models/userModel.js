@@ -28,6 +28,16 @@ const generalUserSchema = new schema({
         ref: 'accountSchema',
         required:true
     },
+    participatedEvents: [{
+        event:{
+            type: schema.Types.ObjectId,
+            ref: 'Events',
+        },
+        participationStatus: {
+            type: String,
+            required: false
+        }
+    }],
     tokenBalance: {
         type: String,
         required: false

@@ -53,6 +53,7 @@ import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc
 import { PrcDriverPriceChartComponent } from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
 import { PrcDriverPickupHitoryPageComponent } from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
 import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
+import { TokenVerificationDialogComponent } from './components/events/token-verification-dialog/token-verification-dialog.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import { DumpTypeComponent } from './pages/prc-admin/dump-type/dump-type.component';
@@ -104,6 +105,8 @@ import { HeaderComponent } from './shared/header/header.component'
     PrcDriverPickupConfirmPageComponent,
     PrcDriverPriceChartComponent,
     PrcDriverPickupHitoryPageComponent,
+    PrcDriverPickupViewPageComponent,
+    TokenVerificationDialogComponent,
     PrcDriverPickupViewPageComponent,
     DumpTypeComponent,
     PickupsListComponent,

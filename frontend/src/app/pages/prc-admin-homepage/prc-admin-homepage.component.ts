@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PRC } from 'src/app/interfaces/PRC';
 import { LoginService } from 'src/app/services/login.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-prc-admin-homepage',
@@ -8,12 +9,31 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./prc-admin-homepage.component.scss']
 })
 export class PrcAdminHomepageComponent implements OnInit {
-  public PRC?: PRC;
-  constructor(public loginService: LoginService) { }
+  constructor(private router: Router) {
+  }
 
-  ngOnInit(): void {
-    this.PRC = this.loginService.getPRC();
-    console.log(this.PRC);
+  ngOnInit() {
+    console.log();
+  }
+
+  createDriver(): void {
+    this.router.navigate(['/create-driver']);
+  }
+
+  viewPrcList(): void {
+    this.router.navigate(['/prc-list']);
+  }
+
+  logOut() {
+    this.router.navigate(['/registration']);
+  }
+
+  viewDriversList(): void {
+    this.router.navigate(['/view-drivers']);
+  }
+
+  goBack() {
+    this.router.navigate(['/admin/dump-type']);
   }
 
 }
