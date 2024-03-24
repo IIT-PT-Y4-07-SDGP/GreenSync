@@ -1,8 +1,12 @@
 <div class="mt-3">
     <div class="container mx-auto flex justify-end">
         <div class="col-span-1 align-middle justify-end grid grid-rows-2 gap-1 mr-4">
-            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white row-span-1" (click)="onClickViewMyEvents()">My
-                Events</button>
+            <button 
+                class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white row-span-1"
+                routerLink='/user-homepage/event/my-events'
+            >
+                My Events
+            </button>
         </div>
         <div class="col-span-1 align-middle justify-end grid grid-rows-2 gap-1 mr-4">
             <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white row-span-1"
@@ -21,7 +25,7 @@
                                     <div class="grid grid-rows-2">
                                         <h1 class=" text-primary custom-font font-extrabold row-span-1">{{
                                             event.eventName }}</h1>
-                                        <div class="row-span-1 flex justify-between mr-4 text-xl">
+                                        <div class="row-span-1 flex justify-between mr-4 text-l">
                                             <p class="">Date: {{ formatDate(event.eventTime) }}</p>
                                             <p class="">Time: {{ formatTime(event.eventTime) }}</p>
                                             <p class="">Location: {{ event.eventLocation }}</p>
@@ -37,6 +41,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="flex justify-center mt-4">
+            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white"
+                (click)="previousPage()" [hidden]="currentPage === 1">Previous</button>
+            <button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white ml-4"
+                (click)="nextPage()" [hidden]="currentPage === totalPages">Next</button>
         </div>
     </div>
 </div>

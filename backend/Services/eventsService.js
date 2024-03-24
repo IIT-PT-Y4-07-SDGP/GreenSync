@@ -132,6 +132,14 @@ class EventsService {
 
         // return await eventsModel.findById(eventID).populate('eventParticipant.user');
     }
+
+        async getTotalRegistered(eventId) {
+        const event = await eventsModel.findOne({ _id: eventId }).populate('eventParticipant.user');
+        return event;
+    } 
+    catch (error) {
+        throw new Error(`Error fetching event from the database: ${error.message}`);
+    }
 }
 
 module.exports = EventsService

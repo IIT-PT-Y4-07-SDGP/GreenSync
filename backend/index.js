@@ -22,7 +22,7 @@ const pickupRouter = require("./routes/pickup");
 const UserController = require("./controllers/userController");
 const PRCController = require("./controllers/PRCController");
 const MCController = require("./controllers/MCController");
-
+require("./controllers/PRCDriverController");
 // Initiating Express
 const app = express();
 const port = "5001";
