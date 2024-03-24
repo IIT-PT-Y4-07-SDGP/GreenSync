@@ -41,7 +41,6 @@ class UserController{
 
     static async deleteUser(req, res) {
         try {
-            const {id} = req.params; 
             const {id} = req.params;
 
             // Call the updateUserDetails method from the UserService
