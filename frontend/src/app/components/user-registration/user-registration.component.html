@@ -172,7 +172,7 @@
       formControlName="phoneNumber"
       type="tel"
     />
-    <mat-hint>Phone number format - +9471****768</mat-hint>
+    <mat-hint>Phone number format - +947*****768</mat-hint>
     <mat-error *ngIf="userRegFormGroup.get('phoneNumber')?.hasError('required')"
       >Phone number is required.</mat-error
     >
@@ -257,7 +257,7 @@
   <div class="flex w-full col-span-2 sticky bottom-0 ">
     
     <div class="block w-full bg-secondary-background">
-        <div class="flex items-center justify-center w-full bg-primary p-2">
+        <div class="flex items-center justify-center w-full border-t-2 p-2">
           <button
             class="bg-primary px-4 py-1 rounded text-white"
             type="submit"

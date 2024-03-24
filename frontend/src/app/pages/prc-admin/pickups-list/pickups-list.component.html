@@ -1,12 +1,6 @@
 <mat-sidenav-container autosize>
   <mat-sidenav [opened]="true" mode="side">
     <mat-nav-list>
-      <a mat-list-item>
-        <span class="entry">
-          <mat-icon>house</mat-icon>
-          <span>Dashboard</span>
-        </span>
-      </a>
       <a mat-list-item  [routerLink]="['/admin/dump-type']">
         <span class="entry">
           <mat-icon>assignment</mat-icon>
@@ -17,6 +11,12 @@
         <span class="entry">
           <mat-icon>perm_contact_calendar</mat-icon>
           <span>Pickups</span>
+        </span>
+      </a>
+      <a mat-list-item  [routerLink]="['/admin/driver-manager']">
+        <span class="entry">
+          <mat-icon>assignment</mat-icon>
+          <span>Driver Manager</span>
         </span>
       </a>
     </mat-nav-list>

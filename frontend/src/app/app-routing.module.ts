@@ -69,7 +69,9 @@ const routes: Routes = [
   {path: 'prc-driver/pickup-view', component: PrcDriverPickupViewPageComponent},
 
   {path: 'admin/dump-type', component: DumpTypeComponent},
-  {path: 'admin/pickup-list', component: PickupsListComponent}
+  {path: 'admin/pickup-list', component: PickupsListComponent},
+  {path: 'admin/driver-manager', component: PrcAdminHomepageComponent}
+
 ];
 
 @NgModule({

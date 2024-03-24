@@ -14,7 +14,7 @@ class AuthService {
             }
 
             //get related account
-            const account = await accountModel.findOne({ email: userIdentity }) || await accountModel.findOne({ username: userIdentity });
+            const account = await accountModel.findOne({email: userIdentity}) || await accountModel.findOne({username: userIdentity});
             if (!account) {
                 throw new Error("User not found");
             }
@@ -26,7 +26,7 @@ class AuthService {
             }
 
             //generate access and refresh tokens
-            const tokens = this.generateJWTToken(account.username,account.userRole);
+            const tokens = this.generateJWTToken(account.username, account.userRole);
             const accessToken = tokens.accessToken;
             const newRefreshToken = tokens.refreshToken;
 
@@ -39,7 +39,7 @@ class AuthService {
             if (cookies?.jwt) {
                 const refreshToken = cookies.jwt;
                 //find account from refresh token preent in req cookie
-                const foundToken = await accountModel.findOne({ refreshToken }).exec();
+                const foundToken = await accountModel.findOne({refreshToken}).exec();
                 if (!foundToken) {
                     newRefreshTokenArray = [];
                 }
@@ -57,7 +57,7 @@ class AuthService {
             const userRole = account.userRole;
 
             //dynamically fetch user details based on role
-            if(userRole == "GP"){
+            if (userRole == "GP") {
                 let userDetails = await userModel.findOne({account: account.id});
                 return {
                     "_id": userDetails.id,
@@ -66,6 +66,7 @@ class AuthService {
                     "points": userDetails.points,
                     "profilePic": userDetails.profilePic,
                     "address": userDetails.address,
+                    "participatedEvents":userDetails.participatedEvents,
                     "account": {
                         "_id": account.id,
                         "username": account.username,
@@ -77,7 +78,7 @@ class AuthService {
                         "refreshToken": newRefreshToken
                     },
                 }
-            } else if(userRole == "PRC-ADMIN"){
+            } else if (userRole == "PRC-ADMIN") {
                 let PRC = await PRCModel.findOne({account: account.id});
                 return {
                     "_id": PRC.id,
@@ -97,11 +98,7 @@ class AuthService {
                         "refreshToken": newRefreshToken
                     },
                 }
-            } 
-            // else if(userRole == "PRC-DRIVER"){
-            //     return {"PRCDriver" : "PRC Driver"}
-            // } 
-            else if(userRole == "MC-ADMIN"){
+            } else if (userRole == "MC-ADMIN") {
                 let MC = await MCModel.findOne({account: account.id});
                 return {
                     "_id": MC.id,
@@ -120,20 +117,39 @@ class AuthService {
                         "refreshToken": newRefreshToken
                     }
                 }
-            } 
-            // else if(userRole == "SYSTEM-ADMIN"){
-                
+            } else if (userRole == 'DRIVER') {
+                let userDetails = await userModel.findOne({account: account.id});
+                return {
+                    "_id": userDetails.id,
+                    "firstName": userDetails.firstName,
+                    "lastName": userDetails.lastName,
+                    "points": userDetails.points,
+                    "profilePic": userDetails.profilePic,
+                    "address": userDetails.address,
+                    "account": {
+                        "_id": account.id,
+                        "username": account.username,
+                        "phoneNumber": account.phoneNumber,
+                        "userRole": account.userRole,
+                        "email": account.email,
+                        "accountStatus": account.accountStatus,
+                        "accessToken": accessToken,
+                        "refreshToken": newRefreshToken
+                    },
+                }
+            }
+                // else if(userRole == "SYSTEM-ADMIN"){
+
             // } 
             else {
-                throw new Error("User role is not specified")
             }
-            
+
         } catch (error) {
             throw new Error(error.message);
         }
     }
 
-    static generateJWTToken(username, role){
+    static generateJWTToken(username, role) {
         let accessToken = jwt.sign(
             {
                 UserInfo: {
@@ -142,13 +158,13 @@ class AuthService {
                 },
             },
             config.ACCESS_TOKEN_SECRET,
-            { expiresIn: "20m" }
+            {expiresIn: "20m"}
         )
 
         let refreshToken = jwt.sign(
-            { username: username },
+            {username: username},
             config.REFRESH_TOKEN_SECRET,
-            { expiresIn: "3d" }
+            {expiresIn: "3d"}
         );
 
         return {accessToken: accessToken, refreshToken: refreshToken}
@@ -159,7 +175,7 @@ class AuthService {
         try {
             const refreshToken = cookies.jwt;
 
-            const user = await accountModel.findOne({ refreshToken }).exec();
+            const user = await accountModel.findOne({refreshToken}).exec();
             if (!user) {
                 return;
             }
@@ -181,9 +197,9 @@ class AuthService {
                 throw new Error("Unauthorized");
             }
             const refreshToken = cookies.jwt;
-            res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+            res.clearCookie("jwt", {httpOnly: true, sameSite: "None", secure: true});
 
-            const user = await accountModel.findOne({ refreshToken }).exec();
+            const user = await accountModel.findOne({refreshToken}).exec();
 
             if (!user) {
                 jwt.verify(refreshToken, config.REFRESH_TOKEN_SECRET, async (err, decoded) => {
@@ -193,7 +209,7 @@ class AuthService {
 
                     //if the token is valid but there is no user associated to it currently
                     const hackedUser = await accountModel
-                        .findOne({ username: decoded.username })
+                        .findOne({username: decoded.username})
                         .exec();
                     hackedUser.refreshToken = [];
                     await hackedUser.save();
@@ -224,14 +240,14 @@ class AuthService {
                         },
                     },
                     config.ACCESS_TOKEN_SECRET,
-                    { expiresIn: "20m" }
+                    {expiresIn: "20m"}
                 );
 
                 //create new refresh token
                 const newRefreshToken = jwt.sign(
-                    { username: user.username },
+                    {username: user.username},
                     config.REFRESH_TOKEN_SECRET,
-                    { expiresIn: "3d" }
+                    {expiresIn: "3d"}
                 );
 
                 //add the new refresh token to the refresh tokens array
@@ -246,7 +262,7 @@ class AuthService {
                     maxAge: 24 * 60 * 60 * 1000,
                 });
 
-                res.json({ accessToken });
+                res.json({accessToken});
             });
         } catch (error) {
             throw new Error(error.message);
