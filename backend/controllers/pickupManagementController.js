@@ -1,7 +1,5 @@
-// Importing the service class
 const PickupService = require("../Services/pickupManagementService");
 // const AuthService = require("../Services/authService");
-// creating instances for service class
 const pickup = new PickupService();
 // const authService = new AuthService();
 
@@ -90,5 +88,4 @@ class PickupManagementController {
   }
 }
 
-// Export the controller
 module.exports = PickupManagementController;

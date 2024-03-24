@@ -7,6 +7,7 @@ const accountsModel = require('../models/accountModel');
 
 class DriverService {
 
+    //used to fetch drivers 
     async getDriversList() {
         try {
             return await accountsModel.find({'userRole': 'DRIVER'}, {

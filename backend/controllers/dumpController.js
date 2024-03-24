@@ -1,7 +1,6 @@
-// Importing the service class
 const DumpService = require("../Services/dumpService");
 // const AuthService = require("../Services/authService");
-// creating instances for service class
+
 const dump = new DumpService();
 // const authService = new AuthService();
 
@@ -46,5 +45,5 @@ class DumpController {
   }
 }
 
-// Export the controller
+
 module.exports = DumpController;

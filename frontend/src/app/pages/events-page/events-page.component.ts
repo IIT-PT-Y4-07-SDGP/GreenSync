@@ -45,18 +45,15 @@ export class EventsPageComponent implements OnInit {
   openOrganizeEventDialog(): void {
     const dialogRef = this.dialog.open(OrganizeEventComponent, {
       height: '600px',
-      width: '1000px', // Adjust the width as needed
-      // Add any other configuration options for your dialog
+      width: '1000px', 
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
-      // Handle any data or actions after the dialog is closed
     });
   }
 
   fetchEvents() {
-    // Make an HTTP request to fetch events from your server
     this.eventServices.getAllEvents().subscribe(
       (events) =>{
         // Assign the retrieved events to the component property
@@ -106,7 +103,7 @@ export class EventsPageComponent implements OnInit {
       data: { event: selectedEvent, imagePath: this.imagePaths }
     });
     dialogRef.afterClosed().subscribe(result => {
-      // Handle any data or actions after the dialog is closed
+
     });
   }
 
