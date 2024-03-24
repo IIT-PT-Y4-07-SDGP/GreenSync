@@ -51,7 +51,7 @@ export class DriverRegistrationComponent implements OnInit {
 
       this.driverService.registerDriver(jsonData).subscribe(() => {
         this.onClear();
-        this.router.navigate(['prc-admin-homepage']);
+        this.router.navigate(['/admin/driver-manager']);
       });
     }
   }
@@ -61,7 +61,7 @@ export class DriverRegistrationComponent implements OnInit {
   }
 
   cancelSubmit() {
-    this.router.navigate(['/prc-admin-homepage']);
+    this.router.navigate(['/admin/driver-manager']);
   }
 
 }

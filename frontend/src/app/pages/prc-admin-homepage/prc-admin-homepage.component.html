@@ -1,2 +1,10 @@
-<p>prc-admin-homepage works!</p>
-<p>{{this.PRC?.PRCBusinessRegNumber}}</p>
+<div class="background">
+  <div class="content">
+    <h2>Driver Manager</h2>
+    <button mat-raised-button (click)="createDriver()">Create Driver</button>
+    <button mat-raised-button (click)="viewDriversList()">View Drivers</button>
+    <button mat-raised-button (click)="viewPrcList()">View PRC List</button>
+    <button mat-raised-button (click)="goBack()">Back</button>
+    <button mat-raised-button (click)="logOut()" color="warn">Log out</button>
+  </div>
+</div>
