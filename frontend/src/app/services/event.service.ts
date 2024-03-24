@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { EventDetails } from 'src/app/interfaces/event';
+import { ParticipantDetails } from '../interfaces/participantsDetails';
+import { ParticipateEventsResponse } from '../interfaces/participationResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +32,15 @@ export class EventService {
   getOrganizingEvents(eventOrganizer: string) {
     return this.http.get<EventDetails[]>(`${this.apiUrl}/events/get-my-organizing-events?organizerId=${eventOrganizer}`)
   }
+
+  getParticipateEvents(userID: string) {
+    return this.http.get<ParticipateEventsResponse>(`${this.apiUrl}/events/get-participated-events?participantId=${userID}`)
+  }
+
+  verifyToken(data: any) {
+    return this.http.post<boolean>(`${this.apiUrl}/events/verify-event-token`, data, { headers: this.headers });
+  }
+
   startEvent(eventId: string,) {
     return this.http.post(`${this.apiUrl}/events/start-event/${eventId}`, {})
   }

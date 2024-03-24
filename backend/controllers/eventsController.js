@@ -52,16 +52,26 @@ class EventsController{
       - Event ID
       - User ID              
     */
-    async participateUser(req, res){
-        try{
-            await events.participateUser(req.body.eventID, req.body.userID)
-            res.status(201).json({message: 'Successfully registered to event'})
-        } catch(error) {
-            console.error(error);
-            res.status(500).json(error.message);
-        }
-    }
-
+   async participateUser(req, res){
+       try{
+           await events.participateUser(req.body.eventID, req.body.userID)
+           res.status(201).json({message: 'Successfully registered to event'})
+       } catch(error) {
+           console.error(error);
+           res.status(500).json(error.message);
+       }
+   }
+   
+   async getParticipatedEvents(req, res){
+       try{
+           const participatedEvents = await events.getParticipatedEvents(req.query.participantId)
+           res.status(201).json(participatedEvents)
+       } catch(error) {
+           console.error(error);
+           res.status(500).json(error.message);
+       }
+   }
+   
     async getTotalRegistered(req, res){
         try{
             const eventId = req.query.eventId;
@@ -71,6 +81,16 @@ class EventsController{
             console.error(error);
             res.status(500).json({ error: 'Internal Server Error' }); 
         }
+    }
+    
+    async verifyEventToken(req, res){
+        try{
+            const isValidToken = await events.verifyEventToken(req.body.eventID, req.body.userID, req.body.token);
+            res.status(200).json(isValidToken);
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({ error: error.message }); 
+        }    
     }
 
     async endStartedEvent(req, res) {
