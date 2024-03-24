@@ -25,7 +25,7 @@ const pickupSchema = new schema(
     DriverId: {
       type: String,
     },
-    Status: {
+    Status: { // accept  or reject , pending
       type: String,
     },
   },

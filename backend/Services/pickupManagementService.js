@@ -52,7 +52,7 @@ class PickupManagementService {
     });
     // after assign the dirvers for pickup . then use  your sms or email funtion
     // get driver  email by driverIds
-    //send the emails using dirverIds
+    // send the emails using dirverIds
     return assign;
   }
 
@@ -95,7 +95,7 @@ class PickupManagementService {
         PickupEndTime: req.body.PickupEndTime,
         DumpType: req.body.DumpType,
         Location: req.body.Location,
-        Status: "PENDING",
+        Status: "NEW",
       });
       console.log(newPickup);
       const savedPickup = await newPickup.save();
@@ -105,6 +105,7 @@ class PickupManagementService {
       return error;
     }
   }
+
 }
 
 module.exports = PickupManagementService;

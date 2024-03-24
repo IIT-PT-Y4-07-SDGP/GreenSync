@@ -10,6 +10,7 @@ router.put("/assign-pickup/:pickupId", PickupController.AssignePickupForDriver);
 
 router.put("/delete-driver/:pickupId", PickupController.DeleteDriverFromPickup);
 
+//FROM DRIVER SIDE
 router.patch(
   "/update-driver-status/:pickupId",
   PickupController.UpdateDriverStatus

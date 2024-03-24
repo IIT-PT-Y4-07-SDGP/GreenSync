@@ -1,9 +1,9 @@
 // Importing required libraries
 const mongoose = require("mongoose");
 const express = require("express");
-const cors = require('cors');
-const cookieParser = require("cookie-parser")
-const requireAuth=require("./middlewares/requireAuth")
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const requireAuth = require("./middlewares/requireAuth");
 
 // Getting the configuration values
 const config = require("./configuration/config");
@@ -16,6 +16,7 @@ const mcRoute = require("./routes/mc");
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
 const pickupRouter = require("./routes/pickup");
+const dumpRouter = require("./routes/dump");
 
 // Importing Controllers and creating instance
 const UserController = require("./controllers/userController");
@@ -26,10 +27,12 @@ const MCController = require("./controllers/MCController");
 const app = express();
 const port = "5001";
 
-app.use(cookieParser())
-app.use(cors({
-    origin: 'http://localhost:4200' // Allow requests only from localhost:4200
-}));
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:4200", // Allow requests only from localhost:4200
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,12 +43,13 @@ app.post("/user/registration", UserController.userRegistration);
 app.post("/prc/registration", PRCController.PRCRegistration);
 app.post("/mc/registration", MCController.MCRegistration);
 
-// Main route and the sub routes 
+// Main route and the sub routes
 app.use("/admin", adminRouter);
 app.use("/user", userRoute);
 app.use("/prc", prcRoute);
 app.use("/mc", mcRoute);
 app.use("/events", eventsRoute);
+app.use("/dump", dumpRouter);
 app.use(requireAuth);
 
 // Verifying the connection to database and starting the server
