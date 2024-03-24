@@ -20,7 +20,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./pickups-list.component.scss']
 })
 export class PickupsListComponent implements OnInit {
-
+  modeselect:string='1';
   displayedColumns: string[] = ['requestId', 'userName', 'location', 'dumpType','description','status','driver','price'];
   dataSource = ELEMENT_DATA;
   constructor() { }
