@@ -140,6 +140,13 @@ class EventsService {
     catch (error) {
         throw new Error(`Error fetching event from the database: ${error.message}`);
     }
+
+    async endStartedEvent(eventId) {
+        // TODO
+        // pass eventId and change the status to Ended
+        // then update the users who have participated relevant users points their participation status in userModel
+        // Update the organizer's point based on how many participated
+    }
 }
 
 module.exports = EventsService
