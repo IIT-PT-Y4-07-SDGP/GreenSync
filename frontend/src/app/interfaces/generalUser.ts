@@ -7,5 +7,6 @@ export interface GeneralUser{
     points: number,
     profilePic: string,
     address: string,
-    account: Account
+    account: Account,
+    participatedEvents: any[]
 }

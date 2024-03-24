@@ -57,6 +57,7 @@ class AuthService {
                     "points": userDetails.points,
                     "profilePic": userDetails.profilePic,
                     "address": userDetails.address,
+                    "participatedEvents":userDetails.participatedEvents,
                     "account": {
                         "_id": account.id,
                         "username": account.username,

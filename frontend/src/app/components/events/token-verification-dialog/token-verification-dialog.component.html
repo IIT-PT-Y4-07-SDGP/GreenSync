@@ -1,0 +1,10 @@
+<h2 class="text-lg font-bold mb-4">Enter the token</h2>
+
+<!-- Input field to get 6-digit token -->
+<input type="text" [(ngModel)]="token" class="w-full border rounded-md px-3 py-2 mb-4" placeholder="Enter 6-digit token" maxlength="6" pattern="[0-9]{6}" required>
+
+<!-- Small text explaining the purpose of the token -->
+<p class="text-sm mb-4">This token is required to be obtained from the organizer.</p>
+
+<!-- Submit button -->
+<button class="bg-primary hover:bg-green-300 hover:text-black py-2 px-4 rounded text-white text-xs" (click)="verifyToken()">Submit</button>

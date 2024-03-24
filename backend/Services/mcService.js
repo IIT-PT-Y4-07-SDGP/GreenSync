@@ -9,6 +9,7 @@ const accountModel = require("../models/accountModel");
 const districtModel = require("../models/district");
 const scheduleModel= require("../models/schedule");
 const reportGarbageModel = require("../models/reportGarbageModel");
+const createComplaintModel = require("../models/createComplaintModel");
 
 class MCService {
   static async MCRegister(MCDetails, res) {
@@ -386,7 +387,19 @@ static async reportGarbage(reportDetails){
           const event = await reportGarbageModel.create(reportDetails);
           return event;
         } else {
-            throw new Error('Organizer is not a registered users')
+            throw new Error('User is not a registered user, or is not logged in correctly. Please try to login again.')
+        }  
+}
+
+static async createComplaint(reportDetails){
+  let authorID = reportDetails.reportAuthor;
+        if (await this.isAuthorInDB(authorID)){
+          reportDetails.reportAuthor = authorID;
+          const event = await createComplaintModel.create(reportDetails);
+          console.log(event)
+          return event;
+        } else {
+            throw new Error('User is not a registered user, or is not logged in correctly. Please try to login again.')
         }  
 }
 

@@ -5,7 +5,7 @@
       <mat-form-field>
           <mat-select [(ngModel)]="this.complainType" value="illegal-garbage-dump-report" class="pl-1 border-none">
               <mat-option value="illegal-garbage-dump-report">Report garbage dump</mat-option>
-              <mat-option value="complaint">Report complain</mat-option>
+              <mat-option value="complaint">Complaint about MC Services</mat-option>
           </mat-select>
       </mat-form-field>
     </div>
@@ -13,7 +13,7 @@
       <div class="w-full" *ngIf="this.complainType == 'illegal-garbage-dump-report'">
         <app-report-garbage class=""></app-report-garbage>    
       </div>
-      <div *ngIf="this.complainType == 'complaint'">
+      <div class="w-full" *ngIf="this.complainType == 'complaint'">
         <app-report-complaint></app-report-complaint>
       </div>
     </div>
