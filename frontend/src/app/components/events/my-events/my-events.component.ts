@@ -19,8 +19,8 @@ export class MyEventsComponent implements OnInit {
   eventParticipationResponse: any; // Property to hold the response from the server
   public events: EventDetails[] = [];
   public participatedEvents: any[] = [];
+  public attendingEvents: string[] = [];
   public userID?: string;
-  public isAttendButtonDisabled: boolean = false;
   public user?: GeneralUser
   
   selectButton(button: string) {
@@ -51,7 +51,7 @@ export class MyEventsComponent implements OnInit {
     this.fetchOrganizingEvents(this.userID);
     this.fetchParticipatedEvents(this.userID);
     this.user = this.loginService.getGeneralUser();
-
+    this.attendingEvent(this.userID)
   }
 
   fetchOrganizingEvents(eventOrganizer: string): void {
@@ -203,5 +203,9 @@ export class MyEventsComponent implements OnInit {
 
     onClickView(eventID: string) {
       this.eventService.setViewEventID(eventID)
+    }
+
+    attendingEvent(userID: string): void {
+      
     }
 }

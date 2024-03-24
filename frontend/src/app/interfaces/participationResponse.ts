@@ -12,7 +12,7 @@ export interface ParticipateEventsResponse {
         eventLocation: string;
         eventDescription: string;
         eventOrganizer: string;
-        eventParticipant: any[]; // Adjust the type if needed
+        eventParticipant: any[];
         eventToken: string;
         eventStatus: string;
         createdAt: string;
