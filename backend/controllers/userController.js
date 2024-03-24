@@ -59,7 +59,6 @@ class UserController{
 
     static async redeemPoints(req, res, next) {
         try {
-            console.log("Ho wsaad");
             const {userId} = req.body;
             const userData = await userModel.findById(userId);
             if(!userData){

@@ -14,8 +14,8 @@ class RewardService {
        
     // Reward points to user
     async redeemPoints(userId, points) {
-        
 
+        
         const userData = await userService.getUserById(userId)
         const wallet = await walletService.getWalletByUserId(userId);
         if(!wallet){
@@ -24,8 +24,11 @@ class RewardService {
         if(!userData){
             throw new Error("User not found");
         }
+        
+        let remainder = userData.points % 100;
+        let adjustedPoints = userData.points - remainder;
 
-        if(userData.points < 100){
+        if(userData.adjustedPoints < 100){
             throw new Error("Insufficient points");
         }
 
@@ -45,7 +48,7 @@ class RewardService {
             //`https://mumbai.polygonscan.com/tx/${transactionHash}`  <--- frontend print this
 
             // Mint the token
-            const mintToken = await GreenSyncContract.mint(wallet.publicKey, points);
+            const mintToken = await GreenSyncContract.mint(wallet.publicKey, adjustedPoints);
        
             // If minting is successful, update the user's points and token balance
             if(mintToken){
@@ -58,7 +61,7 @@ class RewardService {
                 const GSCBalance = ethers.formatEther(tokenBalance)
 
                 // Update the user's points and token balance
-                await userModel.updateOne({_id: userId},{points: 0, tokenBalance: GSCBalance})
+                await userModel.updateOne({_id: userId},{points: remainder, tokenBalance: GSCBalance})
                 return {
                     message: "Points redeemed successfully",
                     points: userData.points,
