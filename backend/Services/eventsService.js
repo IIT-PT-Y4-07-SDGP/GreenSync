@@ -269,10 +269,9 @@ class EventsService {
             const user = await userModel.findById(participant.user);   
             if (participant.participationStatus === 'Attending') {
                 user.points += 10; // Assuming 10 points for attending an event
+                // Update the participation status in the event object      
+                participant.participationStatus = 'Participated';
             }   
-            
-            // Update the participation status in the event object      
-            participant.participationStatus = 'Participated';
             
             // If the user Registered but didn't attend the event then the status will be 'Absent'
             if (participant.participationStatus === 'Registered') {

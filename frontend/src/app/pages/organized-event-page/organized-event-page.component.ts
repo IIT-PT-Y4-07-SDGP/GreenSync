@@ -48,7 +48,6 @@ export class OrganizedEventPageComponent implements OnInit {
             updatedAt: event.updatedAt,
             __v: event.__v
           }];
-          console.log(event);
       } else {
           console.log('No event found or invalid data returned.'); // Log if no event is found
         }
@@ -64,5 +63,24 @@ export class OrganizedEventPageComponent implements OnInit {
     if (!participants) return 0; // If participants array is empty or undefined, return 0
     // Filter the participants array based on participation status and return the count
     return participants.filter(participant => participant.participationStatus === 'Participated').length;
+  }
+
+  completeEvent(eventId: string): void {
+    const params = { eventID: eventId };
+    // Make an HTTP request to update the event status to 'Completed'
+    this.eventServices.completeEvent(params).subscribe({
+      next: response => {
+        // Check if the response is successful
+        if (response) {
+          // Fetch the details of the event using the event ID
+          this.fetchEvents(this.eventId);
+        } else {
+          console.log('Event completion failed.'); // Log if event completion fails
+        }
+      },
+      error: err => {
+        console.error(err); // Log any errors that occur during the HTTP request
+      }
+    });
   }
 }

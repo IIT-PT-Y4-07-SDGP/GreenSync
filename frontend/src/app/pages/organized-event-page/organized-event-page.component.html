@@ -1,10 +1,15 @@
 <div class="flex justify-between items-start my-6 mx-10">
   <h1 class="text-primary text-xl flex items-center">
     {{ events[0]?.eventName }}
+    <!-- Edit Symbol -->
     <a href="#" class="ml-6 text-black text-base font-extrabold">
       &#9998;
     </a>
-    <a href="#" class="ml-4 text-black text-base font-extrabold">
+    <!-- Complete Symbol -->
+    <a href="#" 
+      class="ml-4 text-black text-base font-extrabold" 
+      (click)="completeEvent(events[0]._id); $event.preventDefault();"
+    >
       &#10003;
     </a>
     <a href="#" class="ml-4 text-black text-base font-extrabold">
@@ -14,13 +19,13 @@
   </h1>
   <div class="text-primary text-xl">
     <h3>Total Register: {{ events[0]?.eventParticipant?.length }}</h3>
-    <h3>Total Participated: {{ getParticipatedCount(events[0]?.eventParticipant) }}</h3>
+    <h3>Total Participated: {{ getParticipatedCount(events[0]?.eventParticipant ?? []) }}</h3>
   </div>
 </div>
 
 <div class="flex justify-center">
   <div class="table-container max-h-96 mx-40 w-2/3 overflow-auto rounded-lg">
-    <mat-table [dataSource]="events[0]?.eventParticipant" class="shadow-lg rounded-lg w-full bg-gray-200">
+    <mat-table [dataSource]="events[0]?.eventParticipant ?? []" class="shadow-lg rounded-lg w-full bg-gray-200">
       <!-- Participant Name Column -->
       <ng-container matColumnDef="participantName">
         <mat-header-cell *matHeaderCellDef class="text-center"> Participant Name </mat-header-cell>
