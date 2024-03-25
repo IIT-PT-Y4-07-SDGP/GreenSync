@@ -13,5 +13,6 @@ router.post("/participate", eventsController.participateUser);
 router.get("/get-event-total-registered", eventsController.getTotalRegistered);
 router.post("/verify-event-token", eventsController.verifyEventToken);
 router.post("/end-event", eventsController.endEvent);
+router.delete("/delete-event", eventsController.deleteEvent);
 
 module.exports = router;

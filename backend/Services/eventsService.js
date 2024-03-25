@@ -296,6 +296,31 @@ class EventsService {
         
         return event;
     }
+
+    async deleteEvent(eventId, organizerID) {
+        const event = await eventsModel.findById(eventId);
+        if (!event) {
+            throw new Error("Event not found");
+        }
+
+        // Only the organizer can delete the event
+        if (event.eventOrganizer.toString() !== organizerID) {
+            throw new Error("You are not authorized to delete this event");
+        }else{
+            // Delete the event
+            await eventsModel.deleteOne({ _id: eventId });
+        }
+
+        // Delete the event from the user's participatedEvents array
+        for (const participant of event.eventParticipant) {
+            const user = await userModel.findById(participant.user);    
+            const userEventIndex = user.participatedEvents.findIndex(event => event.event.toString() === eventId);
+            if (userEventIndex !== -1) {
+                user.participatedEvents.splice(userEventIndex, 1);
+            }
+            await user.save();
+        }
+    }
 }
 
 module.exports = EventsService;

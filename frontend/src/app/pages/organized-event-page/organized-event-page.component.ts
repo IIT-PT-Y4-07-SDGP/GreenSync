@@ -83,4 +83,21 @@ export class OrganizedEventPageComponent implements OnInit {
       }
     });
   }
+
+  deleteEvent(eventId: string, organizerId: string): void {
+    // Make an HTTP request to delete the event using the event ID
+    this.eventServices.deleteEvent(eventId, organizerId).subscribe({
+      next: response => {
+        // Check if the response is successful
+        if (response) {
+          alert('Event deleted successfully.'); // Log if event is deleted successfully
+        } else {
+          alert('Event deletion failed.'); // Log if event deletion fails
+        }
+      },
+      error: err => {
+        console.error(err); // Log any errors that occur during the HTTP request
+      }
+    });
+  }
 }
