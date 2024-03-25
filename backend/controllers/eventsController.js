@@ -101,7 +101,8 @@ class EventsController {
 
     async deleteEvent(req, res) {
         try {
-            const deleteEvent = await events.deleteEvent(req.body.eventID);
+            const { eventID, organizerID } = req.query;
+            const deleteEvent = await events.deleteEvent(eventID, organizerID);
             res.status(200).json({ deleteEvent });
         } catch (error) {
             console.error(error);
