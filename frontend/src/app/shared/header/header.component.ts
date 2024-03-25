@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   points?: number;
   PRCName?: String;
   MCName?: String;
+  userId?: String;
 
   constructor(private router: Router, private loginService: LoginService, private dialog: MatDialog) { }
 
@@ -58,6 +59,7 @@ export class HeaderComponent implements OnInit {
       let userDetails: GeneralUser | undefined = this.loginService.getGeneralUser();
       this.username = userDetails?.account.username.toString();
       this.points = userDetails?.points;
+      this.userId = userDetails?._id;
     } 
     else if(this.userType == this.userTypes.MC){
       let MC: MC | undefined = this.loginService.getMC();
@@ -71,9 +73,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  openRedeemPopUp(points?: number){
+  openRedeemPopUp(){
     this.dialog.open(RedeemComponent, {
-      data: { points: points }
+      height: '255px',
+      width: '450px',
     });
 }
 }

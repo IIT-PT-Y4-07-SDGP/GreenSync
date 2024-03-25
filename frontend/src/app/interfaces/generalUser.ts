@@ -1,6 +1,7 @@
 import { Account } from "./account"
 
 export interface GeneralUser{
+    redeemedPoints: any
     _id: string,
     firstName: string,
     lastName: string,
@@ -8,5 +9,6 @@ export interface GeneralUser{
     profilePic: string,
     address: string,
     account: Account,
-    participatedEvents: any[]
+    participatedEvents: any[],
+    tokenBalance: string
 }
