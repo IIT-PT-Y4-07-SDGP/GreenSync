@@ -56,4 +56,8 @@ export class EventService {
   getEvent(eventId: string){
     return this.http.get<EventDetails>(`${this.apiUrl}/events/get-event-total-registered?eventId=${eventId}`)
   }
+
+  completeEvent(data: any){
+    return this.http.post(`${this.apiUrl}/events/end-event`, data, { headers: this.headers })
+  }
 }

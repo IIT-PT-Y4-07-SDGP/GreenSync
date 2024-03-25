@@ -250,13 +250,52 @@ class EventsService {
     }
 
 
-    async endStartedEvent(eventId) {
-        // TODO
-        // pass eventId and change the status to Ended
-        // then update the users who have participated relevant users points their participation status in userModel
-        // Update the organizer's point based on how many participated
+    async endEvent(eventId) {
+        const event = await eventsModel.findById(eventId);
+        if (!event) {
+            throw new Error("Event not found");
+        }
+
+        if (event.eventStatus === 'Ended') {
+            throw new Error("Event already ended");
+        }
+
+        // Update the event status to 'Ended'
+        event.eventStatus = 'Ended';
+        await event.save();
+
+        // Update the points of the participants
+        for (const participant of event.eventParticipant) {
+            const user = await userModel.findById(participant.user);   
+            if (participant.participationStatus === 'Attending') {
+                user.points += 10; // Assuming 10 points for attending an event
+                // Update the participation status in the event object      
+                participant.participationStatus = 'Participated';
+            }   
+            
+            // If the user Registered but didn't attend the event then the status will be 'Absent'
+            if (participant.participationStatus === 'Registered') {
+                participant.participationStatus = 'Absent';
+            }
+
+            // get all the absent users and change the participationStatus in participatedEvents array at user model
+            if (participant.participationStatus === 'Absent') {
+                const userEventIndex = user.participatedEvents.findIndex(event => event.event.toString() === eventId);
+                if (userEventIndex !== -1) {
+                    user.participatedEvents[userEventIndex].participationStatus = "Absent";
+                }
+            }
+            await user.save();
+            await event.save();
+        }
+
+        // Update the organizer's points
+        const organizer = await userModel.findById(event.eventOrganizer);
+        organizer.points += event.eventParticipant.length * 10; 
+        await organizer.save();
         
+        return event;
     }
 }
 
-module.exports = EventsService
+module.exports = EventsService;

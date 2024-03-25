@@ -89,10 +89,9 @@ class EventsController{
         }    
     }
 
-    async endStartedEvent(req, res) {
+    async endEvent(req, res) {
         try {
-            const eventId = req.params.eventId;
-            const endEvent = await events.endStartedEvent(eventId);
+            const endEvent = await events.endEvent(req.body.eventID);
             res.status(200).json({endEvent});
         } catch (error) {
             console.error(error);
