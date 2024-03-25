@@ -64,7 +64,8 @@ import { PriceChartComponent } from './pages/public/price-chart/price-chart.comp
 import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { HistoryComponent } from './pages/public/history/history.component';
-import { HeaderComponent } from './shared/header/header.component'
+import { HeaderComponent } from './shared/header/header.component';
+import { RedeemComponent } from './components/redeem/redeem.component'
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { HeaderComponent } from './shared/header/header.component'
     PrcDriverPickupViewPageComponent,
     DumpTypeComponent,
     PickupsListComponent,
-    HeaderComponent
+    HeaderComponent,
+    RedeemComponent
   ],
     imports: [
         BrowserModule,

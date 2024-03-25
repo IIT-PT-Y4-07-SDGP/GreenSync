@@ -1,0 +1,16 @@
+<div class="p-4 border rounded shadow-md bg-gray-100">
+    <h1 class="text-primary font-extrabold text-lg text-center">You have {{ this.points }} points</h1>
+    <hr class="my-2 border-gray-400">
+    <div class="flex justify-between items-center">
+        <p class="text-gray-600">Redeemable Points:</p>
+        <p class="font-semibold text-gray-800">{{ redeemable }} points</p>
+    </div> <button (click)="redeemPoints()" [disabled]="isLoading || transactionUrl || redeemable < 100" class="w-full py-2 mt-4 rounded bg-primary text-white hover:bg-red-700">
+        <span *ngIf="!isLoading && !transactionUrl">Redeem</span>
+        <span *ngIf="isLoading">Loading...</span>
+        <span *ngIf="transactionUrl">Redeemed</span>
+        <span *ngIf="!transactionUrl && redeemable < 100">Not enough points</span>
+    </button>
+    <p *ngIf="transactionUrl" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <a href="{{transactionUrl}}" target="_blank" style="display: inline-block; max-width: 200px;">{{transactionUrl}}</a>
+    </p>
+</div>
