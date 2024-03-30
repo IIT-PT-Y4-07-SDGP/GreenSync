@@ -4,7 +4,7 @@ import { PRC } from '../interfaces/PRC';
 import { MC } from '../interfaces/MC';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { EnvironmentService } from './environment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,8 @@ export class LoginService {
   public GeneralUser?: GeneralUser;
   public PRC?: PRC;
   public MC?: MC;
-  private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { 
-    
-  }
+  constructor(private http: HttpClient, private envService: EnvironmentService) { }
   // General User
   setGeneralUser(user: GeneralUser) {
     this.GeneralUser = user;
@@ -48,7 +45,6 @@ export class LoginService {
 
   loginUser(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<GeneralUser>(`${this.apiUrl}/auth/login`, data, { headers: headers });
+    return this.http.post<GeneralUser>(`${this.envService.getBaseURL()}/auth/login`, data, { headers: headers });
   }
-
 }
