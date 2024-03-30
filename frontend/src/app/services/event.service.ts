@@ -4,17 +4,20 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { EventDetails } from 'src/app/interfaces/event';
 import { ParticipateEventsResponse } from '../interfaces/participationResponse';
+import { EnvironmentService } from './environment.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
   public headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  public apiUrl = environment.apiUrl;
+  public apiUrl?:string;
   public events: EventDetails[] = [];
   public viewedEventID?: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private envService: EnvironmentService) { 
+    this.apiUrl = this.envService.getBaseURL();
+  }
 
   setViewEventID(eventID: string){
     this.viewedEventID = eventID;
