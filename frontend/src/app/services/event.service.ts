@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { EventDetails } from 'src/app/interfaces/event';
-import { ParticipantDetails } from '../interfaces/participantsDetails';
 import { ParticipateEventsResponse } from '../interfaces/participationResponse';
 
 @Injectable({
