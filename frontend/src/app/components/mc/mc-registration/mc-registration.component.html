@@ -103,7 +103,7 @@
     class="col-span-1"
   >
     <input matInput placeholder="Phone number" required formControlName="phoneNumber" type="tel">
-    <mat-hint>Phone Number format - +9471****768</mat-hint>
+    <mat-hint>Phone Number format - +947*****768</mat-hint>
     <mat-error *ngIf="MCRegFormGroup.get('phoneNumber')?.hasError('required')">Phone number is required.</mat-error>
     <mat-error *ngIf="MCRegFormGroup.get('phoneNumber')?.hasError('pattern')">Please enter a valid phone number.
     </mat-error>
@@ -146,9 +146,9 @@
   </mat-form-field>
 
   <!-- Register Section -->
-  <div class="flex w-full col-span-2 sticky bottom-0 ">
+  <div class="flex w-full col-span-2 sticky bottom-0 border-t-2">
     <div class="block w-full bg-secondary-background">
-      <div class="flex items-center justify-center w-full bg-primary p-2">
+      <div class="flex items-center justify-center w-full  p-2">
         <button
           class="bg-primary px-4 py-1 rounded text-white"
           type="submit"

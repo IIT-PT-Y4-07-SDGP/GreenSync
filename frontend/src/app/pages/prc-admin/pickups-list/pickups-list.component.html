@@ -1,12 +1,6 @@
 <mat-sidenav-container autosize>
   <mat-sidenav [opened]="true" mode="side">
     <mat-nav-list>
-      <a mat-list-item>
-        <span class="entry">
-          <mat-icon>house</mat-icon>
-          <span>Dashboard</span>
-        </span>
-      </a>
       <a mat-list-item  [routerLink]="['/admin/dump-type']">
         <span class="entry">
           <mat-icon>assignment</mat-icon>
@@ -17,6 +11,12 @@
         <span class="entry">
           <mat-icon>perm_contact_calendar</mat-icon>
           <span>Pickups</span>
+        </span>
+      </a>
+      <a mat-list-item  [routerLink]="['/admin/driver-manager']">
+        <span class="entry">
+          <mat-icon>assignment</mat-icon>
+          <span>Driver Manager</span>
         </span>
       </a>
     </mat-nav-list>
@@ -30,7 +30,30 @@
             <mat-card-title>Pickups</mat-card-title>
           </mat-card-header>
           <mat-card-content class="text-center py-5">
+            <form class="space-y-6 flex-container ">
+              <div class="mr-4 mt-4 pt-2">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Search vehicle reg Number</mat-label>
+                  <input type="text" matInput>
+                </mat-form-field>
+              </div>
+              <div class="mr-4">
 
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Status</mat-label>
+                  <mat-select [(value)]="modeselect">
+                    <mat-option  value="1">New Request</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="text-center mr-4">
+                <button type="submit" mat-raised-button class="bg-primary font-bold text-white tracking-widest">
+                  Search
+                </button>
+              </div>
+
+              <br><br>
+            </form>
 
             <div class="dump-table">
               <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

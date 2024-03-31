@@ -1,11 +1,19 @@
 // Importing the service class
 const DumpService = require("../Services/dumpService");
-// const AuthService = require("../Services/authService");
-// creating instances for service class
+
 const dump = new DumpService();
 // const authService = new AuthService();
 
 class DumpController {
+  static async findDumpById(req, res) {
+    try {
+      const findById = await dump.findDumpById(req);
+      return res.status(200).json({ findById });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   /**
    * Find all dumps
    */
@@ -46,5 +54,4 @@ class DumpController {
   }
 }
 
-// Export the controller
 module.exports = DumpController;

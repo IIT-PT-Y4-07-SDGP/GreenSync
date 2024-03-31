@@ -6,6 +6,15 @@ const DumpModel = require("../models/dumpModel");
 
 const dump = new DumpModel();
 class DumpService {
+  async findDumpById(req) {
+    const dumpId = req.params.dumpId;
+    const dump = await DumpModel.findById(dumpId);
+    if (!dump) {
+      throw new Error("Dump not found");
+    }
+    return dump;
+  }
+
   /**
    * Find all pickups
    * @returns pickup entity as array

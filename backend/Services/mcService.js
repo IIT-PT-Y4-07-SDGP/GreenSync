@@ -9,6 +9,7 @@ const accountModel = require("../models/accountModel");
 const districtModel = require("../models/district");
 const scheduleModel= require("../models/schedule");
 const reportGarbageModel = require("../models/reportGarbageModel");
+const createComplaintModel = require("../models/createComplaintModel");
 
 class MCService {
   static async MCRegister(MCDetails, res) {
@@ -101,6 +102,7 @@ class MCService {
     MC = MC[0];
     account = account[0];
 
+    //set the refresh token in the response cookie
     res.cookie("jwt", tokens.refreshToken, {
       httpOnly: true,
       secure: true,
@@ -130,7 +132,7 @@ class MCService {
 
   static async getAllMCUsers() {
     try {
-      // Query all MC users from the database and populate the 'account' field
+      // metch mc users along with their accounts
       const mcUsers = await MCModel.find().populate("account");
 
       // Process the data if needed
@@ -194,9 +196,12 @@ class MCService {
     }
   }
 
+  //add a pickup point for a district
   static async addPickupPoint(name, MC) {
     let session;
     let existingDistrict;
+
+    //validate inputs
     if (!name || !MC) {
       throw new Error("Name and muncipal council id are required");
     }
@@ -205,13 +210,16 @@ class MCService {
       session.startTransaction();
 
       try {
+    
         const existingMC = await MCModel.findById(MC);
+        //validate if the provided mc is valid
         if (!existingMC) {
           throw new Error("the provided muncipal council id is not valid");
         }
 
         const district = existingMC.DistrictId;
 
+        //fetch the district related to the provided mc
         existingDistrict = await districtModel
           .findOne({ _id: district })
           .session(session);
@@ -219,15 +227,19 @@ class MCService {
           throw new Error(`District does not exist`);
         }
 
+
         const existingPickupPoint = existingDistrict.pickups.find(
           (pickup) => pickup.name === name
         );
+
+        //validate whther the provided name for the new pickup point is unique
         if (existingPickupPoint) {
           throw new Error(
             `A pickup point with the name '${name}' already exists in district '${existingDistrict.name}'`
           );
         }
 
+        //add the pickup point to the relavant district along with the mc who created it
         existingDistrict.pickups.push({ name, MC });
         await existingDistrict.save();
 
@@ -283,11 +295,14 @@ static async createSchedule(schedule) {
       throw new Error("Missing required inputs");
   }
   const arrival = new Date(`${date}T${time}`);
+
+  //check whether the arrival is in the future
   if (arrival < new Date()) {
     throw new Error("The schedule arrival time cannot be in the past");
 }
   try {
       const mcDocument = await MCModel.findById(MC);
+      //validate whehther the mc exists
       if (!mcDocument) {
           throw new Error("Municipal council not found");
       }
@@ -381,21 +396,38 @@ static async updateSchedule(scheduleId, updatedSchedule) {
 
 static async reportGarbage(reportDetails){
   let authorID = reportDetails.reportAuthor;
+      //check whther the user is valid
         if (await this.isAuthorInDB(authorID)){
           reportDetails.reportAuthor = authorID;
+          //create an record 
           const event = await reportGarbageModel.create(reportDetails);
           return event;
         } else {
-            throw new Error('Organizer is not a registered users')
+            throw new Error('User is not a registered user, or is not logged in correctly. Please try to login again.')
+        }  
+}
+
+static async createComplaint(reportDetails){
+  let authorID = reportDetails.reportAuthor;
+      //validate user
+        if (await this.isAuthorInDB(authorID)){
+          reportDetails.reportAuthor = authorID;
+          //create complaint record
+          const event = await createComplaintModel.create(reportDetails);
+          console.log(event)
+          return event;
+        } else {
+            throw new Error('User is not a registered user, or is not logged in correctly. Please try to login again.')
         }  
 }
 
 static async isAuthorInDB(authorID){
   try {
+    //check whther the provided user id is associated to an existing user
     const author = await userModel.findById(authorID);
-            return !!author; // Returns true if organizer exists, false otherwise
+            return !!author; 
         } catch (error) {
-            throw new Error('User not exist in the database:', error); // Handle the error accordingly
+            throw new Error('User not exist in the database:', error); 
         }
   }
 }

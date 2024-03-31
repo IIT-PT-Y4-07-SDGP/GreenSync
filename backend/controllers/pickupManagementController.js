@@ -1,11 +1,18 @@
-// Importing the service class
 const PickupService = require("../Services/pickupManagementService");
 // const AuthService = require("../Services/authService");
-// creating instances for service class
 const pickup = new PickupService();
 // const authService = new AuthService();
 
 class PickupManagementController {
+  static async findPickupByPickupId(req, res) {
+    try {
+      const findById = await pickup.findPickupByPickupId();
+      return res.status(200).json({ findById });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   /**
    * Find all pickups
    */
@@ -88,7 +95,15 @@ class PickupManagementController {
       res.status(400).json({ error: error.message });
     }
   }
+
+  static async UpdatePickupByCustomer(req, res) {
+    try {
+      const updatePickup = await pickup.UpdatePickupByCustomer(req);
+      return res.status(200).json({ updatePickup });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
 
-// Export the controller
 module.exports = PickupManagementController;

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {GeneralUser} from "../interfaces/generalUser";
 import {Driver} from "../interfaces/driver";
+import { EnvironmentService } from './environment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,11 @@ import {Driver} from "../interfaces/driver";
 export class DriverService {
 
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  apiUrl = environment.apiUrl;
+  apiUrl?:string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private envService: EnvironmentService) {
+    this.apiUrl = this.envService.getBaseURL();
+  }
 
   registerDriver(userData: any) {
     return this.http.post<any>(`${this.apiUrl}/user/registration`, userData, {headers: this.headers});

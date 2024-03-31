@@ -6,6 +6,16 @@ const PickupModel = require("../models/pickupModel");
 
 const pickup = new PickupModel();
 class PickupManagementService {
+  async findPickupByPickupId(req) {
+    const _id = req.params.pickupId;
+    const pickup = await PickupModel.findById(_id);
+    if (!pickup) {
+      throw new Error("Pickup not found");
+    }
+
+    return pickup;
+  }
+
   /**
    * Find all pickups
    * @returns pickup entity as array
@@ -141,6 +151,39 @@ class PickupManagementService {
     } catch (error) {
       console.error("Error finding pickups by driver ID:", error);
       throw error;
+    }
+  }
+
+  async UpdatePickupByCustomer(req) {
+    try {
+      const _id = req.params.pickupId;
+
+      // Find the pickup by its ID
+      const pickup = await PickupModel.findById(_id);
+
+      if (!pickup) {
+        throw new Error("Pickup not found");
+      }
+
+      const updateObj = new PickupModel({
+        PickupDate: req.body.pickupDate,
+        PickupStartTime: req.body.pickupStartTime,
+        PickupEndTime: req.body.pickupEndTime,
+        // DumpType: req.body.dumpType,
+        Location: req.body.location,
+      });
+
+      const updatedPickup = await PickupModel.findByIdAndUpdate(
+        _id,
+        updateObj,
+        {
+          new: true,
+        }
+      );
+      return updatedPickup;
+    } catch (error) {
+      console.error("Error updating pickup status:", error);
+      return error;
     }
   }
 }

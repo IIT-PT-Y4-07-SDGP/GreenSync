@@ -24,6 +24,6 @@ export class ViewPrcListComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['prc-admin-homepage']);
+    this.router.navigate(['/admin/driver-manager']);
   }
 }

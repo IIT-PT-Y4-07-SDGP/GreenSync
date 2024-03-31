@@ -9,13 +9,13 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class GeneralUserHomepageComponent implements OnInit {
 
-    public userData?: GeneralUser;
+    public userData?: GeneralUser; // Holds the data of the logged-in user
 
     constructor(
-      private loginService: LoginService
+      private loginService: LoginService 
     ) { }
 
     ngOnInit(): void {
-      this.userData = this.loginService.getGeneralUser();
+      this.userData = this.loginService.getGeneralUser(); // Fetching user data when the component initializes
     }
 }
