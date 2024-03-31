@@ -4,6 +4,15 @@ const pickup = new PickupService();
 // const authService = new AuthService();
 
 class PickupManagementController {
+  static async findPickupByPickupId(req, res) {
+    try {
+      const findById = await pickup.findPickupByPickupId();
+      return res.status(200).json({ findById });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   /**
    * Find all pickups
    */
@@ -82,6 +91,15 @@ class PickupManagementController {
     try {
       const findByCustomerId = await pickup.FindPickupHistoryByCustomerId(req);
       return res.status(200).json({ findByCustomerId });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  static async UpdatePickupByCustomer(req, res) {
+    try {
+      const updatePickup = await pickup.UpdatePickupByCustomer(req);
+      return res.status(200).json({ updatePickup });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

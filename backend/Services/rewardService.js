@@ -64,7 +64,7 @@ class RewardService {
                 await userModel.updateOne({_id: userId},{points: remainder, tokenBalance: GSCBalance})
                 return {
                     message: "Points redeemed successfully",
-                    points: userData.points,
+                    points: remainder,
                     transactionHash: mintToken.hash
                 }
             }
