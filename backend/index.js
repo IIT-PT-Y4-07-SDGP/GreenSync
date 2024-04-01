@@ -32,8 +32,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:4200", 
-      "https://backend-dev.greensync.com.lk",
-      "https://backend.greensync.com.lk",
+      "https://dev.greensync.com.lk", // Dev Environment 
+      "https://greensync.com.lk", //  Prod Environment
     ],
   })
 );
