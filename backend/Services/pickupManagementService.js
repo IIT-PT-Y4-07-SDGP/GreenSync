@@ -164,23 +164,31 @@ class PickupManagementService {
       if (!pickup) {
         throw new Error("Pickup not found");
       }
+      pickup.PickupDate = req.body.pickupDate ?? pickup.PickupDate;
+      pickup.PickupStartTime =
+        req.body.pickupStartTime ?? pickup.PickupStartTime;
+      pickup.PickupEndTime = req.body.pickupEndTime ?? pickup.PickupEndTime;
+      pickup.Location = req.body.location ?? pickup.Location;
+      // Save the updated pickup document
+      const updatedPickup = await pickup.save();
 
-      const updateObj = new PickupModel({
-        PickupDate: req.body.pickupDate,
-        PickupStartTime: req.body.pickupStartTime,
-        PickupEndTime: req.body.pickupEndTime,
-        // DumpType: req.body.dumpType,
-        Location: req.body.location,
-      });
-
-      const updatedPickup = await PickupModel.findByIdAndUpdate(
-        _id,
-        updateObj,
-        {
-          new: true,
-        }
-      );
       return updatedPickup;
+
+      // const updateObj = new PickupModel({
+      //   PickupDate: req.body.pickupDate,
+      //   PickupStartTime: req.body.pickupStartTime,
+      //   PickupEndTime: req.body.pickupEndTime,
+      //   // DumpType: req.body.dumpType,
+      //   Location: req.body.location,
+      // });
+      // const updatedPickup = await PickupModel.findByIdAndUpdate(
+      //   _id,
+      //   updateObj,
+      //   {
+      //     new: true,
+      //   }
+      // );
+      // return updatedPickup;
     } catch (error) {
       console.error("Error updating pickup status:", error);
       return error;

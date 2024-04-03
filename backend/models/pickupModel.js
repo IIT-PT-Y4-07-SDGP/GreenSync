@@ -16,6 +16,7 @@ const pickupSchema = new schema(
     DumpType: {
       type: [String],
     },
+
     Location: {
       type: String,
     },
@@ -28,6 +29,13 @@ const pickupSchema = new schema(
     },
 
     CustomerId: {
+      type: String,
+    },
+    Price: {
+      type: String,
+    },
+
+    TotalPrice: {
       type: String,
     },
   },

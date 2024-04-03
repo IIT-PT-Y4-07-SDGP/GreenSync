@@ -29,7 +29,7 @@ router.get(
 );
 
 router.put(
-  "update-pickup-by-customer/:pickupId",
+  "/update-pickup-by-customer/:pickupId",
   PickupController.UpdatePickupByCustomer
 );
 
