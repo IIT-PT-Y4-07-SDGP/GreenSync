@@ -52,6 +52,15 @@ class DumpController {
       res.status(400).json({ error: error.message });
     }
   }
+
+  static async findDumpPriceByQTYAndName(req, res) {
+    try {
+      const price = await dump.findDumpPriceByQTYAndName(req);
+      return res.status(200).json({ price });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = DumpController;

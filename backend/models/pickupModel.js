@@ -16,6 +16,9 @@ const pickupSchema = new schema(
     DumpType: {
       type: [String],
     },
+    DumpQtyList: {
+      type: [String],
+    },
 
     Location: {
       type: String,

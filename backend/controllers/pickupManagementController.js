@@ -104,6 +104,15 @@ class PickupManagementController {
       res.status(400).json({ error: error.message });
     }
   }
+
+  static async UpdatePickupByDriver(req, res) {
+    try {
+      const updatePickup = await pickup.UpdatePickupByDriver(req);
+      return res.status(200).json({ updatePickup });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = PickupManagementController;

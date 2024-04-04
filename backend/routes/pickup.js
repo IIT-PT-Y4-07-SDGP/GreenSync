@@ -33,4 +33,9 @@ router.put(
   PickupController.UpdatePickupByCustomer
 );
 
+router.put(
+  "/update-pickup-by-driver/:pickupId",
+  PickupController.UpdatePickupByDriver
+);
+
 module.exports = router;
