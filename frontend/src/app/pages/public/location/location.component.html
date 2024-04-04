@@ -7,23 +7,22 @@
           <mat-card-title>Update Location</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <form class="space-y-6">
-
-
+          <form [formGroup]="locationFormGroup" (ngSubmit)="onSubmit()" class="space-y-6 flex-container ">
             <div>
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field  class="form_field">
                 <mat-label>My Address</mat-label>
-                <textarea matInput></textarea>
+                <textarea matInput formControlName="location"></textarea>
               </mat-form-field>
             </div>
 
             <div class="text-center py-5">
-              <button type="submit" mat-raised-button class="w-full bg-primary font-bold text-white tracking-widest">
+              <button type="submit" mat-raised-button class=" bg-primary font-bold text-white tracking-widest">
                 Update
               </button>
             </div>
             <div class="text-center">
-              <button type="submit" mat-raised-button class="w-full bg-primary font-bold text-white tracking-widest">
+              <button type="button" mat-raised-button class=" bg-primary font-bold text-white tracking-widest"
+              [routerLink]="['/public/dashboard']">
                 Home
               </button>
             </div>

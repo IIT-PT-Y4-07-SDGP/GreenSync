@@ -1,18 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { DumpService } from 'src/app/services/dump.service';
 
-export interface PeriodicElement {
-  index: number;
-  dumpType: string;
-  price: number;
-  removeVehicle: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {index: 1, dumpType: 'Hydrogen', price: 1.0079, removeVehicle: 'H'},
-  {index: 2, dumpType: 'Helium', price: 4.0026, removeVehicle: 'He'},
-  {index: 3, dumpType: 'Lithium', price: 6.941, removeVehicle: 'Li'},
-  {index: 4, dumpType: 'Beryllium', price: 9.0122, removeVehicle: 'Be'}
-];
 
 @Component({
   selector: 'app-dump-type',
@@ -22,12 +13,62 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 
 export class DumpTypeComponent implements OnInit {
-
-  displayedColumns: string[] = ['index', 'dumpType', 'price', 'removeVehicle'];
-  dataSource = ELEMENT_DATA;
-  constructor() { }
-
-  ngOnInit(): void {
+  typeList: dumpType[] = [];
+  displayedColumns: string[] = ['dumpType', 'price', 'removeVehicle'];
+  dataSource = new MatTableDataSource<dumpType>(this.typeList);
+  dumpTypeFormGroup: FormGroup;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  constructor(
+    private dumpService: DumpService,
+    private fb: FormBuilder
+  ) {
+    this.dumpTypeFormGroup = this.fb.group({
+      dumpName: ['', Validators.required],
+      price: ['', [Validators.required, Validators.minLength(8)]]
+    });
   }
 
+  async ngOnInit() {
+    await this.getDumpList();
+  }
+
+  getDumpList() {
+    this.typeList=[];
+    this.dumpService.getDumpTypeList().subscribe((dumps: any) => {
+      console.log(dumps);
+
+      dumps['allDumps'].forEach((obj: any) => {
+        this.typeList.push({ dumpType: obj.DumpName, price: obj.Price, removeVehicle: '-' });
+      });
+
+      this.dataSource = new MatTableDataSource<dumpType>(this.typeList);
+    });
+
+  }
+
+  onSubmit(): void {
+    if (this.dumpTypeFormGroup.valid) {
+      const formData = {
+        dumpName: this.dumpTypeFormGroup.value.dumpName,
+        price: this.dumpTypeFormGroup.value.price
+      }
+      const jsonData = JSON.stringify(formData);
+
+      this.dumpService.dumpCreate(jsonData).subscribe(() => {
+        this.onClear();
+        this.getDumpList();
+      });
+    }
+
+  }
+
+
+  onClear(): void {
+    this.dumpTypeFormGroup.reset();
+  }
+}
+export interface dumpType {
+  dumpType: string;
+  price: number;
+  removeVehicle: string;
 }
