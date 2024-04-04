@@ -26,7 +26,7 @@ class UserService {
 
         // updating the data to database
         let session;
-        let account;
+        let account;    
         let generalUserDetails;
 
         // Getting JWT Tokens
