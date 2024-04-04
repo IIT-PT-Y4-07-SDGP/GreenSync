@@ -6,7 +6,7 @@ const pickup = new PickupService();
 class PickupManagementController {
   static async findPickupByPickupId(req, res) {
     try {
-      const findById = await pickup.findPickupByPickupId();
+      const findById = await pickup.findPickupByPickupId(req);
       return res.status(200).json({ findById });
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -99,6 +99,15 @@ class PickupManagementController {
   static async UpdatePickupByCustomer(req, res) {
     try {
       const updatePickup = await pickup.UpdatePickupByCustomer(req);
+      return res.status(200).json({ updatePickup });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  static async UpdatePickupByDriver(req, res) {
+    try {
+      const updatePickup = await pickup.UpdatePickupByDriver(req);
       return res.status(200).json({ updatePickup });
     } catch (error) {
       res.status(400).json({ error: error.message });
