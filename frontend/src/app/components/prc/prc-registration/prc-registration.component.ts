@@ -72,7 +72,7 @@ export class PrcRegistrationComponent implements OnInit {
             this.router.navigate(['admin/driver-manager'])
           },
           error: err => {
-            alert("Registration Failed :-(");
+            alert(err.error.error);
             console.error('Error:', err);
           }
         });
