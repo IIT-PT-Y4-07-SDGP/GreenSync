@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-prc-driver-dashboard',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrcDriverDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(    private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  logOut(){
+    this.router.navigate(['/login-page']);
+  }
 }

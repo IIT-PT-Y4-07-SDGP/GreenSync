@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { GeneralUser } from 'src/app/interfaces/generalUser';
+import { LoginService } from 'src/app/services/login.service';
+import { PickupService } from 'src/app/services/pickup.service';
 
 @Component({
   selector: 'app-history',
@@ -8,29 +11,29 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
+  pickupList: any[] = [];
+  panelOpenState:boolean=true;
+  public userDetails?: GeneralUser;
+  constructor(
+    private loginService: LoginService,
+    private pickupService:PickupService
+  ) { }
 
-  loginFormGroup: FormGroup;
-  constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.loginFormGroup = fb.group({
-      hideRequired: false,
-      floatLabel: 'auto',
+  async ngOnInit() {
+    await this.getUser();
+    await this.getPickupList();
+  }
+
+  getUser(){
+    this.userDetails = this.loginService.getGeneralUser();
+  }
+  getPickupList() {
+    this.pickupList=[];
+    this.pickupService.getPickupListByUserId(this.userDetails?._id).subscribe((dumps: any) => {
+      console.log(dumps['findByCustomerId']);
+      this.pickupList=dumps['findByCustomerId'];
     });
-  }
 
-  ngOnInit(): void {
-    console.log("aa");
 
-  }
-
-  validateCredential() {
-    if (this.loginFormGroup.valid) {
-      // Construct the data object in the required format
-      const formData = {
-        userIdentity: this.loginFormGroup.value.userIdentity,
-        password: this.loginFormGroup.value.password,
-      }
-      // Convert registrationData to JSON format
-      const jsonData = JSON.stringify(formData);
-    }
   }
 }

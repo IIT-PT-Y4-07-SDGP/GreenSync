@@ -29,8 +29,13 @@ router.get(
 );
 
 router.put(
-  "update-pickup-by-customer/:pickupId",
+  "/update-pickup-by-customer/:pickupId",
   PickupController.UpdatePickupByCustomer
+);
+
+router.put(
+  "/update-pickup-by-driver/:pickupId",
+  PickupController.UpdatePickupByDriver
 );
 
 module.exports = router;

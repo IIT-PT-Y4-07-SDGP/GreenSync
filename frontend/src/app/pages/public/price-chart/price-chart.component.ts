@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DumpService } from 'src/app/services/dump.service';
 
 @Component({
   selector: 'app-price-chart',
@@ -9,29 +10,23 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class PriceChartComponent implements OnInit {
 
-  loginFormGroup: FormGroup;
-  constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.loginFormGroup = fb.group({
-      hideRequired: false,
-      floatLabel: 'auto',
-    });
+  typeList: any[] = [];
+  constructor(
+    private dumpService: DumpService
+    ) {
   }
 
   ngOnInit(): void {
-    console.log("aa");
+    this.getDumpList();
 
-  }
+   }
 
-  validateCredential() {
-    if (this.loginFormGroup.valid) {
-      // Construct the data object in the required format
-      const formData = {
-        userIdentity: this.loginFormGroup.value.userIdentity,
-        password: this.loginFormGroup.value.password,
-      }
-      // Convert registrationData to JSON format
-      const jsonData = JSON.stringify(formData);
-    }
-  }
+   getDumpList() {
+     this.typeList=[];
+     this.dumpService.getDumpTypeList().subscribe((dumps: any) => {
+       this.typeList=dumps['allDumps'];
+     });
+
+   }
 
 }

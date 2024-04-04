@@ -35,15 +35,6 @@ class DumpService {
       const dumpName = req.body.dumpName;
       const price = req.body.price;
 
-      // Assuming PickupModel is also required
-      // const pickupId = req.body.pickupId;
-      // const pickup = await PickupModel.findById(pickupId);
-
-      // if (!pickup) {
-      //     throw new Error("Pickup not found");
-      // }
-
-      // Perform your operations here, for example, creating a new dump
       const newDump = new DumpModel({
         DumpName: dumpName,
         Price: price,
@@ -111,6 +102,25 @@ class DumpService {
       // Handle errors
       console.error("Error updating dump:", error);
       throw error; // Throw error to be caught by the caller
+    }
+  }
+
+  async findDumpPriceByQTYAndName(req) {
+    try {
+      const dumpName = req.params.dumpName;
+      const qty = req.body.qty;
+      console.log(dumpName);
+      const dump = await DumpModel.findOne({ DumpName: dumpName });
+      if (dump) {
+        console.log("Dump found:", dump);
+        const priceForQty = dump.Price * qty;
+        return priceForQty;
+      } else {
+        const priceForQty = Math.floor(Math.random() * 999) + 2;
+        return priceForQty;
+      }
+    } catch (error) {
+      console.error("Error finding dump:", error);
     }
   }
 }
