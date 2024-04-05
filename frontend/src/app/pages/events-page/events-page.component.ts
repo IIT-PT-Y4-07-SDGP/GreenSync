@@ -98,8 +98,8 @@ export class EventsPageComponent implements OnInit {
 
   openViewEventDialog(selectedEvent: EventDetails, index: number) {
     const dialogRef = this.dialog.open(ViewEventComponent, {
-      height: '700px',
-      width: '1000px',
+      height: '300px',
+      width: '600px',
       data: { event: selectedEvent, imagePath: this.imagePaths }
     });
     dialogRef.afterClosed().subscribe(result => {

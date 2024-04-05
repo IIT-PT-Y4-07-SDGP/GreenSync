@@ -42,7 +42,6 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
-import { ParticipationComponent } from './components/events/participation/participation.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 import { MyEventPageComponent } from './pages/my-event-page/my-event-page.component';
 import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
@@ -66,7 +65,7 @@ import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { HistoryComponent } from './pages/public/history/history.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { RedeemComponent } from './components/redeem/redeem.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';;
 
 @NgModule({
   declarations: [
@@ -91,7 +90,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
     MyEventsComponent,
-    ParticipationComponent,
     OrganizedEventPageComponent,
     MyEventPageComponent,
     ReportGarbageComponent,
