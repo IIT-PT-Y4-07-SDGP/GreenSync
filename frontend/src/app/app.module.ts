@@ -66,6 +66,7 @@ import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { HistoryComponent } from './pages/public/history/history.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { RedeemComponent } from './components/redeem/redeem.component';
+import { MatPaginatorModule } from '@angular/material/paginator';;
 
 @NgModule({
   declarations: [
@@ -134,7 +135,8 @@ import { RedeemComponent } from './components/redeem/redeem.component';
         MatSidenavModule,
         MatTableModule,
         MatToolbarModule,
-        MatListModule
+        MatListModule,
+        MatPaginatorModule
     ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
