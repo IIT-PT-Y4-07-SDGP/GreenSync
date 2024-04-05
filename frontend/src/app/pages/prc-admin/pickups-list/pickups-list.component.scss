@@ -39,6 +39,11 @@ mat-sidenav-content{
       padding-top: 4rem;
   }
 }
-table.mat-table {
-  min-width: 1200px;
+
+table {
+  width: 100%;
+}
+
+.mat-elevation-z8{
+  box-shadow: none !important;
 }

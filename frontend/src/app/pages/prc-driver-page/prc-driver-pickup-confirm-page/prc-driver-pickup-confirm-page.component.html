@@ -13,17 +13,18 @@
                 <mat-label>Pickup Date</mat-label>
               </div>
               <div>
-                <mat-form-field appearance="fill" class="w-full">
-                  <mat-label>Pickup Time range</mat-label>
+                <mat-form-field  class="form_field">
+                  <mat-label>Pickup Time Range</mat-label>
 
-                  <mat-select>
-                    <mat-option value="one">First option</mat-option>
-                    <mat-option value="two">Second option</mat-option>
-                  </mat-select>
+                  <input matInput type="time"
+                   placeholder="Enter your password" required >
+
+                  <input matInput type="time"  required >
+                  <mat-error>Required</mat-error>
                 </mat-form-field>
               </div>
             <div>
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field  class="form_field">
                 <mat-label>Dump Type</mat-label>
 
                 <mat-select>
@@ -38,7 +39,7 @@
             </div>
 
             <div>
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field  class="form_field">
                 <mat-label>Location</mat-label>
                 <textarea matInput></textarea>
               </mat-form-field>
@@ -53,7 +54,8 @@
                 Accept
               </button>
             </div>
-            <button type="submit" mat-raised-button class=" bg-primary font-bold text-white tracking-widest">
+            <button type="button" mat-raised-button class=" bg-primary font-bold text-white tracking-widest"
+            [routerLink]="['/prc-driver/dashboard']">
               Home
             </button>
             <br><br>

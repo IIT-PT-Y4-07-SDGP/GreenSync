@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ParticipantDetails } from 'src/app/interfaces/participantsDetails';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-organized-event-page',
@@ -15,7 +15,10 @@ export class OrganizedEventPageComponent implements OnInit {
   dataSource = new MatTableDataSource<ParticipantDetails>(); // Data source for the table
   eventId: string = ""; // Holds the ID of the event
 
-  constructor(private eventServices: EventService, private route: ActivatedRoute) { }
+  constructor(
+    private eventServices: EventService, 
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     // Fetch the event ID from the service
@@ -91,6 +94,7 @@ export class OrganizedEventPageComponent implements OnInit {
         // Check if the response is successful
         if (response) {
           alert('Event deleted successfully.'); // Log if event is deleted successfully
+          this.router.navigate(['user-homepage/event/my-events'])
         } else {
           alert('Event deletion failed.'); // Log if event deletion fails
         }

@@ -122,7 +122,7 @@ export class UserRegistrationComponent implements OnInit, OnDestroy {
             this.router.navigate(['/user-homepage']);
           },
           error: err =>{
-            alert("Registration Failed :-(")
+            alert(err.error.error)
             console.error('Error:', err);
           }
         });

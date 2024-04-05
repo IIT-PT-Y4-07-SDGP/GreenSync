@@ -7,21 +7,11 @@ import {LoginPageComponent} from './pages/login-page/login-page.component';
 import {GeneralUserHomepageComponent} from './pages/general-user-homepage/general-user-homepage.component';
 import {McAdminHomepageComponent} from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import {PrcDriverDashboardComponent} from './pages/prc-driver-page/prc-driver-dashboard/prc-driver-dashboard.component';
-import {
-  PrcDriverPendingPickupsComponent
-} from './pages/prc-driver-page/prc-driver-pending-pickups/prc-driver-pending-pickups.component';
-import {
-  PrcDriverPickupConfirmPageComponent
-} from './pages/prc-driver-page/prc-driver-pickup-confirm-page/prc-driver-pickup-confirm-page.component';
-import {
-  PrcDriverPickupHitoryPageComponent
-} from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
-import {
-  PrcDriverPriceChartComponent
-} from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
-import {
-  PrcDriverPickupViewPageComponent
-} from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
+import {PrcDriverPendingPickupsComponent} from './pages/prc-driver-page/prc-driver-pending-pickups/prc-driver-pending-pickups.component';
+import {PrcDriverPickupConfirmPageComponent} from './pages/prc-driver-page/prc-driver-pickup-confirm-page/prc-driver-pickup-confirm-page.component';
+import {PrcDriverPickupHitoryPageComponent} from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
+import {PrcDriverPriceChartComponent} from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
+import {PrcDriverPickupViewPageComponent} from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
 import { DumpTypeComponent } from "./pages/prc-admin/dump-type/dump-type.component";
 import { PickupsListComponent } from "./pages/prc-admin/pickups-list/pickups-list.component";
 import { PrcAdminHomepageComponent } from "./pages/prc-admin-homepage/prc-admin-homepage.component";

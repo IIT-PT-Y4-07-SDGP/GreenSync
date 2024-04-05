@@ -30,7 +30,11 @@ const port = "5001";
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:4200", // Allow requests only from localhost:4200
+    origin: [
+      "http://localhost:4200", 
+      "https://dev.greensync.com.lk", // Dev Environment 
+      "https://greensync.com.lk", //  Prod Environment
+    ],
   })
 );
 
