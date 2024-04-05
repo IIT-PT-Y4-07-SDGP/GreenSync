@@ -9,7 +9,7 @@ import { EnvironmentService } from './environment.service';
 })
 export class RedeemService {
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  apiUrl?:string;
+  apiUrl?:string|undefined|null;
 
   constructor(private http: HttpClient, private envService: EnvironmentService) { 
     this.apiUrl = this.envService.getBaseURL();

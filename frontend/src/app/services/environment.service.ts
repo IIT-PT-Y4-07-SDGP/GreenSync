@@ -6,36 +6,44 @@ import BaseURL from '../enums/baseURL';
 })
 export class EnvironmentService {
 
-  BaseURL?:string;
-
   constructor() { }
   
   private setBaseURL(backendURL: string){
-    this.BaseURL = backendURL;
+    localStorage.setItem('backendURL', backendURL ?? ''); 
   }
 
   getBaseURL(){
-    return this.BaseURL;
+    let baseURL = localStorage.getItem('backendURL');
+    if (baseURL == null || baseURL == '') {
+      baseURL = this.identifyBaseURL() ?? null;
+    }
+    return baseURL;
   }
 
-  public identifyBaseURL(URL: string){
-    console.log(URL);
-    switch (URL) {
-      case BaseURL.FE_PRODUCTION:
+  public identifyBaseURL(): string | undefined{
+    // gets the frontend URL and only keep the base path
+    const frontendURL = window.location.href.split('/').slice(0, 3).join('/');
+    console.log(frontendURL);
+    // Check the frontend URL and return the corresponding backend URL
+    switch (frontendURL) {
+      case BaseURL.FE_PRODUCTION: 
         console.log("Production URL detected!");
         this.setBaseURL(BaseURL.BE_PRODUCTION);
-        break;
+        return BaseURL.BE_PRODUCTION; // Return the production URL
+
       case BaseURL.FE_DEVELOPMENT:
         console.log("Development URL detected!");
         this.setBaseURL(BaseURL.BE_DEVELOPMENT);
-        break;
+        return BaseURL.BE_DEVELOPMENT; // Return the development URL
+
       case BaseURL.FE_LOCALHOST:
         console.log("Localhost detected!");
         this.setBaseURL(BaseURL.BE_LOCALHOST);
-        break;
+        return BaseURL.BE_LOCALHOST; // Return the localhost URL
+        
       default:
-        console.error('Unknown frontend URL:', URL);
-        break;
+        console.error('Unknown frontend URL:', frontendURL);
+        return undefined;
     }
   }
 }
