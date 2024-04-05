@@ -113,16 +113,6 @@ class UserService {
             }
         } catch (error) {
             console.error('Error occurred:', error);
-            if(error.code === 11000){
-                if(error.keyValue.username){
-                    throw new Error("Username already exists");
-                } else if(error.keyValue.email){
-                    throw new Error("Email already exists");
-                } else if(error.keyValue.phoneNumber){
-                    throw new Error("Phone number already exists");
-                }
-            }
-            throw new Error(error);
         } finally {
             session.endSession();
         }

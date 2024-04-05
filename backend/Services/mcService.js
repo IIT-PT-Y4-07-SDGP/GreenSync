@@ -46,120 +46,57 @@ class MCService {
       MCDetails.account.userRole
     );
 
-    // try {
-    //   session = await mongoose.startSession();
-    //   session.startTransaction();
-
-    //   try {
-    //     account = await accountModel.create(
-    //       [
-    //         {
-    //           username: MCDetails.account.username,
-    //           phoneNumber: MCDetails.account.phoneNumber,
-    //           userRole: "MC-ADMIN",
-    //           email: MCDetails.account.email,
-    //           password: MCDetails.account.password,
-    //           accountStatus: "INACTIVE",
-    //           refreshToken: [tokens.refreshToken],
-    //         },
-    //       ],
-    //       { session }
-    //     );
-    //   } catch (error) {
-    //     console.error(error);
-    //     await session.abortTransaction();
-    //     throw new Error("Error occurred when creating account");
-    //   }
-
-    //   try {
-    //     MC = await MCModel.create(
-    //       [
-    //         {
-    //           MCName: MCDetails.MCName,
-    //           District: MCDetails.District,
-    //           DistrictId: MCDetails.DistrictId,
-    //           Address: MCDetails.Address,
-    //           MCStatus: "PENDING",
-    //           account: account[0]._id,
-    //         },
-    //       ],
-    //       { session }
-    //     );
-    //     await session.commitTransaction();
-    //   } catch (error) {
-    //     console.error(error);
-    //     await session.abortTransaction();
-    //     throw new Error("Error occurred when uploading user data to database");
-    //   }
-    // } catch (error) {
-    //   if(error.code === 11000){
-    //     if(error.keyValue.username){
-    //         throw new Error("Username already exists");
-    //     } else if(error.keyValue.email){
-    //         throw new Error("Email already exists");
-    //     } else if(error.keyValue.phoneNumber){
-    //         throw new Error("Phone number already exists");
-    //     }
-    //   }
-    //   console.error(error);
-    //   throw new Error(error);
-    // } finally {
-    //   if (session) {
-    //     session.endSession();
-    //   }
-    // }
-
     try {
       session = await mongoose.startSession();
-      const transactionOptions = { readPreference: 'primary', readConcern: { level: 'local' }, writeConcern: { w: 'majority' } };
+      session.startTransaction();
 
-      const result = await session.withTransaction(async () => {
-        //create MCC account 
+      try {
         account = await accountModel.create(
-          [{
-            username: MCDetails.account.username,
-            phoneNumber: MCDetails.account.phoneNumber,
-            userRole: "MC-ADMIN",
-            email: MCDetails.account.email,
-            password: MCDetails.account.password,
-            accountStatus: "INACTIVE",
-            refreshToken: [tokens.refreshToken],
-          }],
+          [
+            {
+              username: MCDetails.account.username,
+              phoneNumber: MCDetails.account.phoneNumber,
+              userRole: "MC-ADMIN",
+              email: MCDetails.account.email,
+              password: MCDetails.account.password,
+              accountStatus: "INACTIVE",
+              refreshToken: [tokens.refreshToken],
+            },
+          ],
           { session }
         );
+      } catch (error) {
+        console.error(error);
+        await session.abortTransaction();
+        throw new Error("Error occurred when creating account");
+      }
 
-        // create MC record
+      try {
         MC = await MCModel.create(
-          [{
-            MCName: MCDetails.MCName,
-            District: MCDetails.District,
-            DistrictId: MCDetails.DistrictId,
-            Address: MCDetails.Address,
-            MCStatus: "PENDING",
-            account: account[0]._id,
-          }],
+          [
+            {
+              MCName: MCDetails.MCName,
+              District: MCDetails.District,
+              DistrictId: MCDetails.DistrictId,
+              Address: MCDetails.Address,
+              MCStatus: "PENDING",
+              account: account[0]._id,
+            },
+          ],
           { session }
         );
-      }, transactionOptions);
-
-      if (result) {
-        console.log("The transaction was committed.");
+        await session.commitTransaction();
+      } catch (error) {
+        console.error(error);
+        await session.abortTransaction();
+        throw new Error("Error occurred when uploading user data to database");
       }
-
     } catch (error) {
-      console.error('Error occurred:', error);
-      if (error.code === 11000) {
-        if (error.keyValue.username) {
-          throw new Error("Username already exists");
-        } else if (error.keyValue.email) {
-          throw new Error("Email already exists");
-        } else if (error.keyValue.phoneNumber) {
-          throw new Error("Phone number already exists");
-        }
-      }
-      throw new Error(error);
+      console.error(error);
     } finally {
-      session.endSession();
+      if (session) {
+        session.endSession();
+      }
     }
 
     MC = MC[0];

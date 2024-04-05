@@ -70,7 +70,7 @@ export class McRegistrationComponent implements OnInit, OnDestroy {
             this.router.navigate(['/mc-admin-homepage'])
           },
           error: err => {
-            alert(err.error.error);
+            alert("Registration Failed :-(");
             console.error('Error:', err);
           }
         });
