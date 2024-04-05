@@ -1,4 +1,4 @@
-// Importing required libraries
+// Importing libraries
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
