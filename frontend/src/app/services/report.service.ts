@@ -9,7 +9,7 @@ import { EnvironmentService } from './environment.service';
 })
 export class ReportService {
   public headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  public apiUrl?: string|undefined|null;
+  public apiUrl?: string;
 
   constructor(private http: HttpClient, private envService: EnvironmentService) {
     this.apiUrl = this.envService.getBaseURL();

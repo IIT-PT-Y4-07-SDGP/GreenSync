@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MC } from '../interfaces/MC';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { EnvironmentService } from './environment.service';
 })
 export class McService {
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  apiUrl?:string|undefined|null;
+  apiUrl?:string;
 
   constructor(private http: HttpClient, private envService: EnvironmentService) { 
     this.apiUrl = this.envService.getBaseURL();

@@ -11,7 +11,7 @@ import { EnvironmentService } from './environment.service';
 })
 export class EventService {
   public headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  public apiUrl?:string|undefined|null;
+  public apiUrl?:string;
   public events: EventDetails[] = [];
   public viewedEventID?: string;
 
