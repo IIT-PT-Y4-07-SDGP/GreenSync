@@ -18,6 +18,9 @@ export class EventService {
   constructor(private http: HttpClient, private envService: EnvironmentService) { 
     this.apiUrl = this.envService.getBaseURL();
   }
+  constructor(private http: HttpClient, private envService: EnvironmentService) { 
+    this.apiUrl = this.envService.getBaseURL();
+  }
 
   setViewEventID(eventID: string){
     this.viewedEventID = eventID;

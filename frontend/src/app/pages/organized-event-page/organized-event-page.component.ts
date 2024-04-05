@@ -22,15 +22,20 @@ export class OrganizedEventPageComponent implements OnInit {
 
   ngOnInit(): void {
     // Fetch the event ID from the service
+    // Fetch the event ID from the service
     const eventIdFromService = this.eventServices.getViewEventID();
     // Assign the fetched event ID to the component property
+    // Assign the fetched event ID to the component property
     this.eventId = eventIdFromService !== undefined ? eventIdFromService : "";
+    // Fetch the details of the event using the event ID
     // Fetch the details of the event using the event ID
     this.fetchEvents(this.eventId);
   }
 
   // Fetches the details of the event based on the provided event ID
+  // Fetches the details of the event based on the provided event ID
   fetchEvents(eventId: string): void {
+    // Make an HTTP request to fetch events from the server
     // Make an HTTP request to fetch events from the server
     this.eventServices.getEvent(eventId).subscribe({
       next: event => {

@@ -4,6 +4,7 @@ import { GeneralUser } from '../interfaces/generalUser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { EnvironmentService } from './environment.service';
+import { EnvironmentService } from './environment.service';
 
 @Injectable({
   providedIn: 'root'
