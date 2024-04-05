@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
 import { LoginService } from 'src/app/services/login.service';
 import { RedeemService } from 'src/app/services/redeem.service';
+import { PointsService } from 'src/app/services/points.service';
 
 @Component({
   selector: 'app-redeem',
@@ -22,7 +23,7 @@ export class RedeemComponent implements OnInit {
 
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private loginService: LoginService, private redeemService: RedeemService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private loginService: LoginService, private redeemService: RedeemService, private pointsService: PointsService) { }
 
   ngOnInit(): void {
     this.fetchUserDetails();
@@ -31,7 +32,6 @@ export class RedeemComponent implements OnInit {
   fetchUserDetails(){
     // Fetch the user details from the service
     this.user = this.loginService.getGeneralUser();
-    console.log(this.user);
     // Check if the user details are not empty/null
     if (this.user) {
 
@@ -46,29 +46,50 @@ export class RedeemComponent implements OnInit {
   }  
 
 
+  // redeemPoints(){
+  //   this.isLoading = true;
+  //   const params = { userId: this.userId };
+  //   this.redeemService.redeemPoints(params).subscribe((response) => {
+  //     // Add your code here
+  //     const remainingPoints = response.redeemedPoints;
+  //     const transactionHash = remainingPoints.transactionHash;
+
+  //     if (this.points && remainingPoints.points) {
+  //       this.points = remainingPoints.points;
+  //     }
+      
+  //     if (this.redeemable && remainingPoints.points) {
+  //       this.redeemable = remainingPoints.points - (remainingPoints.points % 100);
+  //     }
+
+  //     this.transactionUrl = `https://mumbai.polygonscan.com/tx/${transactionHash}`;
+
+  //     // Log the response
+
+  //     // Set the loading state to false
+  //     this.isLoading = false;
+  //   });
+    
+  // }
+
   redeemPoints(){
     this.isLoading = true;
     const params = { userId: this.userId };
     this.redeemService.redeemPoints(params).subscribe((response) => {
-      // Add your code here
       const remainingPoints = response.redeemedPoints;
       const transactionHash = remainingPoints.transactionHash;
-
-      if (this.points && remainingPoints.points) {
-        this.points = remainingPoints.points;
+  
+      if (transactionHash) {
+        this.transactionUrl = `https://mumbai.polygonscan.com/tx/${transactionHash}`;
+  
+        if (remainingPoints.points) {
+          this.points = remainingPoints.points;
+          this.redeemable = remainingPoints.points - (remainingPoints.points % 100);
+        }
       }
-      
-      if (this.redeemable && remainingPoints.points) {
-        this.redeemable = 0;
-      }
-
-      this.transactionUrl = `https://mumbai.polygonscan.com/tx/${transactionHash}`;
-
-      // Log the response
-
-      // Set the loading state to false
+  
       this.isLoading = false;
+      this.pointsService.changePoints(remainingPoints.points);
     });
-    
   }
 }

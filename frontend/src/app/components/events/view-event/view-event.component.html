@@ -1,12 +1,14 @@
 <!-- view-event.component.html -->
 <div class="view-event-dialog">
-  <h1 class="text-primary font-extrabold" style="font-size: 35px;">{{ event.eventName }}</h1>
+  <div class="flex justify-between items-start">
+    <h1 class="text-primary font-extrabold text-4xl">{{ event.eventName }}</h1>
+    <p *ngIf="isOrganizer()" class="text-primary font-extrabold text-2xl">You Organized This event</p>
+  </div>
   <p>Date: {{ formatDate(event.eventTime) }}</p>
   <p>Time: {{ formatTime(event.eventTime) }}</p>
   <p>Location: {{ event.eventLocation }}</p>
   <p>Description: {{ event.eventDescription }}</p>
-  <!-- Add other event details as needed -->
 </div>
-<div>
-  <button class="bg-primary px-1 py-1 rounded text-white row-span-1" (click)="onClickParticipateEvent()">Participate</button>
+<div class="flex justify-center mt-12">
+  <button class="bg-primary px-1 py-1 rounded text-white row-span-1" (click)="onClickParticipateEvent()" [disabled]="isOrganizer()">Participate</button>
 </div>

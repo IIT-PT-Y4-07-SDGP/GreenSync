@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -9,7 +8,7 @@ import { EnvironmentService } from './environment.service';
 })
 export class ReportService {
   public headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  public apiUrl?: string;
+  public apiUrl?: string|undefined|null;
 
   constructor(private http: HttpClient, private envService: EnvironmentService) {
     this.apiUrl = this.envService.getBaseURL();

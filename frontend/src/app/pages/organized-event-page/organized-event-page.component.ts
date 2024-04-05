@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ParticipantDetails } from 'src/app/interfaces/participantsDetails';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-organized-event-page',
@@ -15,19 +15,27 @@ export class OrganizedEventPageComponent implements OnInit {
   dataSource = new MatTableDataSource<ParticipantDetails>(); // Data source for the table
   eventId: string = ""; // Holds the ID of the event
 
-  constructor(private eventServices: EventService, private route: ActivatedRoute) { }
+  constructor(
+    private eventServices: EventService, 
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     // Fetch the event ID from the service
+    // Fetch the event ID from the service
     const eventIdFromService = this.eventServices.getViewEventID();
     // Assign the fetched event ID to the component property
+    // Assign the fetched event ID to the component property
     this.eventId = eventIdFromService !== undefined ? eventIdFromService : "";
+    // Fetch the details of the event using the event ID
     // Fetch the details of the event using the event ID
     this.fetchEvents(this.eventId);
   }
 
   // Fetches the details of the event based on the provided event ID
+  // Fetches the details of the event based on the provided event ID
   fetchEvents(eventId: string): void {
+    // Make an HTTP request to fetch events from the server
     // Make an HTTP request to fetch events from the server
     this.eventServices.getEvent(eventId).subscribe({
       next: event => {
@@ -91,6 +99,7 @@ export class OrganizedEventPageComponent implements OnInit {
         // Check if the response is successful
         if (response) {
           alert('Event deleted successfully.'); // Log if event is deleted successfully
+          this.router.navigate(['user-homepage/event/my-events'])
         } else {
           alert('Event deletion failed.'); // Log if event deletion fails
         }

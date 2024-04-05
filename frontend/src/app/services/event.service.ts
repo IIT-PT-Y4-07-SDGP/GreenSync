@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { EventDetails } from 'src/app/interfaces/event';
 import { ParticipateEventsResponse } from '../interfaces/participationResponse';
 import { EnvironmentService } from './environment.service';
@@ -11,7 +10,7 @@ import { EnvironmentService } from './environment.service';
 })
 export class EventService {
   public headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  public apiUrl?:string;
+  public apiUrl?:string|undefined|null;
   public events: EventDetails[] = [];
   public viewedEventID?: string;
 
