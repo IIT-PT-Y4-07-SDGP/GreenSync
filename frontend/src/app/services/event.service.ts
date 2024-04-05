@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { EventDetails } from 'src/app/interfaces/event';
 import { ParticipateEventsResponse } from '../interfaces/participationResponse';
 import { EnvironmentService } from './environment.service';
@@ -15,9 +14,6 @@ export class EventService {
   public events: EventDetails[] = [];
   public viewedEventID?: string;
 
-  constructor(private http: HttpClient, private envService: EnvironmentService) { 
-    this.apiUrl = this.envService.getBaseURL();
-  }
   constructor(private http: HttpClient, private envService: EnvironmentService) { 
     this.apiUrl = this.envService.getBaseURL();
   }

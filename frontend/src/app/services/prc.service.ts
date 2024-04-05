@@ -2,8 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PRC } from '../interfaces/PRC';
-import { environment } from 'src/environments/environment';
-import { EnvironmentService } from './environment.service';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({

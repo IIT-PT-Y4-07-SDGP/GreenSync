@@ -66,20 +66,6 @@ import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { HistoryComponent } from './pages/public/history/history.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { RedeemComponent } from './components/redeem/redeem.component';
-import { MatPaginatorModule } from '@angular/material/paginator';;
-import { TokenVerificationDialogComponent } from './components/events/token-verification-dialog/token-verification-dialog.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatListModule} from '@angular/material/list';
-import { DumpTypeComponent } from './pages/prc-admin/dump-type/dump-type.component';
-import { PickupsListComponent } from './pages/prc-admin/pickups-list/pickups-list.component';
-import { PickupComponent } from './pages/public/pickup/pickup.component';
-import { LocationComponent } from './pages/public/location/location.component';
-import { PriceChartComponent } from './pages/public/price-chart/price-chart.component';
-import { ReportPageComponent } from './pages/report-page/report-page.component';
-import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
-import { HistoryComponent } from './pages/public/history/history.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { RedeemComponent } from './components/redeem/redeem.component';
 import { MatPaginatorModule } from '@angular/material/paginator'
 
 @NgModule({
