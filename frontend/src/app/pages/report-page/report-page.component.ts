@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // blankcommit
+// blankcommit2
 @Component({
   selector: 'app-report-page',
   templateUrl: './report-page.component.html',
