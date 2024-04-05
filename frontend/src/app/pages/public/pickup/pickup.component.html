@@ -1,10 +1,10 @@
 <div class="flex w-full">
-  <div class="block container object-none object-left-top w-2/12 h-2/12 ml-4 mt-2">
-    <img src="app/assets/greensync-logo.png" alt="Logo" class="object-contain">
+  <div class="block container object-none object-left-top w-2/12 h-2/12 ml-4 mt-2 mb-4 pb-4">
+    <!-- <img src="app/assets/greensync-logo.png" alt="Logo" class="object-contain"> -->
   </div>
 </div>
 
-<div class="flex justify-center items-center h-5/6">
+<div class="flex justify-center items-center h-5/6 mt-4 pt-4">
   <div class="flex w-1/3 shadow-2xl h-auto bg-white items-center justify-center rounded-2xl">
     <div class="w-full">
       <mat-card class="">
@@ -12,61 +12,67 @@
           <mat-card-title>Request Pickup</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <form [formGroup]="loginFormGroup" (ngSubmit)="validateCredential()" class="space-y-6">
-           
+
+          <form [formGroup]="pickuFormGroup" (ngSubmit)="onSubmit()" class="space-y-6">
+
             <div>
-              <mat-form-field appearance="fill" class="w-full"
-                [floatLabel]="loginFormGroup.value.floatLabel">
+              <mat-form-field  class="form_field">
                 <mat-label>Pickup date</mat-label>
 
-                <input matInput type="date" placeholder="Enter your password" required >
+                <input matInput type="date" placeholder="Enter your password" required
+                formControlName="pickupDate">
+                <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
             <div>
-              <mat-form-field appearance="fill" class="w-full"
-                [floatLabel]="loginFormGroup.value.floatLabel">
+              <mat-form-field  class="form_field">
                 <mat-label>Pickup Time Range</mat-label>
 
-                <input matInput type="date" placeholder="Enter your password" required >
+                <input matInput type="time" formControlName="picupTimeStart"
+                 placeholder="Enter your password" required >
+
+                <input matInput type="time" formControlName="pickupTimeEnd"  required >
+                <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
             <div>
-              <mat-form-field appearance="fill" class="w-full"
-                [floatLabel]="loginFormGroup.value.floatLabel">
+              <mat-form-field  class="form_field">
                 <mat-label>Dump type</mat-label>
 
-                <mat-select>
-                  <mat-option value="one">First option</mat-option>
-                  <mat-option value="two">Second option</mat-option>
+                <mat-select formControlName="dumpType" multiple="true">
+                  <ng-container *ngFor="let item of typeList">
+                    <mat-option value="{{item.DumpName}}">{{item.DumpName}}</mat-option>
+                  </ng-container>
+
                 </mat-select>
+                <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
             <div>
-              <mat-form-field appearance="fill" class="w-full" [hideRequiredMarker]="loginFormGroup.value.hideRequired"
-                [floatLabel]="loginFormGroup.value.floatLabel">
+              <mat-form-field  class="form_field" >
                 <mat-label>Description</mat-label>
-                  <textarea matInput></textarea>
+                  <textarea formControlName="description" matInput></textarea>
               </mat-form-field>
             </div>
             <div>
-              <mat-form-field appearance="fill" class="w-full" [hideRequiredMarker]="loginFormGroup.value.hideRequired"
-                [floatLabel]="loginFormGroup.value.floatLabel">
+              <mat-form-field class="form_field">
                 <mat-label>Location</mat-label>
-                  <textarea matInput></textarea>
+                  <textarea formControlName="location"  matInput></textarea>
+                  <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
-            <div class="text-center py-5">
-              <button type="submit" mat-raised-button [class.opacity-50]="!this.loginFormGroup.valid"
-                [disabled]="!this.loginFormGroup.valid" class="w-full bg-primary font-bold text-white tracking-widest">
+
+            <div class="text-center ">
+              <button type="submit" mat-raised-button class="form_field bg-primary font-bold text-white tracking-widest">
                 Confirm
               </button>
+              <br><br>
+              <button type="button" mat-raised-button  class="form_field bg-primary font-bold text-white tracking-widest"
+              [routerLink]="['/public/dashboard']">
+              Home
+            </button>
             </div>
-            <div class="text-center">
-              <button type="submit" mat-raised-button [class.opacity-50]="!this.loginFormGroup.valid"
-                [disabled]="!this.loginFormGroup.valid" class="w-full bg-primary font-bold text-white tracking-widest">
-                Home
-              </button>
-            </div>
+
             <br><br>
           </form>
         </mat-card-content>

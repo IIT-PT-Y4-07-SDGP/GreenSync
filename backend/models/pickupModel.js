@@ -16,16 +16,29 @@ const pickupSchema = new schema(
     DumpType: {
       type: [String],
     },
+    DumpQtyList: {
+      type: [String],
+    },
+
     Location: {
       type: String,
     },
     DriverId: {
       type: String,
     },
-    DriverId: {
+    Status: {
+      // accept ,reject , pending ,new
       type: String,
     },
-    Status: {
+
+    CustomerId: {
+      type: String,
+    },
+    Price: {
+      type: String,
+    },
+
+    TotalPrice: {
       type: String,
     },
   },

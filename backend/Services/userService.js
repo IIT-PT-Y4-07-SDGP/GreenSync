@@ -9,7 +9,9 @@ const bcrypt = require('bcrypt');
 
 class UserService {
     async userRegister(userDetails, res){
+        //validate password
         if (common.isPasswordValid(userDetails.account.password)) {
+            //hash password
             userDetails.account.password = await common.hashPassword(userDetails.account.password);
         } else {
             throw new Error("Invalid password. Please ensure it meets the requirements.")
@@ -24,17 +26,18 @@ class UserService {
 
         // updating the data to database
         let session;
-        let account;
+        let account;    
         let generalUserDetails;
 
         // Getting JWT Tokens
         let tokens = AuthService.generateJWTToken(userDetails.account.username,userDetails.account.userRole)
 
-        try{
+        /* try{
             session = await mongoose.startSession();
             session.startTransaction();
             
             try {
+                //create an account
                 account = await accountModel.create(
                     [{
                         username: userDetails.account.username,
@@ -53,6 +56,7 @@ class UserService {
             }
             
             try {
+                //create an user record
                 generalUserDetails = await userModel.create(
                     [{  
                         firstName: userDetails.firstName,
@@ -74,10 +78,58 @@ class UserService {
             console.error(error);
         } finally {
             if (session) { session.endSession(); }
+        } */
+
+        try {
+            session = await mongoose.startSession();
+            const transactionOptions = { readPreference: 'primary', readConcern: { level: 'local' }, writeConcern: { w: 'majority' } };
+        
+            const result = await session.withTransaction(async () => {
+                account = await accountModel.create(
+                    [{
+                        username: userDetails.account.username,
+                        phoneNumber: userDetails.account.phoneNumber,
+                        userRole: userDetails.account.userRole,
+                        email: userDetails.account.email,
+                        password: userDetails.account.password,
+                        accountStatus: "ACTIVE",
+                        refreshToken:[tokens.refreshToken]
+                    }], { session }
+                );
+        
+                generalUserDetails = await userModel.create(
+                    [{  
+                        firstName: userDetails.firstName,
+                        lastName: userDetails.lastName,
+                        profilePic: "Default",
+                        address: userDetails.address,
+                        account: account[0]._id
+                    }], { session }
+                );
+            }, transactionOptions);
+        
+            if (result) {
+                console.log("The transaction was committed.");
+            }
+        } catch (error) {
+            console.error('Error occurred:', error);
+            if(error.code === 11000){
+                if(error.keyValue.username){
+                    throw new Error("Username already exists");
+                } else if(error.keyValue.email){
+                    throw new Error("Email already exists");
+                } else if(error.keyValue.phoneNumber){
+                    throw new Error("Phone number already exists");
+                }
+            }
+            throw new Error(error);
+        } finally {
+            session.endSession();
         }
         generalUserDetails = generalUserDetails[0];
         account = account[0];
 
+        //set the refresh token in the response cookie
         res.cookie("jwt", tokens.refreshToken, {
             httpOnly: true,
             secure: true,
@@ -144,10 +196,12 @@ class UserService {
                 if (!account) {
                     throw new Error('Account not found');
                 }
+                //validate if the provided existing password is correct
                 const isMatch = await bcrypt.compare(userDetails.oldPassword, account.password);
                 if (!isMatch) {
                     throw new Error('Invalid previous password');
                 }
+                //hash new password
                 const hashedPassword = await common.hashPassword(userDetails.password);
                 updatedAccount.password = hashedPassword;
                 await updatedAccount.save();
@@ -188,24 +242,29 @@ class UserService {
         try {
             session = await mongoose.startSession();
             session.startTransaction();
-    
+            
+            //validate input
             if (!accountId) {
                 throw new Error("Account ID is required.");
             }
     
             const account = await accountModel.findById(accountId);
+            //check whether the provided id is associated to a gp user
             if (!account || account.userRole !== "GP") {
                 throw new Error("No account associated with the provided ID.");
             }
 
+            //cannot delete an account thats restricted
             if(account.accountStatus==="BANNED" || account.accountStatus==="SUSPENDED"){
                 throw new Error("Account cannot be deleted since its restricted");
             }
     
+            //cannot delete an account thats already deleted
             if (account.accountStatus === "DELETED") {
                 throw new Error("Account is already deleted.");
             }
     
+            //update the status to deleted 
             account.accountStatus = "DELETED";
             await account.save({ session });
     
@@ -229,8 +288,19 @@ class UserService {
             }
         }
     }
-    
    
+    //geting user for the redeem points function
+   async getUserById(userId) {
+        try {
+            const user = await userModel.findById(userId);
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        }catch (error) {
+            throw new Error(`Error fetching user from the database: ${error.message}`);
+        }
+    }
 }
 
 module.exports = UserService;

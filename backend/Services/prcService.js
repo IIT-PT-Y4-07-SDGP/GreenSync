@@ -5,6 +5,11 @@ const common = new CommonService();
 const AuthService = require("./authService");
 const PRCModal = require("../models/PRCModel");
 const accountModel = require("../models/accountModel");
+const { MongoClient } = require('mongodb');
+const config = require('../configuration/config');
+const uri = config.MONGO_URI;
+const prcModel = require('../models/PRCModel')
+
 
 
 class PRCService {
@@ -12,6 +17,8 @@ class PRCService {
     // Validate password
     let hashedPassword;
     if (common.isPasswordValid(prcDetails.account.password)) {
+
+      //hash provided password
       hashedPassword = await common.hashPassword(prcDetails.account.password);
     } else {
       throw new Error(
@@ -41,62 +48,125 @@ class PRCService {
       prcDetails.account.userRole
     );
 
+    // try {
+    //   session = await mongoose.startSession();
+    //   session.startTransaction();
+
+    //   try {
+    //     //create PRC account 
+    //     account = await accountModel.create(
+    //       [
+    //         {
+    //           username: prcDetails.account.username,
+    //           phoneNumber: prcDetails.account.phoneNumber,
+    //           userRole: prcDetails.account.userRole,
+    //           email: prcDetails.account.email,
+    //           password: prcDetails.account.password,
+    //           accountStatus: "INACTIVE",
+    //           refreshToken: [tokens.refreshToken],
+    //         },
+    //       ],
+    //       { session }
+    //     );
+    //   } catch (error) {
+    //     console.error(error);
+    //     await session.abortTransaction();
+    //   }
+
+    //   try {
+    //     //create PRC record
+    //     PRC = await PRCModal.create(
+    //       [
+    //         {
+    //           PRCName: prcDetails.PRCName,
+    //           PRCBusinessRegNumber: prcDetails.PRCBusinessRegNumber,
+    //           District: prcDetails.District,
+    //           Address: prcDetails.Address,
+    //           PRCStatus: "PENDING",
+    //           account: account[0]._id,
+    //         },
+    //       ],
+    //       { session }
+    //     );
+    //     await session.commitTransaction();
+    //   } catch (error) {
+    //     console.log(error);
+    //     await session.abortTransaction();
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   if(error.code === 11000){
+    //     if(error.keyValue.username){
+    //         throw new Error("Username already exists");
+    //     } else if(error.keyValue.email){
+    //         throw new Error("Email already exists");
+    //     } else if(error.keyValue.phoneNumber){
+    //         throw new Error("Phone number already exists");
+    //     }
+    //   }
+    //   throw new Error(error);
+    // } finally {
+    //   if (session) {
+    //     session.endSession();
+    //   }
+    // }
+
     try {
       session = await mongoose.startSession();
-      session.startTransaction();
+      const transactionOptions = { readPreference: 'primary', readConcern: { level: 'local' }, writeConcern: { w: 'majority' } };
 
-      try {
+      const result = await session.withTransaction(async () => {
+        //create PRC account 
         account = await accountModel.create(
-          [
-            {
-              username: prcDetails.account.username,
-              phoneNumber: prcDetails.account.phoneNumber,
-              userRole: prcDetails.account.userRole,
-              email: prcDetails.account.email,
-              password: prcDetails.account.password,
-              accountStatus: "INACTIVE",
-              refreshToken: [tokens.refreshToken],
-            },
-          ],
+          [{
+            username: prcDetails.account.username,
+            phoneNumber: prcDetails.account.phoneNumber,
+            userRole: prcDetails.account.userRole,
+            email: prcDetails.account.email,
+            password: prcDetails.account.password,
+            accountStatus: "INACTIVE",
+            refreshToken: [tokens.refreshToken],
+          }], { session }
+        );
+
+        // create PRC record
+        PRC = await PRCModal.create(
+          [{
+            PRCName: prcDetails.PRCName,
+            PRCBusinessRegNumber: prcDetails.PRCBusinessRegNumber,
+            District: prcDetails.District,
+            Address: prcDetails.Address,
+            PRCStatus: "PENDING",
+            account: account[0]._id,
+          }],
           { session }
         );
-      } catch (error) {
-        console.error(error);
-        await session.abortTransaction();
-        throw new Error("Error occurred when creating account");
+      }, transactionOptions);
+
+      if (result) {
+        console.log("The transaction was committed.");
       }
 
-      try {
-        PRC = await PRCModal.create(
-          [
-            {
-              PRCName: prcDetails.PRCName,
-              PRCBusinessRegNumber: prcDetails.PRCBusinessRegNumber,
-              District: prcDetails.District,
-              Address: prcDetails.Address,
-              PRCStatus: "PENDING",
-              account: account[0]._id,
-            },
-          ],
-          { session }
-        );
-        await session.commitTransaction();
-      } catch (error) {
-        console.log(error);
-        await session.abortTransaction();
-        throw new Error("Error occurred when uploading user data to database");
-      }
     } catch (error) {
-      console.log(error);
-    } finally {
-      if (session) {
-        session.endSession();
+      console.error('Error occurred:', error);
+      if (error.code === 11000) {
+        if (error.keyValue.username) {
+          throw new Error("Username already exists");
+        } else if (error.keyValue.email) {
+          throw new Error("Email already exists");
+        } else if (error.keyValue.phoneNumber) {
+          throw new Error("Phone number already exists");
+        }
       }
+      throw new Error(error);
+    } finally {
+      session.endSession();
     }
 
     PRC = PRC[0];
     account = account[0];
 
+    //set the refresh token in the response cookie
     res.cookie("jwt", tokens.refreshToken, {
       httpOnly: true,
       secure: true,
@@ -123,6 +193,23 @@ class PRCService {
       },
     };
   }
+
+  async getPrcList() {
+    try {
+      //fetch all prcs
+      return await prcModel.find({}, {
+        _id: 0,
+        PRCName: 1,
+        PRCBusinessRegNumber: 1,
+        District: 1,
+        Address: 1,
+        PRCStatus: 1
+      });
+    } catch (error) {
+      throw new Error(`Error fetching events from the database: ${error.message}`);
+    }
+  }
+
 }
 
 module.exports = PRCService;

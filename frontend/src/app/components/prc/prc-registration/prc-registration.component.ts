@@ -16,11 +16,11 @@ export class PrcRegistrationComponent implements OnInit {
   PRCRegFormGroup: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private router: Router,
     private loginService: LoginService,
     private PRCService: PrcService
-  ) { 
+  ) {
     this.PRCRegFormGroup = fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -69,10 +69,10 @@ export class PrcRegistrationComponent implements OnInit {
           next : response => {
             const PRC: PRC = response;
             this.loginService.setPRC(PRC);
-            this.router.navigate(['/prc-admin-homepage'])
+            this.router.navigate(['admin/driver-manager'])
           },
           error: err => {
-            alert("Registration Failed :-(");
+            alert(err.error.error);
             console.error('Error:', err);
           }
         });
