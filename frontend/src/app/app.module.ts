@@ -65,7 +65,7 @@ import { ReportPageComponent } from './pages/report-page/report-page.component';
 import { DashbordComponent } from './pages/public/dashbord/dashbord.component';
 import { HistoryComponent } from './pages/public/history/history.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { RedeemComponent } from './components/redeem/redeem.component'
+import { RedeemComponent } from './components/redeem/redeem.component';
 
 @NgModule({
   declarations: [

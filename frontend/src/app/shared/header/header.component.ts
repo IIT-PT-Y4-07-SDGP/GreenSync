@@ -7,6 +7,7 @@ import { PRC } from 'src/app/interfaces/PRC';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
 import { LoginService } from 'src/app/services/login.service';
 import { RedeemComponent } from 'src/app/components/redeem/redeem.component';
+import { PointsService } from 'src/app/services/points.service';
 
 @Component({
   selector: 'app-header',
@@ -23,13 +24,15 @@ export class HeaderComponent implements OnInit {
   MCName?: String;
   userId?: String;
 
-  constructor(private router: Router, private loginService: LoginService, private dialog: MatDialog) { }
+  constructor(private router: Router, private loginService: LoginService, private dialog: MatDialog, private pointsService: PointsService) { }
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.checkRoutes();
         this.setUsername();
+        this.pointsService.fethUserDetails();
+        this.pointsService.currentPoints.subscribe(points => this.points = points);
       }
     });
   }
