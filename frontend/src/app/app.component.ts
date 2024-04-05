@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { EnvironmentService } from './services/environment.service';
-import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +7,7 @@ import { LoginService } from './services/login.service';
 })
 export class AppComponent implements OnInit{
 
-  constructor(private envService: EnvironmentService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.envService.identifyBaseURL(window.location.href);
-  }
+  ngOnInit(): void { }
 }
