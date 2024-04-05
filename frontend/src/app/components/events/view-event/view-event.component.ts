@@ -55,4 +55,8 @@ export class ViewEventComponent implements OnInit {
       }
     })
   }
+
+  isOrganizer(): boolean {
+    return this.event.eventOrganizer === this.loginService.getGeneralUser()?._id;
+  }
 }
