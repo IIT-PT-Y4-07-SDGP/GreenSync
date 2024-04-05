@@ -1,26 +1,40 @@
-<div class="flex justify-between items-start my-6 mx-10">
-  <h1 class="text-primary text-xl flex items-center">
-    {{ events[0]?.eventName }}
-    <!-- Edit Symbol -->
-    <a href="#" class="ml-6 text-black text-base font-extrabold">
-      &#9998;
-    </a>
-    <!-- Complete Symbol -->
-    <a href="#" 
-      class="ml-4 text-black text-base font-extrabold" 
-      (click)="completeEvent(events[0]._id); $event.preventDefault();"
-    >
-      &#10003;
-    </a>
-    <!-- Bin Symbol -->
-    <a href="#" 
-      class="ml-4 text-black text-base font-extrabold"
-      (click)="deleteEvent(events[0]._id, events[0].eventOrganizer); $event.preventDefault();"  
-    >
-      <span class="icon-bin">🗑</span>
-    </a>
-  </h1>
-  <div class="text-primary text-xl">
+<div class="flex justify-between w-full items-center">
+  <div class="w-1/2 justify-start">
+    <div class="flex justify-between items-start my-6 mx-10">
+      <h1 class="text-primary text-xl flex items-center">
+        {{ events[0]?.eventName }}
+        <!-- Edit Symbol -->
+        <a href="#" class="ml-6 text-black text-base font-extrabold">
+          &#9998;
+        </a>
+        <!-- Complete Symbol -->
+        <a href="#" 
+          class="ml-4 text-black text-base font-extrabold" 
+          (click)="completeEvent(events[0]._id); $event.preventDefault();"
+        >
+          &#10003;
+        </a>
+        <!-- Bin Symbol -->
+        <a href="#" 
+          class="ml-4 text-black text-base font-extrabold"
+          (click)="deleteEvent(events[0]._id, events[0].eventOrganizer); $event.preventDefault();"  
+        >
+          <span class="icon-bin">🗑</span>
+        </a>
+      </h1>
+    </div>
+  </div>
+  <div class="w-1/2 flex justify-end h-16 items-center">
+    <button 
+      class="bg-primary hover:bg-green-300 text-white py-2 px-4 rounded mx-5 my-2" 
+      routerLink="/user-homepage/event/my-events"
+    > 
+      Back to My Event Page
+    </button>
+  </div>
+</div>
+<div class="flex justify-end w-screen">
+  <div class="text-primary text-xl mr-14">
     <h3>Total Register: {{ events[0]?.eventParticipant?.length }}</h3>
     <h3>Total Participated: {{ getParticipatedCount(events[0]?.eventParticipant ?? []) }}</h3>
   </div>
