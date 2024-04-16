@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login.service';
 import { ReportService } from 'src/app/services/report.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -23,8 +22,7 @@ export class ReportComplaintComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    private loginService: LoginService,
+    private userService: UserService,
     private reportService: ReportService
   )
   {
@@ -46,7 +44,7 @@ export class ReportComplaintComponent implements OnInit {
       reportLocation: ['', [Validators.required]],
       reportDescription: ['', [Validators.maxLength(1000)]],
     });
-    this.userDetails = this.loginService.getGeneralUser();
+    this.userDetails = this.userService.getGeneralUser();
   }
 
   onSubmit() {

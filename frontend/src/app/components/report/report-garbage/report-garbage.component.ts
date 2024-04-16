@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login.service';
 import { ReportService } from 'src/app/services/report.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-report-garbage',
@@ -20,11 +19,11 @@ export class ReportGarbageComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   dialogRef: any;
 
-  constructor(private fb: FormBuilder, 
-    private http: HttpClient,
-    private loginService: LoginService,
-    private reportService: ReportService) {
-    
+  constructor(
+    private fb: FormBuilder, 
+    private userService: UserService,
+    private reportService: ReportService
+  ) {  
     this.reportForm = this.fb.group({
       hideRequired: false,
       floatLabel: 'auto',
@@ -43,7 +42,7 @@ export class ReportGarbageComponent implements OnInit {
       reportTime: [null, [Validators.required]],
       reportDescription: ['', [Validators.maxLength(1000)]],
     });
-    this.userDetails = this.loginService.getGeneralUser(); // Assuming selectedReportPictures is an array to hold multiple selected files
+    this.userDetails = this.userService.getGeneralUser(); // Assuming selectedReportPictures is an array to hold multiple selected files
 
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     const label = document.querySelector('label[for="fileInput"]');

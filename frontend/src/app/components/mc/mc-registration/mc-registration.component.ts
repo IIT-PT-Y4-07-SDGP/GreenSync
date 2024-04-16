@@ -4,8 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MC } from 'src/app/interfaces/MC';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/login.service';
-import { McService } from 'src/app/services/mc.service';
+import { MCService } from 'src/app/services/mc.service';
 
 @Component({
   selector: 'app-mc-registration',
@@ -19,8 +18,7 @@ export class McRegistrationComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder, 
     private router: Router,
-    private loginService: LoginService,
-    private MCService: McService
+    private MCService: MCService
   ) {
     this.MCRegFormGroup = fb.group({
       hideRequired: false,
@@ -66,7 +64,7 @@ export class McRegistrationComponent implements OnInit, OnDestroy {
         .subscribe({
           next: response => {
             const MC: MC = response;
-            this.loginService.setMC(MC);
+            this.MCService.setMC(MC);
             this.router.navigate(['/mc-admin-homepage'])
           },
           error: err => {

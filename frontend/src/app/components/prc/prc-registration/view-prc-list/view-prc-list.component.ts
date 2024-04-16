@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PrcService} from "../../../../services/prc.service";
+import {PRCService} from "../../../../services/prc.service";
 import {PRC} from "../../../../interfaces/PRC";
 import {Router} from "@angular/router";
 
@@ -11,8 +11,9 @@ import {Router} from "@angular/router";
 export class ViewPrcListComponent implements OnInit {
   PRCList: PRC[] = [];
 
-  constructor(private prcService: PrcService,
-              private router: Router) {
+  constructor(
+    private prcService: PRCService,
+    private router: Router) {
   }
 
   ngOnInit(): void {

@@ -7,6 +7,9 @@ import {MC} from 'src/app/interfaces/MC';
 import {PRC} from 'src/app/interfaces/PRC';
 import {GeneralUser} from 'src/app/interfaces/generalUser';
 import {LoginService} from 'src/app/services/login.service';
+import { MCService } from 'src/app/services/mc.service';
+import { PRCService } from 'src/app/services/prc.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login-page',
@@ -20,6 +23,9 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
+    private userService: UserService,
+    private prcService: PRCService,
+    private mcService: MCService,
     private router: Router
   ) {
     this.loginFormGroup = fb.group({
@@ -52,42 +58,41 @@ export class LoginPageComponent implements OnInit {
       this.loginService.loginUser(jsonData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-            next: response => {
-              const userRole = response.account.userRole;
-              switch (userRole) {
-                case 'GP':
-                  const generalUser: GeneralUser = response;
-                  this.loginService.setGeneralUser(generalUser);
-                  // Navigate to user home page component
-                  this.router.navigate(['/user-homepage']);
-                  break;
-                case 'PRC-ADMIN':
-                  const PRC: PRC = response;
-                  this.loginService.setPRC(PRC);
-                  this.router.navigate(['/admin/dump-type']); // Navigate to PRC Admin Panel
-                  break;
-                case 'DRIVER':
-                  const DRIVER: PRC = response;
-                  this.loginService.setPRC(DRIVER);
-                  this.router.navigate(['/prc-driver/dashboard']); // Navigate to PRC Driver Panel
-                  break;
-                case 'MC-ADMIN':
-                  const MC: MC = response;
-                  this.loginService.setMC(MC);
-                  this.router.navigate(['/mc-admin-homepage']); // Navigate to MC-ADMIN Panel
-                  break;
-                default:
-                  // Handle unexpected roles or errors
-                  alert(`Unknown user role: ${userRole}`);
-                  break;
-              }
-            },
-            error: err => {
-              alert("Login Failed :-(")
-              console.error('Error:', err);
+          next: response => {
+            const userRole = response.account.userRole;
+            switch (userRole) {
+              case 'GP':
+                const generalUser: GeneralUser = response;
+                this.userService.setGeneralUser(generalUser);
+                // Navigate to user home page component
+                this.router.navigate(['/user-homepage']);
+                break;
+              case 'PRC-ADMIN':
+                const PRC: PRC = response;
+                this.prcService.setPRC(PRC);
+                this.router.navigate(['/admin/dump-type']); // Navigate to PRC Admin Panel
+                break;
+              case 'DRIVER':
+                const DRIVER: PRC = response;
+                this.prcService.setPRC(DRIVER);
+                this.router.navigate(['/prc-driver/dashboard']); // Navigate to PRC Driver Panel
+                break;
+              case 'MC-ADMIN':
+                const MC: MC = response;
+                this.mcService.setMC(MC);
+                this.router.navigate(['/mc-admin-homepage']); // Navigate to MC-ADMIN Panel
+                break;
+              default:
+                // Handle unexpected roles or errors
+                alert(`Unknown user role: ${userRole}`);
+                break;
             }
+          },
+          error: err => {
+            alert("Login Failed :-(")
+            console.error('Error:', err);
           }
-        );
+        });
     }
   }
 
