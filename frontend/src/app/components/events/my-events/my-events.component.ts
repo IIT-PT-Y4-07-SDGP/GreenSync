@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EventService } from '../../../services/event.service';
 import { EventDetails } from 'src/app/interfaces/event';
-import { OrganizeEventComponent } from '../organize-event/organize-event.component';
-import { TokenVerificationDialogComponent } from '../token-verification-dialog/token-verification-dialog.component';
+import { OrganizeEventComponent } from '../../../popups/organize-event/organize-event.component';
+import { TokenVerificationDialogComponent } from '../../../popups/token-verification-dialog/token-verification-dialog.component';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
 import { UserService } from 'src/app/services/user.service';
 
