@@ -8,12 +8,21 @@ import { EnvironmentService } from './environment.service';
   providedIn: 'root'
 })
 
-export class PrcService {
+export class PRCService {
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   apiUrl?:string|undefined|null;
+  PRC?: PRC;
 
   constructor(private http: HttpClient, private envService: EnvironmentService) {
     this.apiUrl = this.envService.getBaseURL();
+  }
+  // PRC
+  setPRC(user: PRC) {
+    this.PRC = user;
+  }
+
+  getPRC() {
+    return this.PRC;
   }
 
   getPRCs() {

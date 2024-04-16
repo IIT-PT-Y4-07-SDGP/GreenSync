@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login.service';
 import { RedeemService } from 'src/app/services/redeem.service';
 import { PointsService } from 'src/app/services/points.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-redeem',
@@ -23,7 +23,12 @@ export class RedeemComponent implements OnInit {
 
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private loginService: LoginService, private redeemService: RedeemService, private pointsService: PointsService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any, 
+    private userService: UserService, 
+    private redeemService: RedeemService, 
+    private pointsService: PointsService
+  ) { }
 
   ngOnInit(): void {
     this.fetchUserDetails();
@@ -31,7 +36,7 @@ export class RedeemComponent implements OnInit {
 
   fetchUserDetails(){
     // Fetch the user details from the service
-    this.user = this.loginService.getGeneralUser();
+    this.user = this.userService.getGeneralUser();
     // Check if the user details are not empty/null
     if (this.user) {
 

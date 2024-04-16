@@ -10,9 +10,19 @@ import { EnvironmentService } from './environment.service';
 export class UserService {
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   apiUrl?:string|undefined|null;
+  GeneralUser?: GeneralUser;
 
   constructor(private http: HttpClient, private envService: EnvironmentService) {
     this.apiUrl = this.envService.getBaseURL();
+  }
+
+  // General User
+  setGeneralUser(user: GeneralUser) {
+    this.GeneralUser = user;
+  }
+
+  getGeneralUser() {
+    return this.GeneralUser;
   }
 
   registerUser(data: any): Observable<GeneralUser> {

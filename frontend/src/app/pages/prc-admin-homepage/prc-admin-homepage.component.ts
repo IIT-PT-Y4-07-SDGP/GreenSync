@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PRC } from 'src/app/interfaces/PRC';
-import { LoginService } from 'src/app/services/login.service';
 import {Router} from "@angular/router";
 
 @Component({
