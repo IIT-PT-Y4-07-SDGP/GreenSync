@@ -2,8 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {GeneralUser} from 'src/app/interfaces/generalUser';
-import {LoginService} from 'src/app/services/login.service';
 import {Router} from '@angular/router';
 import {UserService} from 'src/app/services/user.service';
 
@@ -22,7 +20,6 @@ export class UserRegistrationComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private loginService: LoginService,
     private userService: UserService
   ) {
     this.userRegFormGroup = fb.group({
@@ -118,7 +115,7 @@ export class UserRegistrationComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: response => {
-            this.loginService.setGeneralUser(response);
+            this.userService.setGeneralUser(response);
             this.router.navigate(['/user-homepage']);
           },
           error: err =>{

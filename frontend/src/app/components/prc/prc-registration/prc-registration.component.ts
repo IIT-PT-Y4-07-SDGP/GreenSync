@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LoginService } from 'src/app/services/login.service';
 import { PRC } from 'src/app/interfaces/PRC';
 import { Router } from '@angular/router';
-import { PrcService } from 'src/app/services/prc.service';
+import { PRCService } from 'src/app/services/prc.service';
 @Component({
   selector: 'app-prc-registration',
   templateUrl: './prc-registration.component.html',
@@ -18,8 +17,7 @@ export class PrcRegistrationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private loginService: LoginService,
-    private PRCService: PrcService
+    private prcService: PRCService
   ) {
     this.PRCRegFormGroup = fb.group({
       hideRequired: false,
@@ -63,12 +61,12 @@ export class PrcRegistrationComponent implements OnInit {
       }
       // Convert registrationData to JSON format
       const jsonData = JSON.stringify(formData);
-      this.PRCService.registerPRC(jsonData)
+      this.prcService.registerPRC(jsonData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next : response => {
             const PRC: PRC = response;
-            this.loginService.setPRC(PRC);
+            this.prcService.setPRC(PRC);
             this.router.navigate(['admin/driver-manager'])
           },
           error: err => {

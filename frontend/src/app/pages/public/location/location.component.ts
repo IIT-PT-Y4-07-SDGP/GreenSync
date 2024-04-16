@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login.service';
 import { PickupService } from 'src/app/services/pickup.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-location',
@@ -14,8 +14,8 @@ export class LocationComponent implements OnInit {
   locationFormGroup: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService,
-    private pickupService:PickupService
+    private pickupService:PickupService,
+    private userService: UserService
   ) {
     this.locationFormGroup = this.fb.group({
       location: ['', Validators.required]
@@ -26,7 +26,7 @@ export class LocationComponent implements OnInit {
   }
 
   getUser(){
-    this.userDetails = this.loginService.getGeneralUser();
+    this.userDetails = this.userService.getGeneralUser();
   }
 
   onSubmit(): void {

@@ -1,13 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DumpService } from 'src/app/services/dump.service';
 import { PickupService } from 'src/app/services/pickup.service';
-import { dumpType } from '../../prc-admin/dump-type/dump-type.component';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login.service';
-import { log } from 'util';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-pickup',
@@ -21,9 +18,10 @@ export class PickupComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-     private dumpService: DumpService,
-     private loginService: LoginService,
-     private pickupService:PickupService) {
+    private dumpService: DumpService,
+    private userService: UserService,
+    private pickupService: PickupService
+  ) {
 
     this.pickuFormGroup = this.fb.group({
       pickupDate: ['', Validators.required],
@@ -36,17 +34,17 @@ export class PickupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.getDumpList();
+    this.getDumpList();
 
-    this.userDetails = this.loginService.getGeneralUser();
+    this.userDetails = this.userService.getGeneralUser();
     console.log(this.userDetails);
 
   }
 
   getDumpList() {
-    this.typeList=[];
+    this.typeList = [];
     this.dumpService.getDumpTypeList().subscribe((dumps: any) => {
-      this.typeList=dumps['allDumps'];
+      this.typeList = dumps['allDumps'];
     });
 
   }
@@ -60,7 +58,7 @@ export class PickupComponent implements OnInit {
         dumpType: this.pickuFormGroup.value.dumpType,
         decription: this.pickuFormGroup.value.description,
         location: this.pickuFormGroup.value.location,
-        customerId:this.userDetails?._id
+        customerId: this.userDetails?._id
       }
       console.log(formData);
 

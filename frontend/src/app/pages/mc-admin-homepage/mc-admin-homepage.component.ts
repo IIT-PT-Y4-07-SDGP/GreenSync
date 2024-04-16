@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MC } from 'src/app/interfaces/MC';
-import { LoginService } from 'src/app/services/login.service';
+import { MCService } from 'src/app/services/mc.service';
 
 @Component({
   selector: 'app-mc-admin-homepage',
@@ -9,10 +9,10 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class McAdminHomepageComponent implements OnInit {
   public MC?: MC;
-  constructor(private loginService: LoginService) { }
+  constructor(private mcService: MCService) { }
 
   ngOnInit(): void {
-    this.MC = this.loginService.getMC(); // Fetching MC data when the component initializes
+    this.MC = this.mcService.getMC(); // Fetching MC data when the component initializes
   }
 
 }

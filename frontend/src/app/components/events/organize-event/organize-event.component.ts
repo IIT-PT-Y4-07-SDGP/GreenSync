@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
 import { EventService } from 'src/app/services/event.service';
-import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 
@@ -25,7 +25,7 @@ export class OrganizeEventComponent implements OnInit {
     private fb: FormBuilder, 
     public dialogRef: MatDialogRef<OrganizeEventComponent>, 
     private eventService: EventService,
-    private loginService: LoginService
+    private userService: UserService
   ){ 
     this.eventForm = this.fb.group({
       hideRequired: false,
@@ -46,7 +46,7 @@ export class OrganizeEventComponent implements OnInit {
       eventTime: [null, [Validators.required,]],
       eventDescription: ['', [Validators.maxLength(1000)]]
     })
-    this.userDetails = this.loginService.getGeneralUser();
+    this.userDetails = this.userService.getGeneralUser();
   }
 
   onSubmit() {

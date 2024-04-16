@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { GeneralUser } from 'src/app/interfaces/generalUser';
-import { LoginService } from 'src/app/services/login.service';
 import { PickupService } from 'src/app/services/pickup.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-prc-driver-pickup-hitory-page',
@@ -14,8 +13,8 @@ export class PrcDriverPickupHitoryPageComponent implements OnInit {
   panelOpenState:boolean=true;
   public userDetails?: GeneralUser;
   constructor(
-    private loginService: LoginService,
-    private pickupService:PickupService
+    private pickupService:PickupService,
+    private userService: UserService
   ) { }
 
   async ngOnInit() {
@@ -24,7 +23,7 @@ export class PrcDriverPickupHitoryPageComponent implements OnInit {
   }
 
   getUser(){
-    this.userDetails = this.loginService.getGeneralUser();
+    this.userDetails = this.userService.getGeneralUser();
   }
   getPickupList() {
     this.pickupList=[];
