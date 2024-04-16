@@ -23,11 +23,11 @@ import { RegistrationPageComponent } from './pages/registration-page/registratio
 import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
 import { PrcRegistrationComponent } from './components/prc/prc-registration/prc-registration.component';
 import { EventsPageComponent } from './pages/events-page/events-page.component';
-import { OrganizeEventComponent } from './components/events/organize-event/organize-event.component';
+import { OrganizeEventComponent } from './popups/organize-event/organize-event.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { McRegistrationComponent } from './components/mc/mc-registration/mc-registration.component';
-import { ViewEventComponent } from './components/events/view-event/view-event.component';
+import { ViewEventComponent } from './popups/view-event/view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -42,7 +42,6 @@ import { GeneralUserHomepageComponent } from './pages/general-user-homepage/gene
 import { PrcAdminHomepageComponent } from './pages/prc-admin-homepage/prc-admin-homepage.component';
 import { McAdminHomepageComponent } from './pages/mc-admin-homepage/mc-admin-homepage.component';
 import { MyEventsComponent } from './components/events/my-events/my-events.component';
-import { ParticipationComponent } from './components/events/participation/participation.component';
 import { OrganizedEventPageComponent } from './pages/organized-event-page/organized-event-page.component';
 import { MyEventPageComponent } from './pages/my-event-page/my-event-page.component';
 import { ReportGarbageComponent } from './components/report/report-garbage/report-garbage.component';
@@ -53,7 +52,7 @@ import { PrcDriverPickupConfirmPageComponent } from './pages/prc-driver-page/prc
 import { PrcDriverPriceChartComponent } from './pages/prc-driver-page/prc-driver-price-chart/prc-driver-price-chart.component';
 import { PrcDriverPickupHitoryPageComponent } from './pages/prc-driver-page/prc-driver-pickup-hitory-page/prc-driver-pickup-hitory-page.component';
 import { PrcDriverPickupViewPageComponent } from './pages/prc-driver-page/prc-driver-pickup-view-page/prc-driver-pickup-view-page.component';
-import { TokenVerificationDialogComponent } from './components/events/token-verification-dialog/token-verification-dialog.component';
+import { TokenVerificationDialogComponent } from './popups/token-verification-dialog/token-verification-dialog.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import { DumpTypeComponent } from './pages/prc-admin/dump-type/dump-type.component';
@@ -91,7 +90,6 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
     MyEventsComponent,
-    ParticipationComponent,
     OrganizedEventPageComponent,
     MyEventPageComponent,
     ReportGarbageComponent,
