@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { OrganizeEventComponent } from 'src/app/components/events/organize-event/organize-event.component';
-import { ViewEventComponent } from 'src/app/components/events/view-event/view-event.component';
+import { OrganizeEventComponent } from 'src/app/popups/organize-event/organize-event.component';
+import { ViewEventComponent } from 'src/app/popups/view-event/view-event.component';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
 
