@@ -7,10 +7,9 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-view-event',
-  templateUrl: './view-event.component.html',
-  styleUrls: ['./view-event.component.scss']
+  templateUrl: './detailed-view-event.component.html'
 })
-export class ViewEventComponent implements OnInit {
+export class DetailedViewEventComponent implements OnInit {
   event: EventDetails;
 
   constructor(

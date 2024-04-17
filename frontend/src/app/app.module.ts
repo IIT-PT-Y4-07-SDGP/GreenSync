@@ -27,7 +27,7 @@ import { OrganizeEventComponent } from './popups/organize-event/organize-event.c
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { McRegistrationComponent } from './components/mc/mc-registration/mc-registration.component';
-import { ViewEventComponent } from './popups/view-event/view-event.component';
+import { DetailedViewEventComponent } from './popups/detailed-view-event/detailed-view-event.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -80,12 +80,11 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     LoginPageComponent,
     OrganizeEventComponent,
     McRegistrationComponent,
-    ViewEventComponent,
+    DetailedViewEventComponent,
     PrcAdminHomepageComponent,
     DriverRegistrationComponent,
     ViewPrcListComponent,
     ViewDrivesListComponent,
-    ViewEventComponent,
     GeneralUserHomepageComponent,
     PrcAdminHomepageComponent,
     McAdminHomepageComponent,
@@ -113,29 +112,29 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     HeaderComponent,
     RedeemComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        MatSelectModule,
-        MatInputModule,
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        HttpClientModule,
-        MatDialogModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCardModule,
-        MatButtonModule,
-        MatExpansionModule,
-        MatSidenavModule,
-        MatTableModule,
-        MatToolbarModule,
-        MatListModule,
-        MatPaginatorModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    HttpClientModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCardModule,
+    MatButtonModule,
+    MatExpansionModule,
+    MatSidenavModule,
+    MatTableModule,
+    MatToolbarModule,
+    MatListModule,
+    MatPaginatorModule
+  ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })
