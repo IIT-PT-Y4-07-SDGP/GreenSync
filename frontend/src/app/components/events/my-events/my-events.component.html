@@ -1,5 +1,10 @@
 <div class="flex w-screen justify-between">
   <div class="justify-start">
+    <button class="bg-primary hover:bg-green-300 text-white py-2 px-4 rounded m-2" routerLink="/user-homepage/event">
+      Back
+    </button>
+  </div>
+  <div class="justify-end">
     <button class="bg-primary hover:bg-green-300 text-white py-2 px-4 rounded m-2"
       [class.selected]="selectedButton === 'Participation'" (click)="selectButton('Participation')"
     >
@@ -9,12 +14,6 @@
       [class.selected]="selectedButton === 'Organizing'" (click)="selectButton('Organizing')"
     >
       Organizing
-    </button>
-  </div>
-  
-  <div class="justify-end">
-    <button class="bg-primary hover:bg-green-300 text-white py-2 px-4 rounded m-2" routerLink="/user-homepage/event">
-      Back
     </button>
   </div>
 </div>
