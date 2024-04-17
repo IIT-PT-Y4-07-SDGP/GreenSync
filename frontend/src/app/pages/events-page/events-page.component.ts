@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganizeEventComponent } from 'src/app/popups/organize-event/organize-event.component';
-import { ViewEventComponent } from 'src/app/popups/view-event/view-event.component';
+import { DetailedViewEventComponent } from 'src/app/popups/detailed-view-event/detailed-view-event.component';
 import { EventDetails } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
 
@@ -97,7 +97,7 @@ export class EventsPageComponent implements OnInit {
   }
 
   openViewEventDialog(selectedEvent: EventDetails, index: number) {
-    const dialogRef = this.dialog.open(ViewEventComponent, {
+    const dialogRef = this.dialog.open(DetailedViewEventComponent, {
       height: '300px',
       width: '600px',
       data: { event: selectedEvent, imagePath: this.imagePaths }
