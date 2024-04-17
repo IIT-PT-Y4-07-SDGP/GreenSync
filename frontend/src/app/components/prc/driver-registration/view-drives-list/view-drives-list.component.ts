@@ -5,8 +5,7 @@ import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-view-drives-list',
-  templateUrl: './view-drives-list.component.html',
-  styleUrls: ['./view-drives-list.component.scss']
+  templateUrl: './view-drives-list.component.html'
 })
 export class ViewDrivesListComponent implements OnInit {
   driversList: Driver[] = [];

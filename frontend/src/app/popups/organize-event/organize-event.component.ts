@@ -11,8 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-organize-event',
-  templateUrl: './organize-event.component.html',
-  styleUrls: ['./organize-event.component.scss']
+  templateUrl: './organize-event.component.html'
 })
 
 
