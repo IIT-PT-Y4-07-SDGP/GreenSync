@@ -9,8 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-my-events',
-  templateUrl: './my-events.component.html',
-  styleUrls: ['./my-events.component.scss']
+  templateUrl: './my-events.component.html'
 })
 export class MyEventsComponent implements OnInit {
   selectedButton: string = 'Participation'; // Default selected button
