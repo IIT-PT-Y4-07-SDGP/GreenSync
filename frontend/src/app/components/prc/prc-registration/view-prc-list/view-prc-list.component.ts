@@ -5,8 +5,7 @@ import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-view-prc-list',
-  templateUrl: './view-prc-list.component.html',
-  styleUrls: ['./view-prc-list.component.scss']
+  templateUrl: './view-prc-list.component.html'
 })
 export class ViewPrcListComponent implements OnInit {
   PRCList: PRC[] = [];

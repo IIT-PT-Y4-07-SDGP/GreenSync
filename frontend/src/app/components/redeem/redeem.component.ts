@@ -7,8 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-redeem',
-  templateUrl: './redeem.component.html',
-  styleUrls: ['./redeem.component.scss']
+  templateUrl: './redeem.component.html'
 })
 export class RedeemComponent implements OnInit {
 

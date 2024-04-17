@@ -8,8 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-report-garbage',
-  templateUrl: './report-garbage.component.html',
-  styleUrls: ['./report-garbage.component.scss']
+  templateUrl: './report-garbage.component.html'
 })
 export class ReportGarbageComponent implements OnInit {
 

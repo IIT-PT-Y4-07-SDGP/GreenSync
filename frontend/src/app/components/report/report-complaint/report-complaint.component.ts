@@ -9,8 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-report-complaint',
-  templateUrl: './report-complaint.component.html',
-  styleUrls: ['./report-complaint.component.scss']
+  templateUrl: './report-complaint.component.html'
 })
 export class ReportComplaintComponent implements OnInit {
 

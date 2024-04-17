@@ -6,8 +6,7 @@ import {DriverService} from "../../../../services/driver.service";
 
 @Component({
   selector: 'app-driver-registration',
-  templateUrl: './driver-registration.component.html',
-  styleUrls: ['./driver-registration.component.scss']
+  templateUrl: './driver-registration.component.html'
 })
 export class DriverRegistrationComponent implements OnInit {
   driverRegFormGroup: FormGroup;
