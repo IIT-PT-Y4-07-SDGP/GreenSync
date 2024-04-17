@@ -8,8 +8,7 @@ import { MCService } from 'src/app/services/mc.service';
 
 @Component({
   selector: 'app-mc-registration',
-  templateUrl: './mc-registration.component.html',
-  styleUrls: ['./mc-registration.component.scss']
+  templateUrl: './mc-registration.component.html'
 })
 export class McRegistrationComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();

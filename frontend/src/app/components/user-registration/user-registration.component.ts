@@ -9,8 +9,9 @@ import {UserService} from 'src/app/services/user.service';
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
-  styleUrls: ['./user-registration.component.scss']
+  styles: [`.file-name { visibility: hidden; } .file-name.visible { visibility: visible; }`]
 })
+
 export class UserRegistrationComponent implements OnInit, OnDestroy {
   private profilePicture!: File;
   private destroy$: Subject<void> = new Subject();
