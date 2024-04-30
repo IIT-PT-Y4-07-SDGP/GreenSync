@@ -1,0 +1,7 @@
+version: 0.1
+endpoints:
+- name: GreenSync API
+  port: 5001
+  type: REST
+  networkVisibility: Public
+  context: /
